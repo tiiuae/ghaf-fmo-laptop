@@ -26,9 +26,6 @@
     # FMO imports
     inputs.self.nixosModules.host
     inputs.self.nixosModules.fmo-services
-
-    # TODO Remove this in Ghaf
-    inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
   config = {

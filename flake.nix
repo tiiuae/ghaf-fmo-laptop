@@ -39,32 +39,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-    };
-
-    givc = {
-      url = "github:tiiuae/ghaf-givc";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-        devshell.follows = "devshell";
-      };
-    };
-
-    ctrl-panel = {
-      url = "github:tiiuae/ghaf-ctrl-panel/555a414a5d50eed7f17e7f45221eba0261c40dc6";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        crane.follows = "givc/crane";
-      };
-    };
-
     registration-agent = {
       url = "git+ssh://git@github.com/tiiuae/registration-agent-laptop";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "ctrl-panel/flake-utils";
+        flake-utils.follows = "ghaf/flake-utils";
       };
     };
 
@@ -74,7 +53,7 @@
       url = "github:tiiuae/fmo-tool/119afdcf908dad61ae862c0efd8d148d8d8580ce";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "ctrl-panel/flake-utils";
+        flake-utils.follows = "ghaf/flake-utils";
       };
     };
 
@@ -85,6 +64,10 @@
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
     };
 
     # To ensure that checks are run locally to enforce cleanliness
@@ -101,27 +84,6 @@
     };
     ###
     ### End of Flake and repo structuring configurations
-
-    # Random stuff?!? TODO why is this required
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-      };
-    };
-
-    # Other stuff due to overlay in builder
-    # TODO: this should be removed if the makeScope takes care of it.
-    ghafpkgs = {
-      url = "github:tiiuae/ghafpkgs";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-        crane.follows = "givc/crane";
-        devshell.follows = "devshell";
-      };
-    };
   };
 
   outputs =
