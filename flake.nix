@@ -52,6 +52,32 @@
       };
     };
 
+    ctrl-panel = {
+      url = "github:tiiuae/ghaf-ctrl-panel/555a414a5d50eed7f17e7f45221eba0261c40dc6";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        crane.follows = "givc/crane";
+      };
+    };
+
+    registration-agent = {
+      url = "git+ssh://git@github.com/tiiuae/registration-agent-laptop";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "ctrl-panel/flake-utils";
+      };
+    };
+
+    # Pin the version until we can merge the changes upstream
+    # TODO: we do not have access to manage the upstream repo
+    fmo-tool = {
+      url = "github:tiiuae/fmo-tool/119afdcf908dad61ae862c0efd8d148d8d8580ce";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "ctrl-panel/flake-utils";
+      };
+    };
+
     ###
     # Flake and repo structuring configurations
     ###
@@ -105,10 +131,11 @@
         "x86_64-linux"
       ];
       imports = [
-        ./nix/flake-module.nix
-        ./targets/flake-module.nix
         ./modules/flake-module.nix
+        ./nix/flake-module.nix
+        ./overlays/flake-module.nix
         ./profile/flake-module.nix
+        ./targets/flake-module.nix
       ];
     };
 }

@@ -29,9 +29,13 @@ in
 
               overlays = [
                 inputs.ghafpkgs.overlays.default
+                inputs.ctrl-panel.overlays.default
                 inputs.givc.overlays.default
+                #TODO: Make Ghaf export a single overlay with all included
+                # as the default
                 inputs.ghaf.overlays.own-pkgs-overlay
                 inputs.ghaf.overlays.custom-packages
+                inputs.self.overlays.custom-packages
               ];
 
             };
