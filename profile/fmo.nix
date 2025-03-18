@@ -11,11 +11,8 @@
   imports = [
     # Ghaf imports
     inputs.ghaf.nixosModules.microvm
-    inputs.ghaf.nixosModules.common
-    inputs.ghaf.nixosModules.host
-    inputs.ghaf.nixosModules.desktop
-    inputs.ghaf.nixosModules.laptop
     inputs.ghaf.nixosModules.disko-debug-partition
+    inputs.ghaf.nixosModules.profiles
     inputs.ghaf.nixosModules.profiles-laptop
     inputs.ghaf.nixosModules.reference-appvms
     inputs.ghaf.nixosModules.reference-profiles
@@ -53,8 +50,8 @@
             # FMO imports
             inputs.self.nixosModules.guivm
           ];
-          inherit (config.ghaf.reference.appvms) enabled-app-vms;
         };
+        graphics.enable = true;
       };
 
       graphics = {
@@ -69,24 +66,33 @@
         "chrome-vm"
       ];
 
+      virtualization.microvm.appvm = {
+        enable = true;
+        vms = {
+          chrome.enable = true;
+          zathura.enable = true;
+          docker.enable = true;
+        } // (import ../modules/microvm/docker/vm.nix { inherit pkgs lib config; });
+      };
+
       # Content
       reference = {
-        appvms = {
-          enable = true;
-          chrome-vm = true;
-          zathura-vm = true;
-          enabled-app-vms = [
-            (import ../modules/microvm/docker/vm.nix { inherit pkgs lib config; })
-          ];
-        };
+        appvms.enable = true;
+
         services = {
           enable = true;
           google-chromecast = true;
         };
+
         personalize = {
           keys.enable = true;
         };
       };
+
+      # TODO: this is the debug partitioning for the ghaf
+      # it allows read and write. Production should use the read-only version
+      # that is coming with dm-verity
+      partitioning.disko.enable = true;
     };
   };
 }

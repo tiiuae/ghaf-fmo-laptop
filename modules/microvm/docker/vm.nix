@@ -8,12 +8,13 @@
   ...
 }:
 {
-  name = "docker";
-  ramMb = 4096;
-  cores = 2;
-  borderColor = "#000000";
-  applications = [ ];
-  extraModules = [
-    (import ./config.nix { inherit pkgs lib config; })
-  ];
+  "docker" = {
+    ramMb = 4096;
+    cores = 2;
+    borderColor = "#000000";
+    applications = [ ];
+    extraModules = [
+      (import ./config.nix { inherit pkgs lib config; })
+    ];
+  };
 }
