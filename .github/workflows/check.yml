@@ -3,15 +3,95 @@
 # SPDX-License-Identifier: Apache-2.0
 
 name: check
+
+permissions:
+  contents: read
+
 on:
   push:
     branches:
       - main
-  pull_request:
+  pull_request_target:
     branches:
       - main
 jobs:
+  check-identity:
+    # Skip running in forked repos, since it would fail anyway:
+    if: ${{ github.repository == 'tiiuae/ghaf-fmo-laptop' }}
+    runs-on: ubuntu-latest
+    outputs:
+      authorized_user: ${{ steps.check-authorized-user.outputs.authorized_user }}
+    environment: "internal"
+    steps:
+      - name: Check identity
+        id: check-authorized-user
+        shell: bash
+        run: |
+          authorized_user='False'
+          for user in ${{ vars.AUTHORIZED_USERS }};
+          do
+            if [ "$user" = "${{ github.actor }}" ]; then
+              authorized_user='True'
+              break
+            fi
+          done
+          echo "github.event_name: ${{ github.event_name }}"
+          echo "github.repository: ${{ github.repository }}"
+          echo "github.event.pull_request.head.repo.full_name: ${{ github.event.pull_request.head.repo.full_name }}"
+          echo "github.actor: ${{ github.actor }}"
+          echo "github.ref: ${{ github.ref }}"
+          echo "github.event.pull_request.head.sha: ${{github.event.pull_request.head.sha }}"
+          echo "authorized_user=$authorized_user"
+          echo "authorized_user=$authorized_user" >> "$GITHUB_OUTPUT"
+
+  # Authorization passes without approval if:
+  # - The event is not a pull request (e.g. push to main)
+  # - Pull request comes from another branch in the same repo
+  # - Author is in our predefined list of authorized users
+  # Otherwise, the workflow requires manual approval from a maintainer
+  # as configured in the 'external' github environment
+  authorize:
+    needs: [check-identity]
+    environment: ${{
+      ( github.event_name != 'pull_request_target' ||
+        github.event.pull_request.head.repo.full_name == github.repository ||
+        needs.check-identity.outputs.authorized_user == 'True' )
+      && 'internal' || 'external' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Auth OK"
+
+  # Send a warning and fail this job if the workflow file was changed.
+  # Rest of the workflow continues as normal but the job failure will grab author's attention.
+  no-workflow-changes:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request_target' }}
+    steps:
+      - uses: actions/checkout@v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+          fetch-depth: 0
+
+      - name: Check if workflow is modified
+        id: workflow-changed
+        uses: tj-actions/changed-files@v46.0.1
+        with:
+          files: .github/workflows/check.yml
+
+      - name: Send warning
+        run: |
+          if [ "${{ steps.workflow-changed.outputs.any_changed }}" == "true" ]; then
+            echo "::error::"\
+                 "This change edits workflow file '.github/workflows/check.yml'."\
+                 "Raising this error to notify that the workflow change will only take impact after merge."\
+                 "Therefore, you need to manually test the change (perhaps in a forked repo) "\
+                 "before merging to make sure the change does not break anything."
+
+            exit 1
+          fi
+
   run-checks:
+    needs: [authorize]
     runs-on: ubuntu-latest
     steps:
       - name: Maximize space available on rootfs
@@ -38,9 +118,13 @@ jobs:
           echo
           echo "Available storage after cleanup:"
           df -h
+      - uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: |
+            ${{ secrets.READ_PRIVATE_REPO }}
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install nix
-        uses: cachix/install-nix-action@v30
+        uses: cachix/install-nix-action@v31
       - name: Run all checks
         run: nix flake check --option accept-flake-config true
