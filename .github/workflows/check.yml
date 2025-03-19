@@ -94,30 +94,6 @@ jobs:
     needs: [authorize]
     runs-on: ubuntu-latest
     steps:
-      - name: Maximize space available on rootfs
-        # Why not use https://github.com/easimon/maximize-build-space directly?
-        # The reason is: we want to maximize the space on rootfs, since that's
-        # where the nix store (`/nix/store`) is located. Github action
-        # https://github.com/easimon/maximize-build-space maximizes
-        # the builder space on ${GITHUB_WORKSPACE}, which is not what we need.
-        # Alternatively, we could move the nix store to ${GITHUB_WORKSPACE}
-        # and use https://github.com/easimon/maximize-build-space as such, but
-        # we suspect other tooling (e.g. cachix) would not work well with such
-        # configuration.
-        run: |
-          echo "Available storage before cleanup:"
-          df -h
-          echo
-          echo "Removing unwanted software... "
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /opt/ghc
-          sudo rm -rf /opt/hostedtoolcache/CodeQL
-          sudo docker image prune --all --force
-          echo "... done"
-          echo
-          echo "Available storage after cleanup:"
-          df -h
       - uses: webfactory/ssh-agent@v0.9.1
         with:
           ssh-private-key: |
