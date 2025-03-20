@@ -1,3 +1,6 @@
+# Copyright 2022-2025 TII (SSRC) and the Ghaf contributors
+# SPDX-License-Identifier: Apache-2.0
+
 # NATS configuration fails due to certs do not exist during the build stage
 # Need to investigate if it is possible to use .overlay here
 # Copied from nixpkgs/nixos/modules/services/networking/nats.nix
