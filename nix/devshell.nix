@@ -12,6 +12,9 @@
       pkgs,
       ...
     }:
+    let
+      fmo-build-helper = pkgs.callPackage ../packages/fmo-build-helper/default.nix { };
+    in
     {
       devshells = {
         # the main developer environment
@@ -30,8 +33,9 @@
                 pkgs.reuse
                 pkgs.cachix
                 config.treefmt.build.wrapper
+                fmo-build-helper
               ]
-              ++ lib.attrValues config.treefmt.build.programs # make all the trefmt packages available
+              ++ lib.attrValues config.treefmt.build.programs # make all the treefmt packages available
               ++ config.pre-commit.settings.enabledPackages;
 
             startup.hook.text = config.pre-commit.installationScript;
@@ -48,6 +52,12 @@
               name = "check-license";
               command = "reuse lint";
               category = "linters";
+            }
+            {
+              help = "FMO nixos-rebuild command, uses proxy jump";
+              name = "fmo-rebuild";
+              command = "fmo-build-helper $@";
+              category = "builder";
             }
           ];
         };

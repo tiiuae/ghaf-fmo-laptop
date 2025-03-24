@@ -7,7 +7,9 @@
   ...
 }:
 let
+  inherit (lib) hasAttr optionals;
   inherit (config.ghaf.networking) hosts;
+  isMsgvmEnabled = hasAttr "msg-vm" config.microvm.vms;
 in
 {
   config = {
@@ -18,36 +20,6 @@ in
     #   RAversion = "v0.8.4";
     # };
 
-    # TODO These should get picked up automatically by vhotplug
-    ghaf.hardware.definition.usb.external = [
-      {
-        # PLX Technology, Inc. RNDIS/Ethernet Gadget
-        # PLX Technology, Inc. Linux-USB Ethernet/RNDIS Gadget
-        name = "mesh0";
-        vendorId = "0525";
-        productId = "a4a2";
-      }
-      {
-        # Realtek Semiconductor Corp. USB 10/100/1000 LAN
-        # Realtek Semiconductor Corp. RTL8153 Gigabit Ethernet Adapter
-        name = "externalmesh0";
-        vendorId = "0bda";
-        productId = "8153";
-      }
-      # Passthrough yubikeys
-      # TODO Vhotplug doesn't support wildcards, hence the patched vhotplug
-      # {
-      #   bus = "usb";
-      #   vendorid = "1050";
-      #   productid = ".*";
-      # }
-    ];
-
-    ### udev rules + fmo-dynamic-device-passthrough
-
-    # this is default? still ahci fails
-    boot.initrd.availableKernelModules = [ "ahci" ];
-
     environment.systemPackages = [
       pkgs.vim
       pkgs.tcpdump
@@ -57,36 +29,16 @@ in
 
     services = {
 
-      # This enables to set dynamic port forwarding rules
-      # TODO check if this is necessary and why
-      # fmo-dynamic-portforwarding-service-host = {
-      #   enable = true;
-      #   config-paths = {
-      #     netvm = "/var/netvm/netconf/dpf.config";
-      #   };
-      # }; # services.dynamic-portforwarding-service
-
-      # Sets config file using fmo-tool and vhotplug.
-      # We currently don't support dynamic vhotplug configuration.
-      # Long term plan is to enable this through policy mechanism
-      # TODO decide on re-enabling dynamic passthrough or wait for ghaf support
-      # fmo-dynamic-device-passthrough-service-host = {
-      #   enable = true;
-      # }; # services.dynamic-device-passthrough-service-host
-
       # TODO check if this is required and its dependencies (fmo-config.yaml?)
       # environment.systemPackages = [ pkgs.fmo-tool ];
 
-      # TODO should this perhaps be split to run server in admin-vm with
-      # cert generation on the host?
       fmo-certs-distribution-service-host = {
         enable = true;
         ca-name = "NATS CA";
         ca-path = "/run/certs/nats/ca";
         server-ips = [
-          "${hosts.msg-vm.ipv4}"
           "127.0.0.1"
-        ];
+        ] ++ optionals isMsgvmEnabled "${hosts.msg-vm.ipv4}";
         server-name = "NATS-server";
         server-path = "/run/certs/nats/server";
         clients-paths = [
@@ -99,16 +51,14 @@ in
 
     # Create MicroVM host share folders
     systemd.tmpfiles.rules = [
-      "d /persist/vms_shares/common 0700 ${toString config.ghaf.users.loginUser.uid} users -"
-      "d /persist/vms_shares/dockervm 0700 ${toString config.ghaf.users.loginUser.uid} users -"
-      "d /persist/vms_shares/netvm 0700 ${toString config.ghaf.users.loginUser.uid} users -"
-      "d /persist/vms_shares/msgvm 0700 ${toString config.ghaf.users.loginUser.uid} users -"
+      "d /persist/common 0700 root root -"
       "d /persist/fogdata 0700 ${toString config.ghaf.users.loginUser.uid} users -"
-      # TODO is this actually meant to be temporary? if yes adjust rule
+      # TODO is this actually meant to be temporary?
       "d /persist/tmp 0700 microvm kvm -"
+      # TODO remove this when better hostname/ip setting option is implemented
+      "f /persist/common/hostname 0600 root root -"
+      "f /persist/common/ip-address 0600 root root -"
     ];
 
-    # Limit the memory of the chrome-vm
-    microvm.vms.chrome-vm.config.config.microvm.mem = lib.mkForce 2047;
   };
 }

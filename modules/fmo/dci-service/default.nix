@@ -61,7 +61,19 @@ in
       enable = true;
       daemon.settings = {
         mtu = cfg.docker-mtu;
+        data-root = "/var/lib/docker";
       };
+    };
+
+    systemd.paths.fmo-dci = {
+      description = "Monitor docker compose meta files for changes";
+      requires = [ "network-online.target" ];
+      wantedBy = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+      pathConfig.PathModified = [
+        cfg.pat-path
+        cfg.compose-path
+      ];
     };
 
     systemd.services.fmo-dci = {

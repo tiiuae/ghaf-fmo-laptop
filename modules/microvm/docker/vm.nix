@@ -10,13 +10,11 @@
 {
   docker = {
     enable = true;
-    ramMb = 2047;
-    cores = 4;
     borderColor = "#000000";
     applications = [
       # TODO this is largely untested
       {
-        name = "FMO-Registration";
+        name = "FMO Registration Agent";
         description = "FMO Registration Agent";
         packages = [
           pkgs.registration-agent
@@ -24,7 +22,7 @@
           pkgs.papirus-icon-theme
         ];
         icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus/64x64/apps/rocs.svg";
-        command = "foot ${pkgs.fmo-registration}/bin/fmo-registration";
+        command = "foot /run/wrappers/bin/sudo ${pkgs.fmo-registration}/bin/fmo-registration";
       }
     ];
     extraModules = [

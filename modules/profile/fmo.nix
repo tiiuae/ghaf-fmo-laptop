@@ -27,6 +27,7 @@
 
   config = {
     ghaf = {
+
       # Ghaf platform profile
       profiles = {
         laptop-x86 = {
@@ -46,9 +47,6 @@
             inputs.ghaf.nixosModules.reference-programs
             inputs.ghaf.nixosModules.reference-personalize
             { ghaf.reference.personalize.keys.enable = true; }
-
-            # FMO imports
-            inputs.self.nixosModules.guivm
           ];
         };
         graphics.enable = true;
@@ -73,8 +71,8 @@
             chrome.enable = true;
             zathura.enable = true;
           }
-          // (import ../modules/microvm/docker/vm.nix { inherit pkgs lib config; })
-          // (import ../modules/microvm/msg/vm.nix { inherit pkgs lib config; });
+          // (import ../microvm/docker/vm.nix { inherit pkgs lib config; })
+          // (import ../microvm/msg/vm.nix { inherit pkgs lib config; });
       };
 
       # Content

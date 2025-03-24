@@ -8,13 +8,31 @@
   ...
 }:
 let
-  inherit (lib) optionals hasAttr;
+  inherit (lib)
+    strings
+    mapAttrsToList
+    flatten
+    ;
+
+  # Temporary until USB passthrough is fixed
+  yubikeysExtraArgs = flatten (
+    mapAttrsToList (
+      n: v: if (strings.hasPrefix "yubikey" n) then v else [ ]
+    ) config.ghaf.hardware.usb.external.qemuExtraArgs
+  );
+  gnssExtraArgs = flatten (
+    mapAttrsToList (
+      n: v: if (strings.hasPrefix "gnss" n) then v else [ ]
+    ) config.ghaf.hardware.usb.external.qemuExtraArgs
+  );
 in
 {
+  # TODO implement appvm interface and remove these imports
   imports = [
     ../../fmo/dci-service
     ../../fmo/fmo-dci-passthrough
     ../../fmo/registration-agent-laptop
+    ../../fmo/fmo-update-hostname
   ];
 
   config = {
@@ -26,28 +44,8 @@ in
       pkgs.natscli
     ];
 
-    # Docker configuration
-    virtualisation.docker.daemon.settings = {
-      data-root = "/var/lib/docker";
-    };
-
-    # We use appuser in app VMs to run applications.
-    # This is probably for configuration purposes though.
-    # TODO verify requirement
-    ghaf.users.admin.extraGroups = [ "dialout" ];
-
-    # Use givc service management
-    # givc.appvm.enable = mkForce false;
-    # givc.sysvm = {
-    #   enable = true;
-    #   inherit (config.microvm.vms.docker-vm.config.config.givc.appvm)
-    #     debug
-    #     admin
-    #     tls
-    #     transport
-    #     ;
-    #   services = [ "docker.service" ];
-    # };
+    # Use givc service & app manager
+    # TODO This is currently not supported in givc as it has a microvm dependency
 
     # MTU
     systemd.network.links."10-ethint0".extraConfig = "MTUBytes=1372";
@@ -74,18 +72,11 @@ in
 
       shares = [
         {
-          source = "/persist/vms_shares/common";
-          mountPoint = "/var/lib/vms_share/common";
+          source = "/persist/common";
+          mountPoint = "/var/common";
           tag = "common_share_dockervm";
           proto = "virtiofs";
           socket = "common_share_dockervm.sock";
-        }
-        {
-          source = "/persist/vms_shares/dockervm";
-          mountPoint = "/var/lib/vms_share/host";
-          tag = "dockervm_share";
-          proto = "virtiofs";
-          socket = "dockervm_share.sock";
         }
         {
           source = "/persist/fogdata";
@@ -110,28 +101,24 @@ in
         }
       ]; # microvm.shares
 
-      # Extra args for gnss device
-      qemu.extraArgs = optionals (hasAttr "gps0" config.ghaf.hardware.usb.internal.qemuExtraArgs) config.ghaf.hardware.usb.internal.qemuExtraArgs.gps0;
+      # Extra args for yubikey
+      qemu.extraArgs = yubikeysExtraArgs ++ gnssExtraArgs;
     }; # microvm
 
     # Terminal and fonts
-    # TODO this doesn't work yet
+    fonts.packages = [ pkgs.nerd-fonts.fira-code ];
     programs.foot = {
       enable = true;
-      settings.main.font = "DroidSansMono:size=12";
+      settings.main.font = "FiraCode Nerd Font Mono:size=10";
     };
-    fonts.packages = [
-      pkgs.nerd-fonts.droid-sans-mono
-    ];
 
-    users.users.appuser = {
-      initialPassword = "appuser";
-      extraGroups = [
-        "wheel"
-        "docker"
-        "dialout"
-      ];
-    };
+    # User is used for registration agent
+    users.users.appuser.extraGroups = [
+      "dialout"
+    ];
+    security.sudo.extraConfig = ''
+      appuser ALL=(root) NOPASSWD: ${pkgs.fmo-registration}/bin/fmo-registration
+    '';
 
     # Services
     services = {
@@ -147,34 +134,11 @@ in
       #   topics = [ "dockervm/logs/fmo-dci" ];
       # };
 
-      # TODO check how we can support dynamic hostnames
-      # fmo-hostname-service = {
-      #   enable = true;
-      #   hostname-path = "/var/lib/fogdata/hostname";
-      # }; # services.fmo-hostnam-service
-
-      # This seems unnecessary, ghaf should handle ssh keys
-      # fmo-psk-distribution-service-vm = {
-      #   enable = true;
-      # }; # services.fmo-psk-distribution-service-vm
-
-      # TODO optional feature for yubikeys
-      # fmo-dynamic-device-passthrough = {
-      #   enable = true;
-      #   devices = [
-      #     # Passthrough yubikeys
-      #     {
-      #       bus = "usb";
-      #       vendorid = "1050";
-      #       productid = ".*";
-      #     }
-      #   ];
-      # }; # services.fmo-dynamic-device-passthrough
-      # fmo-dci-passthrough = {
-      #   enable = true;
-      #   container-name = "swarm-server-pmc01-swarm-server-1";
-      #   vendor-id = "1050";
-      # }; # services.fmo-dci-passthrough
+      fmo-dci-passthrough = {
+        enable = true;
+        container-name = "swarm-server-pmc01-swarm-server-1";
+        vendor-id = "1050";
+      };
 
       fmo-dci = {
         enable = true;
@@ -187,14 +151,17 @@ in
         docker-url = "ghcr.io";
         docker-url-path = "/var/lib/fogdata/cr.url";
         docker-mtu = 1372;
-      }; # services.fmo-dci
+      };
 
       avahi = {
         enable = true;
         nssmdns4 = true;
-        # TODO enable dynamic support for this?
-        hostName = "m1";
-      }; # services.avahi
+      };
+
+      fmo-update-hostname = {
+        enable = true;
+        hostnamePath = "/var/common/hostname";
+      };
 
       # Setup service for registration agent
       registration-agent-laptop = {
@@ -205,10 +172,11 @@ in
         hostname_path = "/var/lib/fogdata";
         ip_path = "/var/lib/fogdata";
         post_install_path = "/var/lib/fogdata/certs";
-      }; # services.registration-agent-laptop
+      };
+
     }; # services
 
-    # FIXME why is this here?
+    # TODO Do we support the FMO dynamic firewalling
     networking.firewall.enable = false;
   }; # config
 }

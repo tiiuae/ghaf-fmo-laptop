@@ -14,7 +14,7 @@
 }:
 let
 
-  cfg = config.services.nats;
+  cfg = config.services.fmo-nats-server;
 
   inherit (lib)
     mkEnableOption

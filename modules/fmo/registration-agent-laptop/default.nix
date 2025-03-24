@@ -108,18 +108,9 @@ in
             POST_INSTALLATION_DIRECTORY=${cfg.post_install_path}
             EOF
 
-            # Write ip file
-            cat > ${cfg.ip_path}/ip-address << EOF
-            192.168.1.60
-            EOF
-
-            cat > ${cfg.certs_path}/hostname << EOF
-            m1
-            EOF
-
             # Set permissions
-            # TODO not sure if this is necessary/wanted as it defaults to home directory
             chown ${config.users.users.appuser.name}:${config.users.users.appuser.group} ${cfg.env_path}/.env
+            # TODO is this necessary?
             chmod 666 ${cfg.env_path}/.env
           '';
         };

@@ -9,9 +9,8 @@
 }:
 {
   msg = {
-    enable = true;
-    ramMb = 1024;
-    cores = 2;
+    # TODO Decide if msg vm should be used
+    enable = false;
     borderColor = "#000000";
     applications = [ ];
     extraModules = [

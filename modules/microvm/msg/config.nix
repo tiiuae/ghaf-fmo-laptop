@@ -11,8 +11,10 @@ let
   inherit (lib) mkForce;
 in
 {
+  # TODO implement appvm interface and remove these imports
   imports = [
     ../../fmo/fmo-nats-server
+    ../../fmo/fmo-update-hostname
   ];
 
   config = {
@@ -41,6 +43,7 @@ in
 
     # MicroVM
     microvm = {
+
       # TODO Should we use storagevm instead?
       volumes = [
         {
@@ -57,22 +60,15 @@ in
           autoCreate = true;
           fsType = "ext4";
         }
-      ]; # microvm.volumes
+      ];
 
       shares = [
         {
-          source = "/persist/vms_shares/common";
-          mountPoint = "/var/vms_share/common";
+          source = "/persist/common";
+          mountPoint = "/var/common";
           tag = "common_share_msgvm";
           proto = "virtiofs";
           socket = "common_share_msgvm.sock";
-        }
-        {
-          source = "/persist/vms_shares/msgvm";
-          mountPoint = "/var/vms_share/host";
-          tag = "msgvm_share";
-          proto = "virtiofs";
-          socket = "msgvm_share.sock";
         }
         {
           source = "/run/certs/nats/server";
@@ -88,12 +84,13 @@ in
           proto = "virtiofs";
           socket = "nats_ca.sock";
         }
-      ]; # microvm.shares
+      ];
 
     }; # microvm
 
     # Services
     services = {
+
       avahi = {
         enable = true;
         nssmdns4 = true;
@@ -104,8 +101,12 @@ in
         publish.addresses = true;
         publish.workstation = true;
         domainName = "msgvm";
-        hostName = "m1";
-      }; # services.avahi
+      };
+
+      fmo-update-hostname = {
+        enable = true;
+        hostnamePath = "/var/common/hostname";
+      };
 
       # NATS server
       fmo-nats-server = {
@@ -132,10 +133,10 @@ in
           log_file = "/var/lib/nats/nats-server.log";
           logtime = true;
         };
-      }; # services.nats-server
+      };
     }; # services
 
-    # TODO why is this here?
+    # TODO Do we support the FMO dynamic firewalling
     networking.firewall.enable = false;
-  }; # config
+  };
 }

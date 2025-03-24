@@ -3,43 +3,47 @@
 { inputs, ... }:
 let
   system = "x86_64-linux";
+
+  mkFmoLaptopConfiguration =
+    hardware-module: profile-module:
+    inputs.nixpkgs.lib.nixosSystem {
+      inherit system;
+      modules = [
+        hardware-module
+        profile-module
+        {
+          ghaf.profiles.debug.enable = true;
+
+          nixpkgs = {
+            hostPlatform = { inherit system; };
+
+            config = {
+              allowUnfree = true;
+              permittedInsecurePackages = [
+                "jitsi-meet-1.0.8043"
+              ];
+            };
+
+            overlays = [
+              inputs.ghaf.overlays.default
+              inputs.self.overlays.custom-packages
+              inputs.self.overlays.own-pkgs-overlay
+            ];
+
+          };
+        }
+      ];
+    };
 in
 {
   flake = {
     nixosConfigurations = {
-      fmo-laptop = inputs.nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          inputs.ghaf.nixosModules.hardware-dell-latitude-7230
-          inputs.self.nixosModules.fmo-profile
-
-          # TODO Move this in ghaf
-          {
-            ghaf.profiles.debug.enable = true;
-
-            nixpkgs = {
-              hostPlatform = { inherit system; };
-
-              config = {
-                allowUnfree = true;
-                permittedInsecurePackages = [
-                  "jitsi-meet-1.0.8043"
-                ];
-              };
-
-              overlays = [
-                inputs.ghaf.overlays.default
-                inputs.self.overlays.custom-packages
-                inputs.self.overlays.own-pkgs-overlay
-              ];
-
-            };
-          }
-        ];
-      };
+      fmo-dell-7230 = mkFmoLaptopConfiguration inputs.self.nixosModules.hardware-dell-latitude-7230 inputs.self.nixosModules.fmo-profile;
+      fmo-alienware = mkFmoLaptopConfiguration inputs.self.nixosModules.hardware-alienware-m18-r2 inputs.self.nixosModules.fmo-profile;
     };
     packages.${system} = {
-      fmo-laptop = inputs.self.nixosConfigurations.fmo-laptop.config.system.build.diskoImages;
+      fmo-dell-7230 = inputs.self.nixosConfigurations.fmo-dell-7230.config.system.build.diskoImages;
+      fmo-alienware = inputs.self.nixosConfigurations.fmo-alienware.config.system.build.diskoImages;
     };
   };
 }

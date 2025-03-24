@@ -16,20 +16,14 @@ in
     enable = mkEnableOption "dynamic-portforwarding-service";
 
     ipaddress-path = mkOption {
-      type = types.str;
       description = "Path to ipaddress file for dynamic use";
+      type = types.str;
       default = "";
     };
 
     config-path = mkOption {
+      description = "Path to dynamic configuratuon config";
       type = types.str;
-      description = "Path to dynamic configuraiton config";
-      default = "";
-    };
-
-    ipaddress = mkOption {
-      type = types.str;
-      description = "Static IP address to use instead for dynamic from file";
       default = "";
     };
 
@@ -45,14 +39,13 @@ in
           }
       '';
     };
-
   };
 
   config = mkIf cfg.enable {
     systemd.services.fmo-dynamic-portforwarding-service = {
       script = ''
         CHAIN_N="fmo-os-fw"
-        IP=$(${pkgs.gawk}/bin/gawk '{print $1}' ${cfg.ipaddress-path} || echo ${cfg.ipaddress})
+        IP=$(${pkgs.gawk}/bin/gawk '{print $1}' ${cfg.ipaddress-path})
         sync
         lines=$(cat ${cfg.config-path})
 
