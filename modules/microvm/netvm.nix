@@ -2,23 +2,24 @@
 # SPDX-License-Identifier: Apache-2.0
 {
   config,
+  lib,
   ...
 }:
+let
+  inherit (config.ghaf.networking) hosts;
+  wifiNic = lib.head config.ghaf.hardware.definition.network.pciDevices;
+  wifiDevice = wifiNic.name;
+in
 {
   imports = [
     ../fmo/fmo-update-hostname
     ../fmo/fmo-update-ipaddress
-    ../fmo/dynamic-portforwarding-service
+    ../fmo/fmo-firewall
   ];
   config = {
 
     # Adjust the MTU for the ethint0 interface
     systemd.network.links."10-ethint0".extraConfig = "MTUBytes=1372";
-
-    givc.sysvm.services = [
-      "reboot.target"
-      "poweroff.target"
-    ];
 
     # Services
     services = {
@@ -38,62 +39,64 @@
         ];
       };
 
-      # TODO This is currently non-functional
-      # dynamic-portforwarding-service = {
-      #   enable = true;
-      #   ipaddress-path = "/var/common/ip-address";
-      #   config-path = "/etc/NetworkManager/system-connections/dpf.config";
-      #   configuration = [
-      #     {
-      #       dip = hosts.docker-vm.ipv4;
-      #       dport = "4222";
-      #       sport = "4222";
-      #       proto = "tcp";
-      #     }
-      #     {
-      #       dip = hosts.docker-vm.ipv4;
-      #       dport = "4222";
-      #       sport = "4222";
-      #       proto = "udp";
-      #     }
-      #     {
-      #       dip = hosts.docker-vm.ipv4;
-      #       dport = "7222";
-      #       sport = "7222";
-      #       proto = "tcp";
-      #     }
-      #     {
-      #       dip = hosts.docker-vm.ipv4;
-      #       dport = "7222";
-      #       sport = "7222";
-      #       proto = "udp";
-      #     }
-      #     {
-      #       dip = hosts.docker-vm.ipv4;
-      #       dport = "6422";
-      #       sport = "6422";
-      #       proto = "tcp";
-      #     }
-      #     {
-      #       dip = hosts.docker-vm.ipv4;
-      #       dport = "6423";
-      #       sport = "6423";
-      #       proto = "udp";
-      #     }
-      #     {
-      #       dip = hosts.docker-vm.ipv4;
-      #       dport = "123";
-      #       sport = "123";
-      #       proto = "udp";
-      #     }
-      #     {
-      #       dip = hosts.docker-vm.ipv4;
-      #       dport = "123";
-      #       sport = "123";
-      #       proto = "tcp";
-      #     }
-      #   ];
-      # };
+      fmo-firewall = {
+        enable = true;
+        externalNics = [
+          "mesh0"
+          "externalmesh0"
+          "${wifiDevice}"
+        ];
+        configuration = [
+          {
+            dip = hosts.docker-vm.ipv4;
+            dport = "4222";
+            sport = "4222";
+            proto = "tcp";
+          }
+          {
+            dip = hosts.docker-vm.ipv4;
+            dport = "4222";
+            sport = "4222";
+            proto = "udp";
+          }
+          {
+            dip = hosts.docker-vm.ipv4;
+            dport = "7222";
+            sport = "7222";
+            proto = "tcp";
+          }
+          {
+            dip = hosts.docker-vm.ipv4;
+            dport = "7222";
+            sport = "7222";
+            proto = "udp";
+          }
+          {
+            dip = hosts.docker-vm.ipv4;
+            dport = "6422";
+            sport = "6422";
+            proto = "tcp";
+          }
+          {
+            dip = hosts.docker-vm.ipv4;
+            dport = "6423";
+            sport = "6423";
+            proto = "udp";
+          }
+          {
+            dip = hosts.docker-vm.ipv4;
+            dport = "123";
+            sport = "123";
+            proto = "udp";
+          }
+          {
+            dip = hosts.docker-vm.ipv4;
+            dport = "123";
+            sport = "123";
+            proto = "tcp";
+          }
+        ];
+      };
     }; # services
 
     microvm = {

@@ -4,7 +4,7 @@
   flake.nixosModules = {
     fmo-services.imports = [
       ./dci-service
-      ./dynamic-portforwarding-service
+      ./fmo-firewall
       ./fmo-certs-distribution-host
       ./fmo-dci-passthrough
       ./registration-agent-laptop

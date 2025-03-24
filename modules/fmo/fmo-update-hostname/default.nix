@@ -29,6 +29,8 @@ in
 
     # Add fmo-update-hostname service to givc
     givc.sysvm.services = [
+      "reboot.target"
+      "poweroff.target"
       "fmo-update-hostname.service"
     ];
 
