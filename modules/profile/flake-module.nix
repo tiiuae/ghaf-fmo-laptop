@@ -6,5 +6,10 @@
     fmo-profile.imports = [
       (import ./fmo.nix { inherit inputs; })
     ];
+    fmo-personalize.imports = [
+      inputs.ghaf.nixosModules.reference-personalize
+      { ghaf.reference.personalize.keys.enable = true; }
+      ./personalize.nix
+    ];
   };
 }

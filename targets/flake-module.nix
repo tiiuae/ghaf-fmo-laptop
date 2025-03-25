@@ -20,6 +20,7 @@ let
       nixMods.fmo-profile
       {
         ghaf.profiles.debug.enable = true;
+        fmo.personalize.debug.enable = true;
       }
     ])
     (laptop-configuration "fmo-dell-7230-debug" [
@@ -27,6 +28,7 @@ let
       nixMods.fmo-profile
       {
         ghaf.profiles.debug.enable = true;
+        fmo.personalize.debug.enable = true;
       }
     ])
     (laptop-configuration "fmo-dell-7330-debug" [
@@ -34,6 +36,7 @@ let
       nixMods.fmo-profile
       {
         ghaf.profiles.debug.enable = true;
+        fmo.personalize.debug.enable = true;
       }
     ])
     (laptop-configuration "fmo-lenovo-x1-gen11-debug" [
@@ -41,6 +44,7 @@ let
       nixMods.fmo-profile
       {
         ghaf.profiles.debug.enable = true;
+        fmo.personalize.debug.enable = true;
       }
     ])
 

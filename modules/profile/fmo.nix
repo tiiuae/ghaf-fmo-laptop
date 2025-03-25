@@ -18,14 +18,15 @@
     inputs.ghaf.nixosModules.reference-profiles
     inputs.ghaf.nixosModules.reference-programs
     inputs.ghaf.nixosModules.reference-services
-    inputs.ghaf.nixosModules.reference-personalize
 
     # FMO imports
     inputs.self.nixosModules.host
     inputs.self.nixosModules.fmo-services
+    inputs.self.nixosModules.fmo-personalize
   ];
 
   config = {
+
     ghaf = {
 
       # Ghaf platform profile
@@ -35,18 +36,18 @@
           netvmExtraModules = [
             # Ghaf imports
             inputs.ghaf.nixosModules.reference-services
-            inputs.ghaf.nixosModules.reference-personalize
-            { ghaf.reference.personalize.keys.enable = true; }
 
             # FMO imports
             inputs.self.nixosModules.netvm
             inputs.self.nixosModules.fmo-services
+            inputs.self.nixosModules.fmo-personalize
           ];
           guivmExtraModules = [
             # Ghaf imports
             inputs.ghaf.nixosModules.reference-programs
-            inputs.ghaf.nixosModules.reference-personalize
-            { ghaf.reference.personalize.keys.enable = true; }
+
+            # FMO imports
+            inputs.self.nixosModules.fmo-personalize
           ];
         };
         graphics.enable = true;
@@ -83,10 +84,6 @@
         services = {
           enable = true;
           google-chromecast = true;
-        };
-
-        personalize = {
-          keys.enable = true;
         };
       };
 
