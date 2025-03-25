@@ -111,7 +111,7 @@ in
         description = "Update IP address and network manager templates";
         enable = true;
         serviceConfig = {
-          type = "oneshot";
+          Type = "oneshot";
           ExecStart = "${updateIpaddressScript}/bin/update-ipaddress";
         };
       };
