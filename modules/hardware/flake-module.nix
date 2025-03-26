@@ -24,5 +24,11 @@
       ./resources/lenovo-x1-carbon-gen11.nix
       ./definition/external-usb.nix
     ];
+    hardware-demo-tower-mk1.imports = [
+      inputs.ghaf.nixosModules.hardware-demo-tower-mk1
+      ./resources/demo-tower-mk1.nix
+      # TODO: fix this upstream to support the usb kbd also
+      #./definition/external-usb.nix
+    ];
   };
 }

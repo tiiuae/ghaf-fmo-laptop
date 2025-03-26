@@ -47,6 +47,14 @@ let
         fmo.personalize.debug.enable = true;
       }
     ])
+    (laptop-configuration "fmo-demo-tower-mk1-debug" [
+      nixMods.hardware-demo-tower-mk1
+      nixMods.fmo-profile
+      {
+        ghaf.profiles.debug.enable = true;
+        fmo.personalize.debug.enable = true;
+      }
+    ])
 
     #
     # Release Builds
