@@ -27,7 +27,6 @@
 # Memory ballooning is enabled in Ghaf.
 #
 {
-  config,
   lib,
   ...
 }:
