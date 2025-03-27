@@ -33,6 +33,7 @@ in
     ../../fmo/fmo-dci-passthrough
     ../../fmo/registration-agent-laptop
     ../../fmo/fmo-update-hostname
+    ../../fmo/fmo-docker-networking
   ];
 
   config = {
@@ -134,6 +135,10 @@ in
       #   topics = [ "dockervm/logs/fmo-dci" ];
       # };
 
+      fmo-docker-networking = {
+        enable = true;
+      };
+
       fmo-dci-passthrough = {
         enable = true;
         container-name = "swarm-server-pmc01-swarm-server-1";
@@ -175,8 +180,5 @@ in
       };
 
     }; # services
-
-    # TODO Do we support the FMO dynamic firewalling
-    networking.firewall.enable = false;
   }; # config
 }
