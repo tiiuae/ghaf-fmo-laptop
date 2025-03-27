@@ -8,7 +8,7 @@
   ...
 }:
 let
-  cfg = config.services.registration-agent-laptop;
+  cfg = config.services.onboarding-agent;
   inherit (lib)
     mkEnableOption
     mkOption
@@ -17,7 +17,7 @@ let
     ;
 in
 {
-  options.services.registration-agent-laptop = {
+  options.services.onboarding-agent = {
     enable = mkEnableOption "Install and setup registration-agent on system";
 
     certs_path = mkOption {
@@ -61,14 +61,20 @@ in
       type = types.path;
       default = "${config.users.users.appuser.home}";
     };
+
+    log_file_path = mkOption {
+      description = "Path to log file";
+      type = types.path;
+      default = "${cfg.certs_path}/registration-agent.log";
+    };
   };
 
   config = mkIf cfg.enable {
 
-    systemd.services.setup-registration-agent =
+    systemd.services.setup-onboarding-agent =
       let
         registrationSetup = pkgs.writeShellApplication {
-          name = "setup-registration-agent";
+          name = "setup-onboarding-agent";
           runtimeInputs = [
             pkgs.coreutils
           ];
@@ -79,33 +85,55 @@ in
             [ ! -d ${cfg.token_path} ] && mkdir -p ${cfg.token_path}
             [ ! -d ${cfg.hostname_path} ] && mkdir -p ${cfg.hostname_path}
             [ ! -d ${cfg.ip_path} ] && mkdir -p ${cfg.ip_path}
-            [ ! -d ${cfg.post_install_path} ] && mkdir -p ${cfg.post_install_path}
             [ ! -d ${cfg.env_path} ] && mkdir -p ${cfg.env_path}
 
             # Write .env file
             cat > ${cfg.env_path}/.env << EOF
-            AUTOMATIC_PROVISIONING=false
+            # Agent configuration
             TLS=true
-            PROVISIONING_URL=
+            MDNS=true
+
+            # Device configuration
+            DEVICE_TYPE=laptop
             DEVICE_ALIAS=
-            DEVICE_IDENTITY_FILE=${cfg.certs_path}/identity.txt
-            DEVICE_CONFIGURATION_FILE=${cfg.config_path}/docker-compose.yml
-            DEVICE_AUTH_TOKEN_FILE=${cfg.token_path}/PAT.pat
+
+            # Device identity
+            IDENTITY_FILE=${cfg.certs_path}/device_id.json
+            IDENTITY_SERIAL_NUMBER_FILE=${cfg.certs_path}/serial_number.txt
+
+            # Connection endpoints
+            PROVISIONING_URL=
+            NATS_ENDPOINT_FILE=${cfg.certs_path}/service_nats_url.txt
+
+            # Laptop specific configuration
             DEVICE_HOSTNAME_FILE=${cfg.hostname_path}/hostname
-            DEVICE_ID_FILE=${cfg.certs_path}/device_id.txt
-            FLEET_NATS_LEAF_CONFIG_FILE=${cfg.certs_path}/leaf.conf
-            SERVICE_NATS_URL_FILE=${cfg.certs_path}/service_nats_url.txt
-            SERVICE_IDENTITY_KEY_FILE=${cfg.certs_path}/identity.key
-            SERVICE_IDENTITY_CERTIFICATE_FILE=${cfg.certs_path}/identity.crt
-            SERVICE_IDENTITY_CA_FILE=${cfg.certs_path}/identity_ca.crt
-            SERVICE_FLEET_LEAF_CERTIFICATE_FILE=${cfg.certs_path}/fleet.crt
-            SERVICE_FLEET_LEAF_CA_FILE=${cfg.certs_path}/fleet_ca.crt
-            SERVICE_SWARM_KEY_FILE=${cfg.certs_path}/swarm.key
-            SERVICE_SWARM_CA_FILE=${cfg.certs_path}/swarm.crt
-            IP_ADDRESS_FILE=${cfg.ip_path}/ip-address
-            UTM_CLIENT_SECRET_FILE=${cfg.certs_path}/utm-client-secret
-            RABBIT_MQ_SECRET_FILE=${cfg.certs_path}/rabbit-mq-secret
-            POST_INSTALLATION_DIRECTORY=${cfg.post_install_path}
+            DEVICE_IP_ADDRESS_FILE=${cfg.ip_path}/ip-address
+
+            # FMO stack configuration
+            DEVICE_NATS_LEAF_CONFIGURATION_FILE=${cfg.certs_path}/leaf.conf
+            DEVICE_CONFIGURATION_FILE=${cfg.config_path}/docker-compose.yml
+            DEVICE_CONFIGURATION_TEMPLATE_FILE=${cfg.config_path}/docker-compose.mustache
+
+            # Identity certificates (Backbone certificates)
+            IDENTITY_CERTIFICATE_REQUEST_FILE=${cfg.certs_path}/identity.csr
+            IDENTITY_KEY_FILE=${cfg.certs_path}/identity.key
+            IDENTITY_CERT_FILE=${cfg.certs_path}/identity.crt
+            IDENTITY_CA_CERT_FILE=${cfg.certs_path}/identity_ca.crt
+
+            # Fleet management NATS leaf node certificates
+            IDENTITY_FLEET_CLUSTER_CERTIFICATE_REQUEST_FILE=${cfg.certs_path}/fleet.csr
+            IDENTITY_FLEET_LEAF_CERTIFICATE_FILE=${cfg.certs_path}/fleet.crt
+            IDENTITY_FLEET_LEAF_CA_FILE=${cfg.certs_path}/fleet_ca.crt
+
+            # Swarm intermediate CA certificates
+            IDENTITY_SWARM_CA_CERTIFICATE_REQUEST_FILE=${cfg.certs_path}/swarm.csr
+            IDENTITY_SWARM_KEY_FILE=${cfg.certs_path}/swarm.key
+            IDENTITY_SWARM_CA_FILE=${cfg.certs_path}/swarm.crt
+            IDENTITY_SWARM_ROOT_CA_FILE=${cfg.certs_path}/swarm_root_ca.crt
+
+            # Secrets
+            SECRETS_AUTH_TOKEN_FILE=${cfg.token_path}/PAT.pat
+            SECRETS_UTM_SECRET_FILE=${cfg.certs_path}/utm-client-secret
             EOF
 
             # Set permissions
@@ -125,7 +153,7 @@ in
         ];
         serviceConfig = {
           Type = "oneshot";
-          ExecStart = "${registrationSetup}/bin/setup-registration-agent";
+          ExecStart = "${registrationSetup}/bin/setup-onboarding-agent --log-file ${cfg.log_file_path}";
           RemainAfterExit = true;
         };
       };
