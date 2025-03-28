@@ -7,7 +7,7 @@
       ./fmo-firewall
       ./fmo-certs-distribution-host
       ./fmo-dci-passthrough
-      ./registration-agent-laptop
+      ./onboarding-agent
       ./fmo-nats-server
       ./fmo-update-hostname
       ./fmo-update-ipaddress

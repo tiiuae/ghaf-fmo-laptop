@@ -688,17 +688,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1741599980,
-        "narHash": "sha256-JnjM2e33l4pMgGM4crUXosmYtRxaaiQ60ZfT8HWDDq4=",
+        "lastModified": 1742991541,
+        "narHash": "sha256-nl5R7gu3nz/hiWyPAlcEl0bUciprAat7Ouje4saV18o=",
         "ref": "refs/heads/main",
-        "rev": "3ec9cd1b6c912aca8b9367fd2a18106769b8e2c4",
-        "revCount": 125,
+        "rev": "acc62c9e480cd32b451fb3365d19e78f55b1a0b9",
+        "revCount": 357,
         "type": "git",
-        "url": "ssh://git@github.com/tiiuae/registration-agent-laptop"
+        "url": "ssh://git@github.com/tiiuae/onboarding-agent"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@github.com/tiiuae/registration-agent-laptop"
+        "url": "ssh://git@github.com/tiiuae/onboarding-agent"
       }
     },
     "root": {

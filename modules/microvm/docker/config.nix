@@ -31,7 +31,7 @@ in
   imports = [
     ../../fmo/dci-service
     ../../fmo/fmo-dci-passthrough
-    ../../fmo/registration-agent-laptop
+    ../../fmo/onboarding-agent
     ../../fmo/fmo-update-hostname
     ../../fmo/fmo-docker-networking
   ];
@@ -169,7 +169,7 @@ in
       };
 
       # Setup service for registration agent
-      registration-agent-laptop = {
+      onboarding-agent = {
         enable = true;
         certs_path = "/var/lib/fogdata/certs";
         config_path = "/var/lib/fogdata";

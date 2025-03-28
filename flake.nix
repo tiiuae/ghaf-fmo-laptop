@@ -40,7 +40,7 @@
     };
 
     registration-agent = {
-      url = "git+ssh://git@github.com/tiiuae/registration-agent-laptop";
+      url = "git+ssh://git@github.com/tiiuae/onboarding-agent";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "ghaf/flake-utils";
