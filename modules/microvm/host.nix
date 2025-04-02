@@ -60,5 +60,19 @@ in
       "f /persist/common/ip-address 0600 root root -"
     ];
 
+    ghaf.virtualization.microvm.guivm.applications = [
+      {
+        name = "Google Chrome GPU";
+        description = "Google Chrome with GPU acceleration";
+        icon = "thorium-browser";
+        command = "/run/current-system/sw/bin/google-chrome-stable";
+      }
+      {
+        name = "Firefox GPU";
+        description = "Firefox Beta with GPU acceleration";
+        icon = "firefox";
+        command = "/run/current-system/sw/bin/firefox-beta";
+      }
+    ];
   };
 }
