@@ -52,12 +52,15 @@
             inputs.self.nixosModules.guivm
           ];
         };
-        graphics.enable = true;
+        graphics = {
+          enable = true;
+          idleManagement.enable = false;
+          allowSuspend = false;
+        };
       };
 
       graphics = {
         labwc = {
-          autolock.enable = lib.mkForce true;
           autologinUser = lib.mkForce null;
         };
       };
