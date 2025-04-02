@@ -42,8 +42,7 @@ You will need to store that token in e.g. your `~/.netrc` file in .netrc format.
 
 `machine github.com login x-access-token password <token>`
 
-Where <token> is a github token that you created above.
-
+Where <token> is a GitHub token that you created above.
 
 ### Quick start guide for first time install
 
