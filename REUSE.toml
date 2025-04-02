@@ -17,5 +17,6 @@ path = [
   ".github/workflows/scorecards.yml",
   "flake.lock",
   ".version",
-  "README.md"
+  "README.md",
+  "justfile"
 ]

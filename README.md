@@ -26,6 +26,24 @@ This repository contains the source files (code and documentation) of Ghaf-fmo-l
 
 Ghaf-fmo-laptop images are built and tested by our continuous integration system. For more information on a general process, see [Continuous Integration and Distribution](https://tiiuae.github.io/ghaf/scs/ci-cd-system.html).
 
+### Generate a Personal Access token
+
+As the repo contains references to a number of private repositories it is necessary to generate a [Personal Access Token (PAT)](https://github.com/settings/personal-access-tokens/new) that has read access to the repositories. It is possible to provide access to only the required repos or you could create a token with read access to the [TIIUAE organization](https://github.com/tiiuae).
+
+Currently the following dependency go repositories require access tokens:
+
+* https://github.com/tiiuae/go-configloader
+* https://github.com/tiiuae/fleet-manager
+* https://github.com/tiiuae/provisioning-server
+
+From the PAT menu add a title, description, select `TIIUAE` as the `Resource owner`, choose a reasonable Expiration date (upto 1 year). Choose `All Repos`, or select required ones, and from `Repository Permissions` choose `Contents` and select `Read-only`. Then `Generate Token` to create and save the token. Remember to record the token before closing the page as it is not recoverable and you will have to generate it again.
+
+You will need to store that token in e.g. your `~/.netrc` file in .netrc format.
+
+`machine github.com login x-access-token password <token>`
+
+Where <token> is a github token that you created above.
+
 
 ### Quick start guide for first time install
 
@@ -38,8 +56,12 @@ nix develop
 # See the list of targets that can be built
 nix flake show
 
+# or use the convenience wrapper
+
+just show
+
 # select a target to build
-nix build .#fmo-lenovo-x1-gen11-debug-installer
+just build .#fmo-lenovo-x1-gen11-debug-installer
 
 # insert an ssd to copy the installer to and find the name e.g. /dev/sdb
 sudo dmesg
@@ -80,13 +102,21 @@ nix develop
 cat .packages/fmo-build-helper/default.nix
 
 # use the helper tool to buid and flash your target
-fmo-rebuild 192.168.0.123 .#fmo-lenovo-x1-gen11-debug switch
+just rebuild 192.168.10.212 .#fmo-lenovo-x1-gen11-debug boot
 
-# alternatively you can use the nix tooling directly without the wrapper
-nixos-rebuild --flake .#fmo-lenovo-x1-gen11-debug --target-host "root@ghaf-host" --fast switch
+# alternatively you can use the nix tooling directly without the wrapper - NB remember to copy your .netrc file to /tmp/.netrc before running
+nixos-rebuild --flake .#fmo-lenovo-x1-gen11-debug --target-host "root@ghaf-host" --fast  --option builders '' --option extra-sandbox-paths "/tmp/.netrc" boot
 
 ```
 
+### Specifying a different location for the NETRC_FILE
+
+You can override the default location for the `.netrc` file by specifying it on the command line before any of the default commands.
+
+``` shell
+just NETRC_FILE=/home/user/.my-secrets build .#fmo-lenovo-x1-gen11-debug
+
+```
 
 
 ## Contributing

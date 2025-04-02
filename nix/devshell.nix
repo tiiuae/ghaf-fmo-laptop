@@ -24,6 +24,7 @@
             meta.description = "ghaf-fmo development environment";
             packages =
               [
+                pkgs.just
                 pkgs.jq
                 pkgs.nix-eval-jobs
                 pkgs.nix-fast-build
