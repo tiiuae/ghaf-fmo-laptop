@@ -338,19 +338,11 @@
         "wireguard-gui": "wireguard-gui"
       },
       "locked": {
-<<<<<<< HEAD
-        "lastModified": 1743507095,
-        "narHash": "sha256-w5XILE12ICPk+VXCCNVJUm1ljyDlh00ljiOov6LWRpQ=",
-        "owner": "tiiuae",
-        "repo": "ghaf",
-        "rev": "703450425a31781b0dc0bc2488874c5549b7e971",
-=======
         "lastModified": 1743580630,
         "narHash": "sha256-UxIzpt/JwX/VmccgubI5RspAty5ITvee+POCEJFgciI=",
         "owner": "tiiuae",
         "repo": "ghaf",
         "rev": "33b6f1f85410d354b0721a1b0197c49837cd6b6e",
->>>>>>> da3802f (bump: get the latest vulkan changes)
         "type": "github"
       },
       "original": {
