@@ -2,13 +2,11 @@
 # SPDX-License-Identifier: Apache-2.0
 {
   config,
-  lib,
   ...
 }:
 let
   inherit (config.ghaf.networking) hosts;
-  wifiNic = lib.head config.ghaf.hardware.definition.network.pciDevices;
-  wifiDevice = wifiNic.name;
+  externalNics = map (d: d.name) config.ghaf.hardware.definition.network.pciDevices;
 in
 {
   imports = [
@@ -32,11 +30,7 @@ in
 
       fmo-firewall = {
         enable = true;
-        externalNics = [
-          "mesh0"
-          "externalmesh0"
-          "${wifiDevice}"
-        ];
+        inherit externalNics;
         configuration = [
           {
             dip = hosts.docker-vm.ipv4;
