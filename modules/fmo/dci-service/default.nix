@@ -67,9 +67,7 @@ in
 
     systemd.paths.fmo-dci = {
       description = "Monitor docker compose meta files for changes";
-      requires = [ "network-online.target" ];
-      wantedBy = [ "network-online.target" ];
-      after = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
       pathConfig.PathModified = [
         cfg.pat-path
         cfg.compose-path
@@ -145,7 +143,6 @@ in
       after = [
         "docker.service"
         "docker.socket"
-        "network-online.target"
       ];
       requires = [ "network-online.target" ];
 
@@ -155,10 +152,9 @@ in
         cfg.compose-path
       ];
 
-      # TODO: restart always
       serviceConfig = {
-        Restart = lib.mkForce "always";
-        RestartSec = "30";
+        Restart = "always";
+        RestartSec = "10";
       };
     };
   };

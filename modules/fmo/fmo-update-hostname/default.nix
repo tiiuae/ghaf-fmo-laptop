@@ -36,8 +36,7 @@ in
       # Note: path change only works for local updates.
       paths.fmo-update-avahi-hostname = {
         description = "Monitor hostname file for changes";
-        wantedBy = [ "avahi-daemon.service" ];
-        after = [ "avahi-daemon.service" ];
+        wantedBy = [ "multi-user.target" ];
         pathConfig.PathModified = [ cfg.hostnamePath ];
       };
       services.fmo-update-avahi-hostname =
@@ -66,7 +65,7 @@ in
           wantedBy = [ "avahi-daemon.service" ];
           after = [ "avahi-daemon.service" ];
           serviceConfig = {
-            type = "oneshot";
+            Type = "oneshot";
             ExecStart = "${setHostnameScript}/bin/set-avahi-hostname";
           };
         };
@@ -76,8 +75,7 @@ in
       # TODO Remove this filth
       paths.fmo-update-kernel-hostname = {
         description = "Monitor hostname file for changes";
-        wantedBy = [ "network.target" ];
-        after = [ "network.target" ];
+        wantedBy = [ "multi-user.target" ];
         pathConfig.PathModified = [ cfg.hostnamePath ];
       };
       services.fmo-update-kernel-hostname =
@@ -105,7 +103,7 @@ in
           wantedBy = [ "network-online.target" ];
           after = [ "network-online.target" ];
           serviceConfig = {
-            type = "oneshot";
+            Type = "oneshot";
             ExecStart = "${setHostnameScript}/bin/set-kernel-hostname";
           };
         };
