@@ -10,7 +10,6 @@
       ./onboarding-agent
       ./fmo-nats-server
       ./fmo-update-hostname
-      ./fmo-update-ipaddress
     ];
   };
 }

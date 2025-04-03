@@ -37,8 +37,6 @@ writeShellApplication {
         HOSTNAME=''${HOSTNAME//[^a-zA-Z0-9_-]/}
         HOSTNAME=''$(echo -n "$HOSTNAME" | tr '[:upper:]' '[:lower:]')
         echo -n "$HOSTNAME" > $HOSTNAME_FILE
-        # Start msg-vm service to process the new hostname
-        # grpcurl -cacert /etc/givc/ca-cert.pem -cert /etc/givc/cert.pem -key /etc/givc/key.pem -d '{"UnitName": "fmo-update-hostname.service"}' msg-vm:9000 systemd.UnitControlService.StartUnit > /dev/null 2>&1
         echo "Hostname set to $HOSTNAME"
       }
 
@@ -50,9 +48,6 @@ writeShellApplication {
           if ipcalc -c "$IP"; then
             echo -n "$IP" > $IP_FILE
             echo "IP set to $IP"
-            # Start net-vm service to process the new IP
-            grpcurl -cacert /etc/givc/ca-cert.pem -cert /etc/givc/cert.pem -key /etc/givc/key.pem -d '{"UnitName": "fmo-update-ipaddress.service"}' net-vm:9000 systemd.UnitControlService.StartUnit > /dev/null 2>&1
-            echo "Please wait for the NetworkManager to restart..."
             VALID_IP=true
           else
             echo "Invalid IP address: $IP"

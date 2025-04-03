@@ -13,7 +13,6 @@ in
 {
   imports = [
     ../fmo/fmo-update-hostname
-    ../fmo/fmo-update-ipaddress
     ../fmo/fmo-firewall
   ];
   config = {
@@ -29,14 +28,6 @@ in
         enable = true;
         nssmdns4 = true;
         reflector = true;
-      };
-
-      fmo-update-ipaddress = {
-        enable = true;
-        ipAddressPath = "/var/common/ip-address";
-        restartUnits = [
-          "NetworkManager.service"
-        ];
       };
 
       fmo-firewall = {
