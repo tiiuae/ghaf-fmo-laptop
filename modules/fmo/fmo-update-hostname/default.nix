@@ -48,7 +48,16 @@ in
               pkgs.avahi
               pkgs.gawk
             ];
-            text = ''avahi-set-host-name "$(gawk '{print $1}' ${cfg.hostnamePath})"'';
+            text = ''
+              HOSTNAME=$(gawk '{print $1}' ${cfg.hostnamePath})
+              if [[ "$HOSTNAME" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+                avahi-set-host-name "$HOSTNAME" || exit 1
+                echo "Avahi hostname set to '$HOSTNAME'"
+              else
+                echo "Hostname '$HOSTNAME' is empty or wrong format, skipping..." >&2
+                exit 0
+              fi
+            '';
           };
         in
         {
@@ -80,15 +89,21 @@ in
             ];
             text = ''
               HOSTNAME=$(gawk '{print $1}' ${cfg.hostnamePath})
-              echo "$HOSTNAME" > /proc/sys/kernel/hostname
+              if [[ "$HOSTNAME" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+                echo "$HOSTNAME" > /proc/sys/kernel/hostname || exit 1
+                echo "Kernel hostname set to '$HOSTNAME'"
+              else
+                echo "Hostname '$HOSTNAME' is empty or wrong format, skipping..." >&2
+                exit 0
+              fi
             '';
           };
         in
         {
           description = "Update kernel hostname";
           enable = true;
-          wantedBy = [ "network.target" ];
-          after = [ "network.target" ];
+          wantedBy = [ "network-online.target" ];
+          after = [ "network-online.target" ];
           serviceConfig = {
             type = "oneshot";
             ExecStart = "${setHostnameScript}/bin/set-kernel-hostname";
