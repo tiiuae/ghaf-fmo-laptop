@@ -6,9 +6,19 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.services.fmo-certs-distribution-service-host;
+
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    length
+    genList
+    zipListsWith
+    concatStringsSep
+    ;
 
   mkClintCert = client-path: n: ''
     echo "Generate private key for the client-${n}"

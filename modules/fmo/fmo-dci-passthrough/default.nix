@@ -6,9 +6,15 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.services.fmo-dci-passthrough;
+
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
 
   dockerDevPassScript = pkgs.writeShellScriptBin "docker-dev-pass" ''
     CONTAINERNAME="${cfg.container-name}"

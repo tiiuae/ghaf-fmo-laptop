@@ -6,9 +6,14 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.services.fmo-dci;
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
   preload_path = ./images;
 in
 {
@@ -53,8 +58,8 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      docker-compose
+    environment.systemPackages = [
+      pkgs.docker-compose
     ];
 
     virtualisation.docker = {
