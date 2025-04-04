@@ -1,6 +1,7 @@
 # Copyright 2022-2025 TII (SSRC) and the Ghaf contributors
 # SPDX-License-Identifier: Apache-2.0
 {
+  config,
   pkgs,
   lib,
   ...
@@ -48,6 +49,12 @@ in
     programs.firefox = {
       enable = true;
       package = firefox-beta;
+    };
+
+    ghaf.ghaf-audio = {
+      enable = true;
+      useTunneling = false;
+      inherit (config.system) name;
     };
   };
 }
