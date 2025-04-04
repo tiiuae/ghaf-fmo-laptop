@@ -14,8 +14,13 @@
       ./resources/alienware-m18-r2.nix
       ./definition/external-usb.nix
     ];
-    hardware-dell-latitude-7330.imports = [
-      inputs.ghaf.nixosModules.hardware-dell-latitude-7330
+    hardware-dell-latitude-7330-71.imports = [
+      inputs.ghaf.nixosModules.hardware-dell-latitude-7330-71
+      ./resources/dell-latitude-7330.nix
+      ./definition/external-usb.nix
+    ];
+    hardware-dell-latitude-7330-72.imports = [
+      inputs.ghaf.nixosModules.hardware-dell-latitude-7330-72
       ./resources/dell-latitude-7330.nix
       ./definition/external-usb.nix
     ];
