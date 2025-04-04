@@ -102,6 +102,7 @@ in
           enable = true;
           wantedBy = [ "network-online.target" ];
           after = [ "network-online.target" ];
+          requires = [ "network-online.target" ];
           serviceConfig = {
             Type = "oneshot";
             ExecStart = "${setHostnameScript}/bin/set-kernel-hostname";

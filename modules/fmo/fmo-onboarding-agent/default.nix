@@ -1,4 +1,4 @@
-# Copyright 2022-2024 TII (SSRC) and the Ghaf contributors
+# Copyright 2022-2025 TII (SSRC) and the Ghaf contributors
 # SPDX-License-Identifier: Apache-2.0
 #
 {
@@ -129,7 +129,6 @@ in
         before = [ "multi-user.target" ];
         unitConfig.ConditionPathExists = [
           "/var/lib/fogdata"
-          "!${cfg.env_path}/config.yaml"
         ];
         serviceConfig = {
           Type = "oneshot";
