@@ -129,7 +129,6 @@ in
         before = [ "multi-user.target" ];
         unitConfig.ConditionPathExists = [
           "/var/lib/fogdata"
-          "!${cfg.env_path}/config.yaml"
         ];
         serviceConfig = {
           Type = "oneshot";

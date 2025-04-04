@@ -25,6 +25,8 @@ let
       n: v: if (strings.hasPrefix "gnss" n) then v else [ ]
     ) config.ghaf.hardware.usb.external.qemuExtraArgs
   );
+
+  appuser = config.ghaf.users.appUser.name;
 in
 {
   # TODO implement appvm interface and remove these imports
@@ -113,12 +115,10 @@ in
       settings.main.font = "FiraCode Nerd Font Mono:size=10";
     };
 
-    # User is used for onboarding agent
-    users.users.appuser.extraGroups = [
-      "dialout"
-    ];
+    # Allow app user in this vm to run root commands for on-/offboarding
     security.sudo.extraConfig = ''
-      appuser ALL=(root) NOPASSWD: ${pkgs.fmo-onboarding}/bin/fmo-onboarding
+      ${appuser} ALL=(root) NOPASSWD: ${pkgs.fmo-onboarding}/bin/fmo-onboarding
+      ${appuser} ALL=(root) NOPASSWD: ${pkgs.fmo-offboarding}/bin/fmo-offboarding
     '';
 
     # Services

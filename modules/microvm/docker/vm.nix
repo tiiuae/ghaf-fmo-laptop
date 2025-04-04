@@ -24,6 +24,16 @@
         icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus/64x64/apps/rocs.svg";
         command = "foot /run/wrappers/bin/sudo ${pkgs.fmo-onboarding}/bin/fmo-onboarding";
       }
+      {
+        name = "FMO Offboarding";
+        description = "FMO Offboarding - remove registration data";
+        packages = [
+          pkgs.fmo-offboarding
+          pkgs.papirus-icon-theme
+        ];
+        icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus/64x64/places/user-trash.svg";
+        command = "foot /run/wrappers/bin/sudo ${pkgs.fmo-offboarding}/bin/fmo-offboarding";
+      }
     ];
     extraModules = [
       (import ./config.nix { inherit pkgs lib config; })
