@@ -26,8 +26,8 @@ let
       # Hardware video encoding on Chrome on Linux.
       # See chrome://gpu to verify.
       # Enable H.265 video codec support.
-      # Turn on vulkan support
-      "--enable-features=UseOzonePlatform,VaapiVideoDecoder,VaapiVideoEncoder,WebRtcAllowH265Receive,Vulkan,VaapiIgnoreDriverChecks,DefaultANGLEVulkan,VulkanFromANGLE"
+      "--enable-features=UseOzonePlatform,VaapiVideoDecoder,VaapiVideoEncoder,WebRtcAllowH265Receive,VaapiIgnoreDriverChecks"
+      "--ozone-platform=wayland"
       "--force-fieldtrials=WebRTC-Video-H26xPacketBuffer/Enabled"
     ];
   };
