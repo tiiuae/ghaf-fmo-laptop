@@ -8,7 +8,7 @@
   ...
 }:
 let
-  cfg = config.services.onboarding-agent;
+  cfg = config.services.fmo-onboarding-agent;
   inherit (lib)
     mkEnableOption
     mkOption
@@ -17,7 +17,7 @@ let
     ;
 in
 {
-  options.services.onboarding-agent = {
+  options.services.fmo-onboarding-agent = {
     enable = mkEnableOption "Install and setup onboarding-agent on system";
 
     certs_path = mkOption {

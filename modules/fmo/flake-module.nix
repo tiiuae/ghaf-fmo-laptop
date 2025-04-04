@@ -3,11 +3,11 @@
 {
   flake.nixosModules = {
     fmo-services.imports = [
-      ./dci-service
+      ./fmo-dci-service
       ./fmo-firewall
       ./fmo-certs-distribution-host
       ./fmo-dci-passthrough
-      ./onboarding-agent
+      ./fmo-onboarding-agent
       ./fmo-nats-server
       ./fmo-update-hostname
     ];

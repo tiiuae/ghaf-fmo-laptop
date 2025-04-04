@@ -29,9 +29,9 @@ in
 {
   # TODO implement appvm interface and remove these imports
   imports = [
-    ../../fmo/dci-service
+    ../../fmo/fmo-dci-service
     ../../fmo/fmo-dci-passthrough
-    ../../fmo/onboarding-agent
+    ../../fmo/fmo-onboarding-agent
     ../../fmo/fmo-update-hostname
     ../../fmo/fmo-docker-networking
   ];
@@ -169,7 +169,7 @@ in
       };
 
       # Setup service for onboarding agent
-      onboarding-agent = {
+      fmo-onboarding-agent = {
         enable = true;
         certs_path = "/var/lib/fogdata/certs";
         config_path = "/var/lib/fogdata";
