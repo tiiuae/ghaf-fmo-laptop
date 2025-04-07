@@ -38,14 +38,14 @@ in
 
     # Gui VM
     microvm.vms.gui-vm.config.config.microvm = {
-      mem = mkForce 8192;
-      vcpu = mkForce 4;
+      mem = mkForce 16384;
+      vcpu = mkForce 10;
     };
 
     # Docker VM
     ghaf.virtualization.microvm.appvm.vms.docker = {
       ramMb = mkForce 8192;
-      cores = mkForce 10;
+      cores = mkForce 8;
       balloonRatio = mkForce 4;
     };
 
@@ -59,7 +59,7 @@ in
     # Chrome VM
     ghaf.virtualization.microvm.appvm.vms.chrome = {
       ramMb = mkForce 8192;
-      cores = mkForce 10;
+      cores = mkForce 8;
       balloonRatio = mkForce 4;
     };
 
