@@ -73,17 +73,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1741641951,
-        "narHash": "sha256-eWR/1gZGZYTQTLlW2G1H2ERJIDSHtWySfJzLpyHi7d0=",
+        "lastModified": 1743755278,
+        "narHash": "sha256-8NROCZ3L/NJiglBDyecv3w5+cE7ITkWevS/nZQqWutA=",
         "owner": "tiiuae",
         "repo": "ghaf-ctrl-panel",
-        "rev": "555a414a5d50eed7f17e7f45221eba0261c40dc6",
+        "rev": "c598cf55ed9cc9be29f88d78bf2495393292335c",
         "type": "github"
       },
       "original": {
         "owner": "tiiuae",
         "repo": "ghaf-ctrl-panel",
-        "rev": "555a414a5d50eed7f17e7f45221eba0261c40dc6",
+        "rev": "c598cf55ed9cc9be29f88d78bf2495393292335c",
         "type": "github"
       }
     },
@@ -313,11 +313,11 @@
         "wireguard-gui": "wireguard-gui"
       },
       "locked": {
-        "lastModified": 1743765360,
-        "narHash": "sha256-9Ix41es7fuSLA2fF2wWVfkxFZbtv/Qj+Qf6CepsKA4A=",
+        "lastModified": 1744016067,
+        "narHash": "sha256-bP7kqNLHgqKns67QsKVrtTFZ4YbxSePK/72wGnBfqxk=",
         "owner": "tiiuae",
         "repo": "ghaf",
-        "rev": "10f75518dac9df738b34feeddc0fecd7eb5f7f97",
+        "rev": "8d1dc01471e66718168109e16a3a091f67e02da6",
         "type": "github"
       },
       "original": {
