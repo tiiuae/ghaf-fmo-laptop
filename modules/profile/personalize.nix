@@ -31,6 +31,7 @@ in
         # Example:
         #"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICwsW+YJw6ukhoWPEBLN93EFiGhN7H2VJn5yZcKId56W mb@mmm"
         "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC5gQR9UyrTfQBZew9l3uHR6LghMY+BSlvBytHFMjJvvrSlBWO7dYFUuaRY15BnDDn3HQKVRKAWV9iEbNH/TttcJQ4FqEcXYtKpLqFzFQDb3mK3nABY0h1fJKT71MfDfdbPrZzFuZT6bm1pU8fSOPgkUzVggfMYIIe3dtsrGVh06rbKGlYWdJKmKgmzyoDYOHvRee/ez7RY2cp4dMjHu5kmOP6WMbr9Zl4xiF0OFs2WI/dMQJmi8uYoQmR+UbPJeKSJY1Hq4vJTqijGsAwkUHl+p9JBsfOsrvy2mAjRtUR+Vb+qaMd1AW6wuByOT8vfRsHUZvX1O3jkVfY7/rz0O2u7 toros.gokkurt@tii.ae"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMXCdSgQtSvxRpQoQZt+AkDichPaRG/GaWZwAMgKwT3y ilkka.siiki@solita.fi"
       ];
     };
   };
