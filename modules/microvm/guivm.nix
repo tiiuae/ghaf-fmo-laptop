@@ -7,6 +7,8 @@
   ...
 }:
 let
+  inherit (lib) any;
+
   rmDesktopEntry =
     pkg:
     pkg.overrideAttrs (
@@ -34,11 +36,12 @@ let
   };
 
   firefox-beta = rmDesktopEntry pkgs.firefox-beta;
+  nvidia.enable = any (d: d.vendorId == "10de") config.ghaf.hardware.definition.gpu.pciDevices;
 in
 {
   config = {
     ghaf.graphics.nvidia-setup = {
-      enable = true;
+      inherit (nvidia) enable;
       vaapi.firefox.av1Support = true;
     };
 
