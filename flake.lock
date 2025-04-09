@@ -28,11 +28,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744022732,
-        "narHash": "sha256-V6RfZXanVOXk6K2C2mS/qZjmRHS5Bt9jMHcN5J6QG6M=",
+        "lastModified": 1744191505,
+        "narHash": "sha256-IxHxEyJSzazXzQJk7o43vUFJPUXqOj7tVBUihYSVZ1E=",
         "owner": "tiiuae",
         "repo": "ci-test-automation",
-        "rev": "fe61c5e76dbdaf713347e508cf607fe2944a9c0b",
+        "rev": "71c7f78a746437b32c55d6113d614f82fab76493",
         "type": "github"
       },
       "original": {
@@ -313,11 +313,11 @@
         "wireguard-gui": "wireguard-gui"
       },
       "locked": {
-        "lastModified": 1744188178,
-        "narHash": "sha256-qx0DQXrKPaGivT0R6SR5H0yHTWq5j+VAztEX/tyfrmA=",
+        "lastModified": 1744193726,
+        "narHash": "sha256-8fPBYqfQcK76ybd3Lmb4LFG/65jNj9wxMlEBMYdH6og=",
         "owner": "tiiuae",
         "repo": "ghaf",
-        "rev": "527ecad08da86c26ffcec2d6553985458bd3b507",
+        "rev": "e7f1ed77b1fd58e4f1e3bd0fd639dc50c4799406",
         "type": "github"
       },
       "original": {
@@ -665,11 +665,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1743750435,
-        "narHash": "sha256-9GZza5trffpV2QKON1gmEKX4J8kUhyi4GNXCjPOe/gw=",
+        "lastModified": 1744194270,
+        "narHash": "sha256-J0T1hk1sJfhFX7QNZdrbAHIMTs2fWLgJrLPdlCOHKsM=",
         "ref": "refs/heads/main",
-        "rev": "fe6f48d1ce46a474944e1cea2cc14a90285c949b",
-        "revCount": 375,
+        "rev": "235a716d563ac24ab329606c6716280eddb9fda9",
+        "revCount": 377,
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/onboarding-agent"
       },
