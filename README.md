@@ -63,7 +63,7 @@ just show
 just build .#fmo-lenovo-x1-gen11-debug-installer
 
 # insert an ssd to copy the installer to and find the name e.g. /dev/sdb
-sudo dmesg
+sudo lsblk
 
 # flash the installer to the ssd
 sudo dd if=./result/iso/ghaf.iso of=/dev/sdb bs=32M status=progress; sync
@@ -71,7 +71,7 @@ sudo dd if=./result/iso/ghaf.iso of=/dev/sdb bs=32M status=progress; sync
 # install into the target machine (ensure bios is configured to boot from ssd)
 # boot to the cmd prompt
 
-sudo ghaf_installer
+sudo ghaf-installer
 
 #select the target disk
 /dev/nvme0n1
@@ -82,7 +82,7 @@ y
 # after install reboot and remove the ssd
 sudo reboot
 
-#after boot choose username/ fullname / password (twice)
+#after boot choose username / fullname / password (twice)
 username / username / password
 
 # once created login with the new credentials
