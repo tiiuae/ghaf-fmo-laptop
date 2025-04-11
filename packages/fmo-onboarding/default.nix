@@ -29,17 +29,24 @@ writeShellApplication {
 
       IP_FILE=/var/common/ip-address
       HOSTNAME_FILE=/var/common/hostname
-
       CONFIG_FILE=/var/lib/fogdata/config.yaml
 
       set_hostname(){
-        # Read hostname from user
-        read -e -r -p "Enter mDNS hostname: " HOSTNAME
-        HOSTNAME=''${HOSTNAME// /_}
-        HOSTNAME=''${HOSTNAME//[^a-zA-Z0-9_-]/}
-        HOSTNAME=''$(echo -n "$HOSTNAME" | tr '[:upper:]' '[:lower:]')
-        echo -n "$HOSTNAME" > $HOSTNAME_FILE
-        echo "Hostname set to $HOSTNAME"
+        VALID_HOSTNAME=false
+        until $VALID_HOSTNAME; do
+          # Read hostname from user
+          read -e -r -p "Enter mDNS hostname: " HOSTNAME
+          if [[ -z "$HOSTNAME" ]]; then
+            echo "Hostname cannot be empty."
+            continue
+          fi
+          HOSTNAME=''${HOSTNAME// /_}
+          HOSTNAME=''${HOSTNAME//[^a-zA-Z0-9_-]/}
+          HOSTNAME=''$(echo -n "$HOSTNAME" | tr '[:upper:]' '[:lower:]')
+          echo -n "$HOSTNAME" > $HOSTNAME_FILE
+          VALID_HOSTNAME=true
+          echo "Hostname set to $HOSTNAME"
+        done
       }
 
       set_ip(){
@@ -129,10 +136,11 @@ writeShellApplication {
       ;;
       esac
 
-      echo "Exiting..."
-
       # Wait to allow user to read output
-      sleep 10
+      while true; do
+        read -r -p 'Press [Enter] to exit...'
+        break
+      done
     '';
 
   meta = {
