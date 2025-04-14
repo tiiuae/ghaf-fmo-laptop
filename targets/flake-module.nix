@@ -57,6 +57,14 @@ let
         fmo.personalize.debug.enable = true;
       }
     ])
+    (laptop-configuration "fmo-lenovo-x1-gen12-debug" [
+      nixMods.hardware-lenovo-x1-carbon-gen12
+      nixMods.fmo-profile
+      {
+        ghaf.profiles.debug.enable = true;
+        fmo.personalize.debug.enable = true;
+      }
+    ])
     (laptop-configuration "fmo-demo-tower-mk1-debug" [
       nixMods.hardware-demo-tower-mk1
       nixMods.fmo-profile

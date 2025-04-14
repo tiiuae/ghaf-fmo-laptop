@@ -4,15 +4,16 @@
 # This file specifies resource usage across Ghaf, as different
 # hardware has different capabilities.
 #
-# Lenovo X1 gen11 (Intel(R) Core(TM) i7-1355U)
-#    RAM:                  32 GB
-#    Cache:                12 MB
-#    Total Cores           10
-#    Performance-cores     2
-#    Efficient-cores       8
-#    Total Threads         12
-#    Processor Base Power  15 W
-#    Maximum Turbo Power   55 W
+# Lenovo X1 gen12 (Intel(R) Core(TM) ultra 7 155U)
+#    RAM:                       32 GB
+#    Cache:                     12 MB
+#    Total Cores                12
+#    Performance-cores           2
+#    Efficient-cores             8
+#    Low Power Efficient-cores   2
+#    Total Threads              14
+#    Processor Base Power       15 W
+#    Maximum Turbo Power        57 W
 #
 # Resource allocation:
 #    Net VM:     1 vcpu    512 MB
