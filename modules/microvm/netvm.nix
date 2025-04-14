@@ -6,7 +6,6 @@
 }:
 let
   inherit (config.ghaf.networking) hosts;
-  externalNics = map (d: d.name) config.ghaf.common.hardware.nics;
 in
 {
   imports = [
@@ -30,7 +29,6 @@ in
 
       fmo-firewall = {
         enable = true;
-        inherit externalNics;
         mtu = 1372;
         configuration = [
           {
