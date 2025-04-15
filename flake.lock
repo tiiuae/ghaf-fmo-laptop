@@ -313,11 +313,11 @@
         "wireguard-gui": "wireguard-gui"
       },
       "locked": {
-        "lastModified": 1744357162,
-        "narHash": "sha256-mrtvzFPHrdnAfg12ubbBqBnBR4siZlV81moKM6+Qwhk=",
+        "lastModified": 1744659909,
+        "narHash": "sha256-ioUcYj1OCTDIarZ0tzqCse6lynsEB6gLKBlMMHT7EcE=",
         "owner": "tiiuae",
         "repo": "ghaf",
-        "rev": "d835d328db3123a4a880572f31402e99dd64161d",
+        "rev": "4a6dcda0e6ec1994dd82d6a00f76e899a81f9724",
         "type": "github"
       },
       "original": {
@@ -610,11 +610,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1743420942,
-        "narHash": "sha256-b/exDDQSLmENZZgbAEI3qi9yHkuXAXCPbormD8CSJXo=",
+        "lastModified": 1744633460,
+        "narHash": "sha256-fbWE4Xpw6eH0Q6in+ymNuDwTkqmFmtxcQEmtRuKDTTk=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "de6fc5551121c59c01e2a3d45b277a6d05077bc4",
+        "rev": "9a049b4a421076d27fee3eec664a18b2066824cb",
         "type": "github"
       },
       "original": {
@@ -665,11 +665,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744354403,
-        "narHash": "sha256-UbyGFVbeGktPQ18RDinqW8ewCz11Tg9rikW8zOD51ok=",
+        "lastModified": 1744701475,
+        "narHash": "sha256-/8OcmrGoSEVxO1L0+YIDY54TOJNKW5JXKq7/KEFvMx4=",
         "ref": "refs/heads/main",
-        "rev": "7654b495ca6def3af11f50e1b174dddbd5960b76",
-        "revCount": 378,
+        "rev": "b6937cfe534b9cd2b487b25a08a64eaa10bfe7d5",
+        "revCount": 386,
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/onboarding-agent"
       },
@@ -819,17 +819,17 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1743533788,
-        "narHash": "sha256-/FuPAmoOMDG2DJAHB1ZMe2c+MrpI1DSU9HTq8rDT5s4=",
+        "lastModified": 1744614681,
+        "narHash": "sha256-dO8ULUHYmBYww++hrPOM2hzhpQ45QPyZHw4TO8QtXAQ=",
         "owner": "enesoztrk",
         "repo": "wireguard-gui",
-        "rev": "56b92f8d4d8cf006e53d9fa5373709b00663a45e",
+        "rev": "97c0e80aad9ca6589a94112b773dd7797609443e",
         "type": "github"
       },
       "original": {
         "owner": "enesoztrk",
         "repo": "wireguard-gui",
-        "rev": "56b92f8d4d8cf006e53d9fa5373709b00663a45e",
+        "rev": "97c0e80aad9ca6589a94112b773dd7797609443e",
         "type": "github"
       }
     }
