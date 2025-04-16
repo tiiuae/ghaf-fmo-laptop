@@ -8,8 +8,11 @@
     ];
     fmo-personalize.imports = [
       inputs.ghaf.nixosModules.reference-personalize
-      { ghaf.reference.personalize.keys.enable = true; }
       ./personalize.nix
+      {
+        fmo.personalize.debug.enable = true;
+        ghaf.reference.personalize.keys.enable = true;
+      }
     ];
   };
 }
