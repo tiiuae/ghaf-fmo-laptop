@@ -31,7 +31,7 @@
     #TODO: this needs to be pinned to the version that ghaf is currently pinned to.
     # rather painful. though it can be pinned to official releases this way.
     nixpkgs = {
-      url = "github:NixOS/nixpkgs?rev=063dece00c5a77e4a0ea24e5e5a5bd75232806f8";
+      url = "github:NixOS/nixpkgs?rev=2631b0b7abcea6e640ce31cd78ea58910d31e650";
     };
 
     ghaf = {
