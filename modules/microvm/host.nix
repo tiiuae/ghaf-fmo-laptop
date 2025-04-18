@@ -73,6 +73,12 @@ in
         icon = "firefox";
         command = "/run/current-system/sw/bin/firefox";
       }
+      {
+        name = "Display Settings";
+        description = "Manage displays and resolutions";
+        icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus/64x64/devices/display.svg";
+        command = "${pkgs.wdisplays}/bin/wdisplays";
+      }
     ];
   };
 }
