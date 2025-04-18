@@ -5,6 +5,19 @@
 { inputs, ... }:
 let
   system = "x86_64-linux";
+
+  # The versionRev is used to identify the current version of the configuration.
+  # rev is used when there is a clean repo
+  # dirtyRev is used when there are uncommitted changes
+  # if building in a rebased ci pre-merge check the state will be unknown.
+  versionRev =
+    if (inputs.self ? shortRev) then
+      inputs.self.shortRev
+    else if (inputs.self ? dirtyShortRev) then
+      inputs.self.dirtyShortRev
+    else
+      "unknown-dirty-rev";
+
   mkFmoLaptopConfiguration =
     name: extraModules:
     let
@@ -21,6 +34,10 @@ let
                 inputs.self.overlays.custom-packages
                 inputs.self.overlays.own-pkgs-overlay
               ];
+            };
+            system = {
+              configurationRevision = versionRev;
+              nixos.label = versionRev;
             };
           }
         ] ++ extraModules;
