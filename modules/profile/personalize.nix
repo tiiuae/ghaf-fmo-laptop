@@ -34,6 +34,7 @@ in
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMXCdSgQtSvxRpQoQZt+AkDichPaRG/GaWZwAMgKwT3y ilkka.siiki@solita.fi"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ9Y06NJE/jcPcz7uSE0fwavqzW5jrOb6Pyp1ZZ+pDjp janne.sangi@tii.ae"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICygKKd1/C5IKDiPfG3XdeUEVH/p8emcUm4+qOtY0Ycu aleksei.shebalov@tii.ae"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIErnbTZFBerokHdh9EFB58KRbWBy+64xq5fD9Yk++UnV eyad.shaklab@tii.ae"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6Mt+STPKhCLPoMf+CqSlnFD9TA2veK8wrNeItLWSCo build-server-key"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINt+3IkYGd4DYE6kK/J15ZhEIo2dRITlR+m3MjZ0nC0b github-key"
       ];
