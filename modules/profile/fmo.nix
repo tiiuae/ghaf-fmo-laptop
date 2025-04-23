@@ -71,8 +71,8 @@
         enable = true;
         vms =
           {
-            chrome.enable = true;
-            zathura.enable = true;
+            chrome.enable = false;
+            zathura.enable = false;
           }
           // (import ../microvm/docker/vm.nix { inherit pkgs lib config; })
           // (import ../microvm/msg/vm.nix { inherit pkgs lib config; });
@@ -85,7 +85,7 @@
 
         services = {
           enable = true;
-          google-chromecast = true;
+          google-chromecast = false;
         };
       };
 

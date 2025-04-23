@@ -37,7 +37,7 @@ in
 
     # Gui VM
     microvm.vms.gui-vm.config.config.microvm = {
-      mem = mkForce 8192;
+      mem = mkForce 10240;
       vcpu = mkForce 6;
     };
 

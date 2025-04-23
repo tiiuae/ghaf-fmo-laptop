@@ -41,7 +41,7 @@ in
     # Gui VM
     microvm.vms.gui-vm.config.config.microvm = {
       mem = mkForce 16384;
-      vcpu = mkForce 8;
+      vcpu = mkForce 10;
     };
 
     # Docker VM
