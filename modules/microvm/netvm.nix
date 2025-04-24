@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 {
   config,
+  pkgs,
   ...
 }:
 let
@@ -16,6 +17,10 @@ in
 
     # Adjust the MTU for the ethint0 interface
     systemd.network.links."10-ethint0".extraConfig = "MTUBytes=1372";
+
+    environment.systemPackages = [
+      pkgs.vnstat
+    ];
 
     # Services
     services = {
