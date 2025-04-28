@@ -7,7 +7,7 @@
   ...
 }:
 let
-  inherit (lib) any;
+  inherit (lib) any optionals optionalString;
 
   rmDesktopEntry =
     pkg:
@@ -29,11 +29,12 @@ let
       # Hardware video encoding on Chrome on Linux.
       # See chrome://gpu to verify.
       # Enable H.265 video codec support.
-      "--enable-features=AcceleratedVideoDecodeLinuxGL,UseOzonePlatform,VaapiVideoDecoder,VaapiVideoEncoder,WebRtcAllowH265Receive,VaapiIgnoreDriverChecks,WaylandLinuxDrmSyncobj"
-      "--ozone-platform=wayland"
+      "--enable-features=AcceleratedVideoDecodeLinuxGL,VaapiVideoDecoder,VaapiVideoEncoder,WebRtcAllowH265Receive,VaapiIgnoreDriverChecks,WaylandLinuxDrmSyncobj${
+        optionalString (!config.ghaf.graphics.nvidia-setup.enable) ",UseOzonePlatform"
+      }"
       "--force-fieldtrials=WebRTC-Video-H26xPacketBuffer/Enabled"
       "--enable-zero-copy"
-    ];
+    ] ++ optionals (!config.ghaf.graphics.nvidia-setup.enable) [ "--ozone-platform=wayland" ];
   };
 
 in
