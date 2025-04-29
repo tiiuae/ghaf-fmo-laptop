@@ -312,11 +312,11 @@
         "wireguard-gui": "wireguard-gui"
       },
       "locked": {
-        "lastModified": 1745585406,
-        "narHash": "sha256-aoxo5WYT2P0T2SwpEwYdLe9ixiLJYvfLdatTsIyLjxA=",
+        "lastModified": 1745947492,
+        "narHash": "sha256-DYFDOEMzk0EJuo/zqkArPZ13O8SOa78j+zX9OaVYM38=",
         "owner": "tiiuae",
         "repo": "ghaf",
-        "rev": "f105bdabce04189a019743fc533ed036984fae0f",
+        "rev": "5129787c38167525c591e92b1b7b3fecd828bfe8",
         "type": "github"
       },
       "original": {
@@ -785,11 +785,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744961264,
-        "narHash": "sha256-aRmUh0AMwcbdjJHnytg1e5h5ECcaWtIFQa6d9gI85AI=",
+        "lastModified": 1745929750,
+        "narHash": "sha256-k5ELLpTwRP/OElcLpNaFWLNf8GRDq4/eHBmFy06gGko=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "8d404a69efe76146368885110f29a2ca3700bee6",
+        "rev": "82bf32e541b30080d94e46af13d46da0708609ea",
         "type": "github"
       },
       "original": {
