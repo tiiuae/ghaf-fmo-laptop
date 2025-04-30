@@ -60,7 +60,7 @@ jobs:
           echo -e "\n[+] Git log after rebase (with $CONTEXT commits context):"
           git log --oneline -n$(( COMMITS + CONTEXT ))
       - name: Install nix
-        uses: cachix/install-nix-action@754537aaedb35f72ab11a60cc162c49ef3016495 # v31
+        uses: cachix/install-nix-action@526118121621777ccd86f79b04685a9319637641 # v31
       - name: Generate token
         id: auth
         uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5 # v2.0.2
