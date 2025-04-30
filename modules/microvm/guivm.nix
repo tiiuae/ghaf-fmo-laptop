@@ -54,6 +54,7 @@ in
       pkgs.wl-screenrec
       pkgs.slurp
       pkgs.resources
+      pkgs.wf-recorder
     ];
 
     programs.firefox = {
