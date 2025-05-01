@@ -51,6 +51,8 @@ in
 
     environment.systemPackages = [
       google-chrome
+      pkgs.wl-screenrec
+      pkgs.slurp
     ];
 
     programs.firefox = {
