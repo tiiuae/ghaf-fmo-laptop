@@ -53,6 +53,7 @@ in
       google-chrome
       pkgs.wl-screenrec
       pkgs.slurp
+      pkgs.resources
     ];
 
     programs.firefox = {
