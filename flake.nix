@@ -8,13 +8,13 @@
       "https://prod-cache.vedenemo.dev"
       "https://cache.ssrcdevops.tii.ae"
       "https://ghaf-dev.cachix.org"
-      "https://cache.nixos.org/"
+      "https://cache.nixos.org"
     ];
     extra-trusted-substituters = [
       "https://prod-cache.vedenemo.dev"
       "https://cache.ssrcdevops.tii.ae"
       "https://ghaf-dev.cachix.org"
-      "https://cache.nixos.org/"
+      "https://cache.nixos.org"
     ];
     extra-trusted-public-keys = [
       "prod-cache.vedenemo.dev~1:JcytRNMJJdYJVQCYwLNsrfVhct5dhCK2D3fa6O1WHOI="

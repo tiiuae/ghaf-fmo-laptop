@@ -73,7 +73,14 @@ let
         fmo.personalize.debug.enable = true;
       }
     ])
-
+    (laptop-configuration "fmo-tower-5080-debug" [
+      nixMods.hardware-tower-5080
+      nixMods.fmo-profile
+      {
+        ghaf.profiles.debug.enable = true;
+        fmo.personalize.debug.enable = true;
+      }
+    ])
     #
     # Release Builds
     #

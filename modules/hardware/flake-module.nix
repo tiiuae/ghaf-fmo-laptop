@@ -30,6 +30,10 @@
       # TODO: fix this upstream to support the usb kbd also
       #./definition/external-usb.nix
     ];
+    hardware-tower-5080.imports = [
+      inputs.ghaf.nixosModules.hardware-tower-5080
+      ./resources/tower-5080.nix
+    ];
     hardware-lenovo-x1-carbon-gen11.imports = [
       inputs.ghaf.nixosModules.hardware-lenovo-x1-carbon-gen11
       ./resources/lenovo-x1-carbon-gen11.nix

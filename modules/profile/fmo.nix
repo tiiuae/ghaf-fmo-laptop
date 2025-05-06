@@ -7,6 +7,9 @@
   lib,
   ...
 }:
+let
+  inherit (lib) optionals;
+in
 {
   imports = [
     # Ghaf imports
@@ -50,7 +53,6 @@
           ];
         };
         graphics = {
-          enable = true;
           idleManagement.enable = false;
           allowSuspend = false;
         };
@@ -63,9 +65,15 @@
       };
 
       # Enable shared directories for the selected VMs
-      virtualization.microvm-host.sharedVmDirectory.vms = [
-        "chrome-vm"
-      ];
+      virtualization.microvm-host.sharedVmDirectory.vms =
+        optionals
+          (
+            config.ghaf.virtualization.microvm.appvm.enable
+            && config.ghaf.virtualization.microvm.appvm.vms.chrome.enable
+          )
+          [
+            "chrome-vm"
+          ];
 
       virtualization.microvm.appvm = {
         enable = true;
