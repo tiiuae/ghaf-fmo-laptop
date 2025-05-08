@@ -45,6 +45,7 @@ in
       pkgs.tcpdump
       pkgs.gpsd
       pkgs.natscli
+      pkgs.networkmanager
     ];
 
     # Use givc service & app manager

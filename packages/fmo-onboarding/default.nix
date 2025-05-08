@@ -49,6 +49,66 @@ writeShellApplication {
         done
       }
 
+      #TODO test this in the actual device ++JSA
+      set_ip_con() {
+          CON_IP=""
+          GW_IP=""
+          echo "Choose active connection:"
+          NCON=$(nmcli con show --active|cut -d" "  -f1|fzf)
+          echo "Connection set to $NCON"
+
+          #filename=IP_FILE
+
+          # Read the first line (IP address) from the file
+          #if IFS= read -r ip; then
+          #    echo "First IP address: $ip"
+          #else
+          #    echo "File is empty or error reading the file."
+          #    exit 1
+          #fi
+
+          # Read Con IP from user
+          VALID_IP=false
+          until $VALID_IP; do
+              read -e -r -p "Enter fixed external IP: " IP
+              if ipcalc -c "$IP"; then
+                  #echo -n "$IP" > $IP_FILE
+                  echo "IP set to $IP"
+                  VALID_IP=true
+                  CON_IP=$IP
+              else
+                  echo "Invalid IP address: $IP"
+              fi
+          done
+          # Read Gateway IP from user
+          VALID_IP=false
+          until $VALID_IP; do
+              read -e -r -p "Enter Gateway IP: " IP
+              if ipcalc -c "$IP"; then
+                  #echo -n "$IP" > $IP_FILE
+                  echo "Gateway IP set to $IP"
+                  VALID_IP=true
+                  GW_IP=$IP
+              else
+                  echo "Invalid Gateway IP address: $IP"
+              fi
+          done
+
+          echo "NCON: $NCON"
+          echo "CON IP: $CON_IP"
+          echo "Gateway IP: $GW_IP"
+          nmcli con mod "$NCON" ipv4.addresses "$CON_IP"/24 \
+              ipv4.gateway "$GW_IP" \
+              ipv4.dns 8.8.8.8 \
+              ipv4.method manual
+
+          echo "Deactivate $NCON"
+          sudo nmcli con down "$NCON"
+          sleep 2
+          echo "Activate $NCON"
+          sudo nmcli con up "$NCON"
+      }
+
       set_ip(){
         # Read IP from user
         VALID_IP=false
@@ -134,6 +194,18 @@ writeShellApplication {
       ;;
       *)
       ;;
+      esac
+
+      #Network settings script call ++JSA
+      # Choose some active connection
+      read -r -p 'Do you want to set the Network connection automatically? [y/N] ' response
+      case "$response" in
+      [yY][eE][sS] | [yY])
+          set_ip_con
+          ;;
+      *)
+          echo "Set the Network connection manually..."
+          ;;
       esac
 
       # Wait to allow user to read output
