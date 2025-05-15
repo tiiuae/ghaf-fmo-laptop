@@ -25,6 +25,7 @@ in
       pkgs.tcpdump
       pkgs.gpsd
       pkgs.natscli
+      pkgs.fmo-launch-set-netw
     ];
 
     services = {
@@ -78,6 +79,12 @@ in
         description = "Manage displays and resolutions";
         icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus/64x64/devices/display.svg";
         command = "${pkgs.wdisplays}/bin/wdisplays";
+      }
+      {
+        name = "FMO Set Network Connection";
+        description = "FMO Set Network Connection - Update IP address dynamically";
+        icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus/64x64/apps/rocs.svg";
+        command = "${pkgs.foot}/bin/foot ${pkgs.fmo-launch-set-netw}/bin/fmo-launch-set-netw";
       }
     ];
   };
