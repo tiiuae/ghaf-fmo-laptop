@@ -5,13 +5,13 @@
 
   nixConfig = {
     substituters = [
-      "https://prod-cache.vedenemo.dev"
+      #"https://prod-cache.vedenemo.dev"
       "https://cache.ssrcdevops.tii.ae"
       "https://ghaf-dev.cachix.org"
       "https://cache.nixos.org"
     ];
     extra-trusted-substituters = [
-      "https://prod-cache.vedenemo.dev"
+      #"https://prod-cache.vedenemo.dev"
       "https://cache.ssrcdevops.tii.ae"
       "https://ghaf-dev.cachix.org"
       "https://cache.nixos.org"
@@ -31,7 +31,7 @@
     #TODO: this needs to be pinned to the version that ghaf is currently pinned to.
     # rather painful. though it can be pinned to official releases this way.
     nixpkgs = {
-      url = "github:NixOS/nixpkgs?rev=2631b0b7abcea6e640ce31cd78ea58910d31e650";
+      url = "github:NixOS/nixpkgs?rev=e06158e58f3adee28b139e9c2bcfcc41f8625b46";
     };
 
     ghaf = {
