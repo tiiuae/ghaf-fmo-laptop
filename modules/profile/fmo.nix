@@ -58,6 +58,13 @@ in
         };
       };
 
+      # Enable logging
+      logging = {
+        enable = false;
+        server.endpoint = "https://loki.ghaflogs.vedenemo.dev/loki/api/v1/push";
+        listener.address = config.ghaf.networking.hosts.admin-vm.ipv4;
+      };
+
       graphics = {
         labwc = {
           autologinUser = lib.mkForce null;
