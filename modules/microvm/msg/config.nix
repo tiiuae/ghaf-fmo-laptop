@@ -96,10 +96,12 @@ in
         nssmdns4 = true;
         ipv4 = true;
         ipv6 = false;
-        publish.enable = true;
-        publish.domain = true;
-        publish.addresses = true;
-        publish.workstation = true;
+        publish = {
+          enable = true;
+          domain = true;
+          addresses = true;
+          workstation = true;
+        };
         domainName = "msgvm";
       };
 

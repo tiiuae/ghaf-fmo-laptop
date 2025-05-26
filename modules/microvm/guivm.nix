@@ -40,13 +40,16 @@ let
 in
 {
   config = {
-    ghaf.graphics.nvidia-setup = {
-      enable = any (d: d.vendorId == "10de") config.ghaf.common.hardware.gpus;
-    };
+    ghaf.graphics = {
 
-    #Primary drivers for the integrated GPU should not be enabledd for prime case
-    ghaf.graphics.intel-setup = {
-      enable = !config.ghaf.graphics.nvidia-setup.enable;
+      nvidia-setup = {
+        enable = any (d: d.vendorId == "10de") config.ghaf.common.hardware.gpus;
+      };
+
+      #Primary drivers for the integrated GPU should not be enabledd for prime case
+      intel-setup = {
+        enable = !config.ghaf.graphics.nvidia-setup.enable;
+      };
     };
 
     environment.systemPackages = [

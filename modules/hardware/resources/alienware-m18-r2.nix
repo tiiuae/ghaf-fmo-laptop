@@ -26,14 +26,9 @@
 #
 # Memory ballooning is enabled in Ghaf.
 #
-{
-  lib,
-  ...
-}:
+{ lib, ... }:
 let
-  inherit (lib)
-    mkForce
-    ;
+  inherit (lib) mkForce;
 in
 {
   config = {
@@ -44,33 +39,34 @@ in
       vcpu = mkForce 10;
     };
 
-    # Docker VM
-    ghaf.virtualization.microvm.appvm.vms.docker = {
-      ramMb = mkForce 4096;
-      cores = mkForce 8;
-      balloonRatio = mkForce 4;
-    };
+    ghaf.virtualization.microvm.appvm.vms = {
+      # Docker VM
+      docker = {
+        ramMb = mkForce 4096;
+        cores = mkForce 8;
+        balloonRatio = mkForce 4;
+      };
 
-    # Msg VM
-    ghaf.virtualization.microvm.appvm.vms.msg = {
-      ramMb = mkForce 1024;
-      cores = mkForce 4;
-      balloonRatio = mkForce 4;
-    };
+      # Msg VM
+      msg = {
+        ramMb = mkForce 1024;
+        cores = mkForce 4;
+        balloonRatio = mkForce 4;
+      };
 
-    # Chrome VM
-    ghaf.virtualization.microvm.appvm.vms.chrome = {
-      ramMb = mkForce 4096;
-      cores = mkForce 8;
-      balloonRatio = mkForce 4;
-    };
+      # Chrome VM
+      chrome = {
+        ramMb = mkForce 4096;
+        cores = mkForce 8;
+        balloonRatio = mkForce 4;
+      };
 
-    # Zathura VM
-    ghaf.virtualization.microvm.appvm.vms.zathura = {
-      ramMb = mkForce 512;
-      cores = mkForce 1;
-      balloonRatio = mkForce 2;
+      # Zathura VM
+      zathura = {
+        ramMb = mkForce 512;
+        cores = mkForce 1;
+        balloonRatio = mkForce 2;
+      };
     };
-
   };
 }
