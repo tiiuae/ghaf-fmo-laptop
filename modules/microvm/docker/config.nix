@@ -30,6 +30,11 @@ let
       n: v: if (strings.hasPrefix "xbox" n) then v else [ ]
     ) config.ghaf.hardware.usb.external.qemuExtraArgs
   );
+  crazyflieExtraArgs = flatten (
+    mapAttrsToList (
+      n: v: if (strings.hasPrefix "crazy" n) then v else [ ]
+    ) config.ghaf.hardware.usb.external.qemuExtraArgs
+  );
 
   appuser = config.ghaf.users.appUser.name;
 in
@@ -110,7 +115,7 @@ in
       ]; # microvm.shares
 
       # Extra args for Qemu
-      qemu.extraArgs = yubikeysExtraArgs ++ gnssExtraArgs ++ xboxExtraArgs;
+      qemu.extraArgs = yubikeysExtraArgs ++ gnssExtraArgs ++ xboxExtraArgs ++ crazyflieExtraArgs;
     }; # microvm
 
     # Terminal and fonts
@@ -183,7 +188,6 @@ in
         ip_path = "/var/lib/fogdata";
         post_install_path = "/var/lib/fogdata/certs";
       };
-
     }; # services
   }; # config
 }
