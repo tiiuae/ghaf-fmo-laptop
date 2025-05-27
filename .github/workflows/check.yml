@@ -45,11 +45,11 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha || github.ref }}
           fetch-depth: 0
+          persist-credentials: false
       - name: Rebase
         if: ${{ github.base_ref != '' }}
         run: |
-          sudo apt-get update; sudo apt-get install -y git
-          BASE="origin/${{ github.base_ref }}"
+          BASE="origin/${BASE_REF}"
           COMMITS="$(git rev-list "$BASE".. --count)"
           CONTEXT=5
           echo -e "\n[+] Git log before rebase (with $CONTEXT commits context):"
@@ -59,6 +59,8 @@ jobs:
           git rebase "$BASE"
           echo -e "\n[+] Git log after rebase (with $CONTEXT commits context):"
           git log --oneline -n$(( COMMITS + CONTEXT ))
+        env:
+          BASE_REF: ${{ github.base_ref }}
       - name: Install nix
         uses: cachix/install-nix-action@526118121621777ccd86f79b04685a9319637641 # v31
       - name: Generate token
@@ -70,25 +72,30 @@ jobs:
           owner: tiiuae
       - name: Prepare remote builds
         run: |
-          sudo sh -c "echo '${{ vars.BUILDER_SSH_KNOWN_HOST }}' >>/etc/ssh/ssh_known_hosts"
+          sudo sh -c "echo '${BUILDER_SSH_KNOWN_HOST}' >>/etc/ssh/ssh_known_hosts"
+        env:
+          BUILDER_SSH_KNOWN_HOST: ${{ vars.BUILDER_SSH_KNOWN_HOST }}
       - name: Run all checks
         run: |
           # Setup the .netrc file on remote builder: it will be used to access
           # the go dependencies in private repositories
           tmpdir="$(mktemp --tmpdir=/tmp --dry-run --directory --suffix .gha-check)"
-          echo 'machine github.com login x-access-token password ${{ steps.auth.outputs.token }}' |\
-            ssh "${{ vars.BUILDER_X86 }}" "mkdir -p $tmpdir; cat > $tmpdir/.netrc"
+          echo "machine github.com login x-access-token password ${APP_TOKEN}" |\
+            ssh "${BUILDER_X86}" "mkdir -p $tmpdir; cat > $tmpdir/.netrc"
           on_exit () {
-            echo "Removing $tmpdir on ${{ vars.BUILDER_X86 }}"
-            ssh "${{ vars.BUILDER_X86 }}" "rm -fr $tmpdir"
+            echo "Removing $tmpdir on ${BUILDER_X86}"
+            ssh "${BUILDER_X86}" "rm -fr $tmpdir"
           }
           trap on_exit EXIT
 
           # Run the checks on remote builder
           nix run --inputs-from .# nixpkgs#nix-fast-build -- \
-            --remote '${{ vars.BUILDER_X86 }}' \
+            --remote "${BUILDER_X86}" \
             --flake '.#checks' \
             --always-upload-source \
             --option accept-flake-config true \
             --option extra-sandbox-paths "/tmp/.netrc=$tmpdir/.netrc" \
             --no-download --skip-cached --no-nom
+        env:
+          BUILDER_X86: ${{ vars.BUILDER_X86 }}
+          APP_TOKEN: ${{ steps.auth.outputs.token }}
