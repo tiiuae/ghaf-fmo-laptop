@@ -13,6 +13,22 @@ let
   laptop-configuration = import ./mkLaptopConfiguration.nix { inherit inputs; };
   installer-config = import ./mkInstaller.nix { inherit lib inputs; };
 
+  installerModules = [
+    (
+      { config, ... }:
+      {
+        imports = [
+          inputs.ghaf.nixosModules.common
+          inputs.ghaf.nixosModules.development
+          inputs.ghaf.nixosModules.reference-personalize
+        ];
+
+        users.users.nixos.openssh.authorizedKeys.keys =
+          config.ghaf.reference.personalize.keys.authorizedSshKeys;
+      }
+    )
+  ];
+
   # create a configuration for each live image
   target-configs = [
     (laptop-configuration "fmo-alienware-m18-r2-debug" [
@@ -118,7 +134,7 @@ let
 
   # create an installer for each target
   target-installers = map (
-    t: installer-config t.name (self.packages.x86_64-linux.${t.name} + "/disk1.raw.zst") [ ]
+    t: installer-config t.name self.packages.x86_64-linux.${t.name} installerModules
   ) target-configs;
 
   # the overall outputs. Both the live image and an installer for it.

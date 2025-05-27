@@ -46,7 +46,7 @@ let
     {
       inherit hostConfig;
       inherit name;
-      package = hostConfig.config.system.build.diskoImages;
+      package = hostConfig.config.system.build.ghafImage;
     };
 in
 mkFmoLaptopConfiguration
