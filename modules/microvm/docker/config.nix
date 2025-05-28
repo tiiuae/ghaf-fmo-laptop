@@ -131,8 +131,16 @@ in
       ${appuser} ALL=(root) NOPASSWD: ${pkgs.fmo-offboarding}/bin/fmo-offboarding
     '';
 
+    users.groups."plugdev" = { };
+
     # Services
     services = {
+
+      # crazyflie components
+      udev = {
+        enable = true;
+        packages = [ pkgs.python3Packages.cflib ];
+      };
 
       # TODO enable monitoring service
       # fmo-monitor-service = {
