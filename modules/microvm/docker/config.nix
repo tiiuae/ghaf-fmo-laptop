@@ -131,6 +131,8 @@ in
       ${appuser} ALL=(root) NOPASSWD: ${pkgs.fmo-offboarding}/bin/fmo-offboarding
     '';
 
+    users.groups."plugdev" = { };
+
     # Services
     services = {
 
