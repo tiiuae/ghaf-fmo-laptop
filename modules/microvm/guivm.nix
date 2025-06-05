@@ -7,7 +7,12 @@
   ...
 }:
 let
-  inherit (lib) any optionals optionalString;
+  inherit (lib)
+    any
+    optionals
+    optionalString
+    mkForce
+    ;
 
   rmDesktopEntry =
     pkg:
@@ -65,10 +70,19 @@ in
       package = rmDesktopEntry pkgs.firefox;
     };
 
-    ghaf.ghaf-audio = {
-      enable = true;
-      useTunneling = false;
-      inherit (config.system) name;
+    # A greetd service override is needed to run Google Chrome.
+    # Since Google Chrome uses GPU resources, we require less
+    # hardening for greetd service compared to ghaf.
+    systemd.services.greetd.serviceConfig = {
+      RestrictNamespaces = mkForce false;
+      SystemCallFilter = mkForce [
+        "~@cpu-emulation"
+        "~@debug"
+        "~@module"
+        "~@obsolete"
+        "~@reboot"
+        "~@swap"
+      ];
     };
   };
 }

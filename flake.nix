@@ -33,7 +33,7 @@
 
     ghaf = {
       #url = "flake:mylocalghaf";
-      url = "github:tiiuae/ghaf";
+      url = "github:tiiuae/ghaf/671aa7dfbca5495cee0dddcefdbbbc7663363b16";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
