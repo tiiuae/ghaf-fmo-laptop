@@ -136,6 +136,12 @@ in
     # Services
     services = {
 
+      # crazyflie components
+      udev = {
+        enable = true;
+        packages = [ pkgs.python3Packages.cflib ];
+      };
+
       # TODO enable monitoring service
       # fmo-monitor-service = {
       #   enable = true;
