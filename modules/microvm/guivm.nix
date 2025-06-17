@@ -31,6 +31,9 @@ let
 
   google-chrome = (rmDesktopEntry pkgs.google-chrome).override {
     commandLineArgs = [
+      # Enable secure browser apis for the fmo-ui
+      "--unsafely-treat-insecure-origin-as-secure=\"http://docker-vm:3000\""
+
       # Hardware video encoding on Chrome on Linux.
       # See chrome://gpu to verify.
       # Enable H.265 video codec support.
