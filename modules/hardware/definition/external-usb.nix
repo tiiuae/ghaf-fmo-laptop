@@ -22,6 +22,12 @@
         vendorId = "0bda";
         productId = "8153";
       }
+      {
+        # Logic3 Xbox-Victrix
+        name = "xbox-victrix";
+        vendorId = "0e6f";
+        productId = "02d6";
+      }
     ];
   };
 }

@@ -30,6 +30,13 @@ let
       n: v: if (strings.hasPrefix "xbox" n) then v else [ ]
     ) config.ghaf.hardware.usb.external.qemuExtraArgs
   );
+
+  victrixXboxExtraArgs = flatten (
+    mapAttrsToList (
+      n: v: if (strings.hasPrefix "Victrix" n) then v else [ ]
+    ) config.ghaf.hardware.usb.external.qemuExtraArgs
+  );
+
   crazyflieExtraArgs = flatten (
     mapAttrsToList (
       n: v: if (strings.hasPrefix "crazy" n) then v else [ ]
@@ -115,7 +122,8 @@ in
       ]; # microvm.shares
 
       # Extra args for Qemu
-      qemu.extraArgs = yubikeysExtraArgs ++ gnssExtraArgs ++ xboxExtraArgs ++ crazyflieExtraArgs;
+      qemu.extraArgs =
+        yubikeysExtraArgs ++ gnssExtraArgs ++ xboxExtraArgs ++ crazyflieExtraArgs ++ victrixXboxExtraArgs;
     }; # microvm
 
     # Terminal and fonts
