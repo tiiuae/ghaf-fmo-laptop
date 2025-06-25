@@ -16,7 +16,7 @@
 #    Net VM:     1 vcpu    512 MB
 #    Audio VM:   1 vcpu    384 MB
 #    Admin VM:   1 vcpu    512 MB
-#    Gui VM:     2 vcpu    2047 MB
+#    Gui VM:     2 vcpu    6144 MB
 #    Zathura VM: 1 vcpu    512 MB
 #    Chrome VM:  2 vcpu    4095 MB
 #    Docker VM:  2 vcpu    2047 MB
@@ -33,7 +33,7 @@ in
 
     # Gui VM
     microvm.vms.gui-vm.config.config.microvm = {
-      mem = mkForce 2047;
+      mem = mkForce 6144;
       vcpu = mkForce 2;
     };
 
