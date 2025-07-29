@@ -40,7 +40,8 @@ let
               nixos.label = versionRev;
             };
           }
-        ] ++ extraModules;
+        ]
+        ++ extraModules;
       };
     in
     {

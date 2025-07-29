@@ -41,7 +41,8 @@ let
       "--enable-features=AcceleratedVideoDecodeLinuxGL,VaapiVideoDecoder,VaapiVideoEncoder,WebRtcAllowH265Receive,VaapiIgnoreDriverChecks,WaylandLinuxDrmSyncobj${chromeExtraArgs}"
       "--force-fieldtrials=WebRTC-Video-H26xPacketBuffer/Enabled"
       "--enable-zero-copy"
-    ] ++ optionals (!nvidiaEnabled) [ "--ozone-platform=wayland" ];
+    ]
+    ++ optionals (!nvidiaEnabled) [ "--ozone-platform=wayland" ];
   };
 
 in

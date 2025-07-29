@@ -22,23 +22,22 @@
           devshell = {
             name = "Ghaf-fmo devshell";
             meta.description = "ghaf-fmo development environment";
-            packages =
-              [
-                pkgs.just
-                pkgs.jq
-                pkgs.nix-eval-jobs
-                pkgs.nix-fast-build
-                pkgs.nix-output-monitor
-                pkgs.nix-tree
-                pkgs.nixVersions.latest
-                pkgs.reuse
-                pkgs.cachix
-                pkgs.coreutils
-                config.treefmt.build.wrapper
-                fmo-build-helper
-              ]
-              ++ lib.attrValues config.treefmt.build.programs # make all the treefmt packages available
-              ++ config.pre-commit.settings.enabledPackages;
+            packages = [
+              pkgs.just
+              pkgs.jq
+              pkgs.nix-eval-jobs
+              pkgs.nix-fast-build
+              pkgs.nix-output-monitor
+              pkgs.nix-tree
+              pkgs.nixVersions.latest
+              pkgs.reuse
+              pkgs.cachix
+              pkgs.coreutils
+              config.treefmt.build.wrapper
+              fmo-build-helper
+            ]
+            ++ lib.attrValues config.treefmt.build.programs # make all the treefmt packages available
+            ++ config.pre-commit.settings.enabledPackages;
 
             startup.hook.text = config.pre-commit.installationScript;
           };
