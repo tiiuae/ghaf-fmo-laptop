@@ -24,7 +24,7 @@
 
     # Pinned to the version that ghaf is currently pinned to.
     nixpkgs = {
-      url = "github:tiiuae/nixpkgs/nixos-unstable-fix-ibus";
+      url = "github:NixOS/nixpkgs/17f6bd177404d6d43017595c5264756764444ab8";
     };
 
     ghaf = {
