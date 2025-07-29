@@ -21,7 +21,7 @@ let
   mkFmoLaptopConfiguration =
     name: extraModules:
     let
-      hostConfig = inputs.nixpkgs.lib.nixosSystem {
+      hostConfig = inputs.self.lib.nixosSystem {
         modules = [
           {
             nixpkgs = {

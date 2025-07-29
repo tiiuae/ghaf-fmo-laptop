@@ -4,17 +4,15 @@
 
 # TODO: remove this file when the installer is exported from Ghaf
 # Installer
-{
-  lib,
-  inputs,
-  ...
-}:
+{ inputs, ... }:
 let
   system = "x86_64-linux";
+  inherit (inputs.self) lib;
+
   mkInstaller =
     name: imagePath: extraModules:
     let
-      hostConfiguration = inputs.nixpkgs.lib.nixosSystem {
+      hostConfiguration = lib.nixosSystem {
         inherit system;
         modules = [
           (
@@ -31,6 +29,8 @@ let
               systemd.services.wpa_supplicant.wantedBy = lib.mkForce [ "multi-user.target" ];
               systemd.services.sshd.wantedBy = lib.mkForce [ "multi-user.target" ];
 
+              networking.networkmanager.enable = true;
+              networking.wireless.enable = false;
               isoImage.isoBaseName = lib.mkForce "ghaf";
               networking.hostName = "ghaf-installer";
 

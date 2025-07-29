@@ -1,17 +1,13 @@
 # Copyright 2022-2025 TII (SSRC) and the Ghaf contributors
 # SPDX-License-Identifier: Apache-2.0
-{
-  lib,
-  self,
-  inputs,
-  ...
-}:
+{ inputs, ... }:
 let
   system = "x86_64-linux";
   nixMods = inputs.self.nixosModules;
+  inherit (inputs.self) lib;
 
   laptop-configuration = import ./mkLaptopConfiguration.nix { inherit inputs; };
-  installer-config = import ./mkInstaller.nix { inherit lib inputs; };
+  installer-config = import ./mkInstaller.nix { inherit inputs; };
 
   installerModules = [
     (
@@ -124,7 +120,7 @@ let
 
   # create an installer for each target
   target-installers = map (
-    t: installer-config t.name self.packages.x86_64-linux.${t.name} installerModules
+    t: installer-config t.name inputs.self.packages.x86_64-linux.${t.name} installerModules
   ) target-configs;
 
   # the overall outputs. Both the live image and an installer for it.

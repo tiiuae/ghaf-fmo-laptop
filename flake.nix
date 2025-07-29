@@ -24,7 +24,7 @@
 
     # Pinned to the version that ghaf is currently pinned to.
     nixpkgs = {
-      url = "github:NixOS/nixpkgs/17f6bd177404d6d43017595c5264756764444ab8";
+      url = "github:NixOS/nixpkgs?rev=17f6bd177404d6d43017595c5264756764444ab8";
     };
 
     ghaf = {
@@ -72,16 +72,25 @@
 
   outputs =
     inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-linux"
-      ];
-      imports = [
-        ./modules/flake-module.nix
-        ./nix/flake-module.nix
-        ./overlays/flake-module.nix
-        ./targets/flake-module.nix
-        ./packages/flake-module.nix
-      ];
-    };
+    let
+      inherit (inputs.ghaf) lib;
+    in
+    flake-parts.lib.mkFlake
+      {
+        inherit inputs;
+        specialArgs = { inherit lib; };
+      }
+      {
+        systems = [
+          "x86_64-linux"
+        ];
+        imports = [
+          ./modules/flake-module.nix
+          ./nix/flake-module.nix
+          ./overlays/flake-module.nix
+          ./targets/flake-module.nix
+          ./packages/flake-module.nix
+        ];
+        flake.lib = lib;
+      };
 }
