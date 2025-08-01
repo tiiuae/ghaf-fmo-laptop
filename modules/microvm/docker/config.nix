@@ -41,6 +41,7 @@ in
     ../../fmo/fmo-onboarding-agent
     ../../fmo/fmo-update-hostname
     ../../fmo/fmo-docker-networking
+    ../../fmo/fmo-dac-agent
   ];
 
   config = {
@@ -189,6 +190,11 @@ in
         hostname_path = "/var/lib/fogdata";
         ip_path = "/var/lib/fogdata";
         post_install_path = "/var/lib/fogdata/certs";
+      };
+
+      fmo-dac-agent = {
+        enable = true;
+        # Use defaults unless there's need to change them
       };
     }; # services
   }; # config

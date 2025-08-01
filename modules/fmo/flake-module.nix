@@ -10,6 +10,7 @@
       ./fmo-onboarding-agent
       ./fmo-nats-server
       ./fmo-update-hostname
+      ./fmo-dac-agent
     ];
   };
 }
