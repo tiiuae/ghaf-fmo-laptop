@@ -4,32 +4,9 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }:
 let
-  inherit (lib)
-    strings
-    mapAttrsToList
-    flatten
-    ;
-
-  # Temporary until USB passthrough is fixed
-  gnssExtraArgs = flatten (
-    mapAttrsToList (
-      n: v: if (strings.hasPrefix "gnss" n) then v else [ ]
-    ) config.ghaf.hardware.usb.external.qemuExtraArgs
-  );
-  xboxExtraArgs = flatten (
-    mapAttrsToList (
-      n: v: if (strings.hasPrefix "xbox" n) then v else [ ]
-    ) config.ghaf.hardware.usb.external.qemuExtraArgs
-  );
-  crazyflieExtraArgs = flatten (
-    mapAttrsToList (
-      n: v: if (strings.hasPrefix "crazy" n) then v else [ ]
-    ) config.ghaf.hardware.usb.external.qemuExtraArgs
-  );
 
   appuser = config.ghaf.users.appUser.name;
 in
@@ -108,9 +85,6 @@ in
           socket = "nats_dockervm_ca_certs.sock";
         }
       ]; # microvm.shares
-
-      # Extra args for Qemu
-      qemu.extraArgs = gnssExtraArgs ++ xboxExtraArgs ++ crazyflieExtraArgs;
     }; # microvm
 
     # Terminal and fonts

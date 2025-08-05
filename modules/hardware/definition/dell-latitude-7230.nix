@@ -9,7 +9,7 @@ in
 
     # USB passthrough options
     # TODO Fix this in ghaf, and unify mechanism for USB passthrough
-    ghaf.hardware.definition.usb.internal = mkForce [
+    ghaf.hardware.definition.usb.devices = mkForce [
       {
         name = "bt0";
         vendorId = "8087";

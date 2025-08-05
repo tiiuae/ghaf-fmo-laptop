@@ -7,7 +7,7 @@
     # by vhotplug. These network adapters are untested.
     # External USB devices such as gps, yubikey and xbox
     # are also inherited from ghaf
-    ghaf.hardware.definition.usb.external = [
+    ghaf.hardware.definition.usb.devices = [
       {
         # PLX Technology, Inc. RNDIS/Ethernet Gadget
         # PLX Technology, Inc. Linux-USB Ethernet/RNDIS Gadget

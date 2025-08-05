@@ -92,6 +92,24 @@ in
         // (import ../microvm/msg/vm.nix { inherit pkgs lib config; });
       };
 
+      hardware.passthrough.VMs = {
+        gui-vm.permittedDevices = [
+          "cam0"
+          "fpr0"
+          "gps0"
+          "usbKBD"
+        ];
+        docker-vm.permittedDevices = [
+          "crazyradio0"
+          "crazyradio1"
+          "gnss0"
+          "xbox0"
+          "xbox1"
+          "crazyflie0"
+          "xbox2"
+        ];
+        audio-vm.permittedDevices = [ "bt0" ];
+      };
       # Content
       reference = {
         appvms.enable = true;
