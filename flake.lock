@@ -87,6 +87,31 @@
         "type": "github"
       }
     },
+    "device-assembly-toolset": {
+      "inputs": {
+        "flake-utils": [
+          "ghaf",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1755175300,
+        "narHash": "sha256-q/fm8abf/fz9blNpoE7D+Z9vqpsm0YPecUhZ2RWIJPI=",
+        "ref": "feature/pmc-agent",
+        "rev": "015234f2aab78ff8b159011d148e643ac7d4049e",
+        "revCount": 130,
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
+      },
+      "original": {
+        "ref": "feature/pmc-agent",
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
+      }
+    },
     "devshell": {
       "inputs": {
         "nixpkgs": [
@@ -694,6 +719,7 @@
     },
     "root": {
       "inputs": {
+        "device-assembly-toolset": "device-assembly-toolset",
         "devshell": "devshell",
         "flake-parts": "flake-parts",
         "flake-root": "flake-root",
