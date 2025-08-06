@@ -41,6 +41,14 @@
       };
     };
 
+    device-assembly-toolset = {
+      url = "git+ssh://git@github.com/tiiuae/device_assembly_toolset?ref=feature/pmc-agent";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "ghaf/flake-utils";
+      };
+    };
+
     ###
     # Flake and repo structuring configurations
     ###
