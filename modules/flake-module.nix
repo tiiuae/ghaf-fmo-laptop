@@ -6,6 +6,7 @@
     ./hardware/flake-module.nix
     ./fmo/flake-module.nix
     ./profile/flake-module.nix
+    ./dac/flake-module.nix
   ];
 
   flake.nixosModules = {

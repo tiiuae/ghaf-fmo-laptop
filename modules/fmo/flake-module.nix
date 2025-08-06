@@ -16,6 +16,7 @@
       ./fmo-nats-server
       ./fmo-update-hostname
       ./fmo-docker-networking
+      ./hardware-id-manager
     ];
   };
 }
