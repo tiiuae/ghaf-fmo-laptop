@@ -18,6 +18,7 @@ in
     ../../fmo/fmo-onboarding-agent
     ../../fmo/fmo-update-hostname
     ../../fmo/fmo-docker-networking
+    ../../dac/dac-agent
   ];
 
   config = {
@@ -27,6 +28,7 @@ in
       pkgs.tcpdump
       pkgs.gpsd
       pkgs.natscli
+      pkgs.device-assembly-agent
     ];
 
     # Use givc service & app manager
@@ -94,10 +96,11 @@ in
       settings.main.font = "FiraCode Nerd Font Mono:size=10";
     };
 
-    # Allow app user in this vm to run root commands for on-/offboarding
+    # Allow app user in this vm to run root commands for on-/offboarding and DAC agent
     security.sudo.extraConfig = ''
       ${appuser} ALL=(root) NOPASSWD: ${pkgs.fmo-onboarding}/bin/fmo-onboarding
       ${appuser} ALL=(root) NOPASSWD: ${pkgs.fmo-offboarding}/bin/fmo-offboarding
+      ${appuser} ALL=(root) NOPASSWD: ${pkgs.device-assembly-agent}/bin/device-assembly-agent
     '';
 
     users.groups."plugdev" = { };
@@ -163,6 +166,10 @@ in
         hostname_path = "/var/lib/fogdata";
         ip_path = "/var/lib/fogdata";
         post_install_path = "/var/lib/fogdata/certs";
+      };
+
+      dac-agent = {
+        enable = true;
       };
     }; # services
   }; # config

@@ -86,6 +86,30 @@
         "type": "github"
       }
     },
+    "device-assembly-toolset": {
+      "inputs": {
+        "flake-utils": [
+          "ghaf",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1756389316,
+        "narHash": "sha256-xQ5NTVcbKkEREJh+5HhgUh+9/seeSylZZTvjG1CjBFE=",
+        "ref": "refs/heads/main",
+        "rev": "b8589f4071e73af8253681f8ec5f1d61772cbc46",
+        "revCount": 145,
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
+      }
+    },
     "devshell": {
       "inputs": {
         "nixpkgs": [
@@ -693,6 +717,7 @@
     },
     "root": {
       "inputs": {
+        "device-assembly-toolset": "device-assembly-toolset",
         "devshell": "devshell",
         "flake-parts": "flake-parts",
         "flake-root": "flake-root",
