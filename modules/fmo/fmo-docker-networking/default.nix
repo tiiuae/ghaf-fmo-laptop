@@ -34,16 +34,11 @@ in
 
     ghaf.firewall = rec {
       allowedTCPPorts = [
-        80
         123
-        4222
-        4223
-        4280
-        4290
-        5432
         6422
+        6423
+        4222
         7222
-        8888
       ];
       allowedUDPPorts = [
         123
