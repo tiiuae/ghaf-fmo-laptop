@@ -68,10 +68,25 @@ in
       default = "/var/lib/fogdata/onboarding-agent.log";
     };
 
+<<<<<<< HEAD
     hardware_config_file = mkOption {
       description = "Path to the hardware definition proto file";
       type = types.path;
       default = "/var/lib/fogdata/hw_conf.proto";
+=======
+    enable_dac = mkEnableOption "Enable DAC verification";
+
+    dac_file_path = mkOption {
+      description = "Path to Device Assembly Card (DAC) file";
+      type = types.path;
+      default = "/var/lib/fogdata/dac/dac.json";
+    };
+
+    hardware_config_file = mkOption {
+      description = "Path to the HW configuration file";
+      type = types.path;
+      default = "/var/lib/fogdata/device_config.prototxt";
+>>>>>>> 6e67bf3 (feat: KMS enrolment and DAC creation)
     };
   };
 
@@ -95,6 +110,7 @@ in
 
             # Write config.yaml file
             cat > ${cfg.env_path}/config.yaml << EOF
+            ${if cfg.enable_dac then "EnableDAC: true" else ""}
             TLS: true
             MDNS: true
             NatsEndpointFile: "${cfg.certs_path}/service_nats_url.txt"
@@ -108,6 +124,10 @@ in
               ConfigurationFile: "${cfg.config_path}/docker-compose.yml"
               ConfigurationTemplateFile: "${cfg.config_path}/docker-compose.mustache"
               NatsLeafConfigurationFile: "${cfg.certs_path}/leaf.conf"
+<<<<<<< HEAD
+=======
+              ${if cfg.enable_dac then "AssemblyCardFile: \"${cfg.dac_file_path}\"" else ""}
+>>>>>>> 6e67bf3 (feat: KMS enrolment and DAC creation)
               HardwareConfigurationFile: "${cfg.hardware_config_file}"
             Identity:
               CaCertFile: "${cfg.certs_path}/identity_ca.crt"
