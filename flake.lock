@@ -111,6 +111,28 @@
         "owner": "nixos-cuda",
         "repo": "cuda-legacy",
         "type": "github"
+    "device-assembly-toolset": {
+      "inputs": {
+        "flake-utils": [
+          "ghaf",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1756389316,
+        "narHash": "sha256-xQ5NTVcbKkEREJh+5HhgUh+9/seeSylZZTvjG1CjBFE=",
+        "ref": "refs/heads/main",
+        "rev": "b8589f4071e73af8253681f8ec5f1d61772cbc46",
+        "revCount": 145,
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
       }
     },
     "devshell": {
@@ -581,6 +603,30 @@
         "type": "github"
       }
     },
+    "kms-enrolment": {
+      "inputs": {
+        "flake-utils": [
+          "ghaf",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1756274224,
+        "narHash": "sha256-cFiP6pQKMJdISjnoFzksMO557ktqCOktvVFwf3ixgSU=",
+        "ref": "refs/heads/main",
+        "rev": "261c4483e431e52d44e5d9d3f6aa303e90b08c53",
+        "revCount": 36,
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/enroll-mc"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/enroll-mc"
+      }
+    },
     "microvm": {
       "inputs": {
         "flake-utils": [
@@ -793,12 +839,15 @@
     },
     "root": {
       "inputs": {
+        "device-assembly-toolset": "device-assembly-toolset",
         "devshell": "devshell",
         "flake-parts": "flake-parts",
         "flake-root": "flake-root",
         "ghaf": "ghaf",
         "git-hooks-nix": "git-hooks-nix_2",
         "nixpkgs": "nixpkgs_2",
+        "kms-enrolment": "kms-enrolment",
+        "nixpkgs": "nixpkgs",
         "onboarding-agent": "onboarding-agent",
         "treefmt-nix": "treefmt-nix_2"
       }
