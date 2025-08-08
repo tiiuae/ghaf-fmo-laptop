@@ -25,6 +25,9 @@ in
     # Services
     services = {
 
+      # enable the network monitoring service
+      vnstat.enable = true;
+
       # Avahi
       avahi = {
         enable = true;
