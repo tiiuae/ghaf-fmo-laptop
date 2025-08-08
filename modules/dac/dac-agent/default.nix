@@ -34,7 +34,7 @@ in
     nats_endpoint = mkOption {
       description = "The NATS server the agent will communicate with the server to receive the DAC";
       type = types.str;
-      default = "localhost";
+      default = "nats://localhost:9876";
     };
 
     serial_number_file = mkOption {
