@@ -119,6 +119,12 @@ in
             sport = "123";
             proto = "tcp";
           }
+          {
+            dip = hosts.docker-vm.ipv4;
+            dport = "9876";
+            sport = "9876";
+            proto = "tcp";
+          }
         ];
       };
     }; # services

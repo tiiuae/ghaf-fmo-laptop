@@ -24,7 +24,7 @@ in
       before = [ "multi-user.target" ];
       serviceConfig = {
         Type = "exec";
-        ExecStart = "/run/current-system/sw/bin/nats-server --trace --debug";
+        ExecStart = "/run/current-system/sw/bin/nats-server --trace --debug --port 9876";
         Restart = "on-failure";
       };
     };

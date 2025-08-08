@@ -19,6 +19,7 @@ in
     ../../fmo/fmo-update-hostname
     ../../fmo/fmo-docker-networking
     ../../dac/dac-agent
+    ../../dac/dac-nats-server
   ];
 
   config = {
@@ -29,6 +30,7 @@ in
       pkgs.gpsd
       pkgs.natscli
       pkgs.device-assembly-agent
+      pkgs.nats-server
     ];
 
     # Use givc service & app manager
@@ -166,6 +168,10 @@ in
         hostname_path = "/var/lib/fogdata";
         ip_path = "/var/lib/fogdata";
         post_install_path = "/var/lib/fogdata/certs";
+      };
+
+      dac-nats-server = {
+        enable = true;
       };
 
       dac-agent = {
