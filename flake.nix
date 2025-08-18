@@ -24,7 +24,7 @@
 
     # Pinned to the version that ghaf is currently pinned to.
     nixpkgs = {
-      url = "github:tiiuae/nixpkgs/fix-qemu";
+      url = "github:tiiuae/nixpkgs/fix-qemu-rebase";
     };
 
     ghaf = {
