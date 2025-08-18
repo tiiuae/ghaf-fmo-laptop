@@ -11,6 +11,7 @@ let
   inherit (lib)
     mkIf
     mkEnableOption
+    mkForce
     mkOption
     types
     ;
@@ -54,7 +55,7 @@ in
     # NAT translation for docker bridge network
     # used by operational-nats
     networking.nat = {
-      enable = true;
+      enable = mkForce true;
       externalInterface = "ethint0";
       inherit (cfg) internalIPs;
     };
