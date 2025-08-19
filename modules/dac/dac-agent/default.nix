@@ -76,10 +76,8 @@ in
             # Write ENV file
             cat > ${cfg.env_path}/dac-agent.env << EOF
             LOG_LEVEL=${cfg.log_level}
-            MOCK=false
             DAC_STORE_PATH=${cfg.dac_store_path}
             KEY_PATH=${cfg.key_path}
-            PMC_SERIAL_NUMBER_FILE=${cfg.serial_number_file}
             DEVICE_ID=$device_id
             NATS_HOST=${cfg.nats_endpoint}
             EOF

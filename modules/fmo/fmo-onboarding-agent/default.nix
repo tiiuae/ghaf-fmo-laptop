@@ -67,6 +67,14 @@ in
       type = types.path;
       default = "/var/lib/fogdata/onboarding-agent.log";
     };
+
+    enable_dac = mkEnableOption "Enable DAC verification";
+
+    dac_file_path = mkOption {
+      description = "Path to Device Assembly Card (DAC) file";
+      type = types.path;
+      default = "/var/lib/fogdata/dac/dac.json";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -89,6 +97,7 @@ in
 
             # Write config.yaml file
             cat > ${cfg.env_path}/config.yaml << EOF
+            ${if cfg.enable_dac then "EnableDAC: true" else ""}
             TLS: true
             MDNS: true
             NatsEndpointFile: "${cfg.certs_path}/service_nats_url.txt"
@@ -102,6 +111,7 @@ in
               ConfigurationFile: "${cfg.config_path}/docker-compose.yml"
               ConfigurationTemplateFile: "${cfg.config_path}/docker-compose.mustache"
               NatsLeafConfigurationFile: "${cfg.certs_path}/leaf.conf"
+              ${if cfg.enable_dac then "AssemblyCardFile: \"${cfg.dac_file_path}\"" else ""}
             Identity:
               CaCertFile: "${cfg.certs_path}/identity_ca.crt"
               CertFile: "${cfg.certs_path}/identity.crt"
