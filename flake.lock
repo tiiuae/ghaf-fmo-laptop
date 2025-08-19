@@ -337,11 +337,11 @@
         "wireguard-gui": "wireguard-gui"
       },
       "locked": {
-        "lastModified": 1755504389,
-        "narHash": "sha256-qn57s4A9jLbpbxP4Qdo4fDOZxuX6adjC+yRyfLEHxtU=",
+        "lastModified": 1755563635,
+        "narHash": "sha256-xQz6zt9i3Ppb0+NY+NQF+jpistRHhSj2rFBlNEojbKk=",
         "owner": "tiiuae",
         "repo": "ghaf",
-        "rev": "9e4056b6016dcdac7f11d9f5b3d6c2fcf5076d86",
+        "rev": "4954b4e8aef74d6111194396d600f60ec44955d9",
         "type": "github"
       },
       "original": {
@@ -672,15 +672,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1752043847,
-        "narHash": "sha256-EGdkF6yTsG1GGZPpPdAmd51+da2O9iU6OJliCGXj1K8=",
-        "ref": "refs/heads/main",
-        "rev": "537c6535aa320c222b45e3553394fa1d330cd200",
-        "revCount": 419,
+        "lastModified": 1755601025,
+        "narHash": "sha256-XbkxOWUpd+RMnSIc0otvnCTEIYI+BxB/+pIsGIjfD98=",
+        "ref": "feature/dac-verification",
+        "rev": "50a811cc93c04a5b0a3a2f7a3353b432d426ab25",
+        "revCount": 420,
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/onboarding-agent"
       },
       "original": {
+        "ref": "feature/dac-verification",
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/onboarding-agent"
       }
