@@ -168,6 +168,8 @@ in
         hostname_path = "/var/lib/fogdata";
         ip_path = "/var/lib/fogdata";
         post_install_path = "/var/lib/fogdata/certs";
+        enable_dac = true;
+        dac_file_path = "/var/lib/fogdata/dac/dac.json";
       };
 
       dac-nats-server = {

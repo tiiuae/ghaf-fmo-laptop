@@ -34,7 +34,7 @@
     };
 
     onboarding-agent = {
-      url = "git+ssh://git@github.com/tiiuae/onboarding-agent";
+      url = "git+ssh://git@github.com/tiiuae/onboarding-agent?ref=feature/dac-verification";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "ghaf/flake-utils";
