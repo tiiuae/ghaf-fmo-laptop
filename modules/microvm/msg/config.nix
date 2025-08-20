@@ -139,6 +139,6 @@ in
     }; # services
 
     # TODO Do we support the FMO dynamic firewalling
-    networking.firewall.enable = false;
+    ghaf.firewall.enable = false;
   };
 }
