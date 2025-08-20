@@ -26,32 +26,29 @@ in
       description = ''
         List of docker network ranges for NAT translation.
       '';
-      default = [ "172.18.0.0/16" ];
+      default = [ "172.17.0.0/16" ];
     };
 
   };
 
   config = mkIf cfg.enable {
 
-    # TODO Enable firewall and test
-    networking.firewall.enable = false;
-
-    # TODO inherit firewall ports from fmo-firewall in docker
-    # networking.firewall.allowedTCPPorts = [
-    #   123
-    #   6422
-    #   6423
-    #   4222
-    #   7222
-    # ];
-    # networking.firewall.allowedUDPPorts = [
-    #   123
-    #   6422
-    #   6423
-    #   4222
-    #   7222
-    # ];
-
+    ghaf.firewall = {
+      allowedTCPPorts = [
+        123
+        6422
+        6423
+        4222
+        7222
+      ];
+      allowedUDPPorts = [
+        123
+        6422
+        6423
+        4222
+        7222
+      ];
+    };
     # NAT translation for docker bridge network
     # used by operational-nats
     networking.nat = {

@@ -25,8 +25,9 @@ let
       proto,
     }:
     ''
-      /run/current-system/sw/sbin/iptables -t nat -A PREROUTING -i "$IFACE" -p ${proto} --dport ${sport} -j DNAT --to-destination ${dip}:${dport}
-      /run/current-system/sw/sbin/iptables -t nat -A POSTROUTING -o "$IFACE" -p ${proto} --dport ${sport} -j MASQUERADE
+      /run/current-system/sw/sbin/iptables -t nat -A ghaf-fw-pre-nat -i "$IFACE" -p ${proto} --dport ${sport} -j DNAT --to-destination ${dip}:${dport}
+      /run/current-system/sw/sbin/iptables -t filter -A ghaf-fw-fwd-filter -i "$IFACE" -p ${proto} --dport ${sport} -j ACCEPT
+      /run/current-system/sw/sbin/iptables -t nat -A ghaf-fw-post-nat -o "$IFACE" -p ${proto} --dport ${sport} -j MASQUERADE
     '';
 
 in
@@ -58,7 +59,7 @@ in
 
   config = mkIf cfg.enable {
 
-    networking.firewall = {
+    ghaf.firewall = {
       enable = true;
     };
 
