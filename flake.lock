@@ -336,11 +336,11 @@
         "wireguard-gui": "wireguard-gui"
       },
       "locked": {
-        "lastModified": 1755563635,
-        "narHash": "sha256-xQz6zt9i3Ppb0+NY+NQF+jpistRHhSj2rFBlNEojbKk=",
+        "lastModified": 1756220590,
+        "narHash": "sha256-l2mWu/0ccAH7qTHDH2UbJBdSwHebYL9VoOGJTX7jS9o=",
         "owner": "tiiuae",
         "repo": "ghaf",
-        "rev": "4954b4e8aef74d6111194396d600f60ec44955d9",
+        "rev": "d056528c50f7acc71b0a70833af8acb9848e40a8",
         "type": "github"
       },
       "original": {
@@ -551,6 +551,30 @@
         "type": "github"
       }
     },
+    "kms-enrolment": {
+      "inputs": {
+        "flake-utils": [
+          "ghaf",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1756274224,
+        "narHash": "sha256-cFiP6pQKMJdISjnoFzksMO557ktqCOktvVFwf3ixgSU=",
+        "ref": "refs/heads/main",
+        "rev": "261c4483e431e52d44e5d9d3f6aa303e90b08c53",
+        "revCount": 36,
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/enroll-mc"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/enroll-mc"
+      }
+    },
     "microvm": {
       "inputs": {
         "flake-utils": [
@@ -671,11 +695,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1755601025,
-        "narHash": "sha256-XbkxOWUpd+RMnSIc0otvnCTEIYI+BxB/+pIsGIjfD98=",
-        "ref": "feature/dac-verification",
-        "rev": "50a811cc93c04a5b0a3a2f7a3353b432d426ab25",
-        "revCount": 420,
+        "lastModified": 1756107705,
+        "narHash": "sha256-bFA7tSSnjjEcdMLTtu8lpqeo8LGyRYQIPZO4CNOrDiY=",
+        "ref": "refs/heads/main",
+        "rev": "54bc390bd1c73575b9f52bb9d633aa3a9254683b",
+        "revCount": 422,
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/onboarding-agent"
       },
@@ -724,6 +748,7 @@
         "flake-root": "flake-root",
         "ghaf": "ghaf",
         "git-hooks-nix": "git-hooks-nix_2",
+        "kms-enrolment": "kms-enrolment",
         "nixpkgs": "nixpkgs",
         "onboarding-agent": "onboarding-agent",
         "treefmt-nix": "treefmt-nix_2"

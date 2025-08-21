@@ -5,6 +5,7 @@
     dac-services.imports = [
       ./dac-nats-server
       ./dac-agent
+      ./dac-kms-enrolment
     ];
   };
 }
