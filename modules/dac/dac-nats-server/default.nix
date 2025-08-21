@@ -22,6 +22,7 @@ in
       description = "NATS server used for the communication between DAC agent and DAC server";
       wantedBy = [ "multi-user.target" ];
       before = [ "multi-user.target" ];
+      after = [ "dac-kms-enrolment.service" ];
       serviceConfig = {
         Type = "exec";
         ExecStart = "/run/current-system/sw/bin/nats-server --trace --debug --port 9876";
