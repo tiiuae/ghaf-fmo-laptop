@@ -26,28 +26,36 @@ in
       description = ''
         List of docker network ranges for NAT translation.
       '';
-      default = [ "172.17.0.0/16" ];
+      default = [ "172.18.0.0/16" ];
     };
-
   };
 
   config = mkIf cfg.enable {
 
-    ghaf.firewall = {
+    ghaf.firewall = rec {
       allowedTCPPorts = [
-        123
-        6422
-        6423
-        4222
-        7222
+        80
+        # 123 # from net-vm config
+        # 4222 # from net-vm config
+        4223
+        4280
+        4290
+        5432
+        # 6422 # from net-vm config
+        # 7222 # from net-vm config
+        8888
       ];
       allowedUDPPorts = [
         123
-        6422
+        # 4222 # from net-vm config
         6423
-        4222
-        7222
+        # 7222 # from net-vm config
       ];
+      extra = {
+        forward.filter =
+          map (port: "-i ethint0 -o 'br-+' -p tcp --dport ${toString port} -j ACCEPT") allowedTCPPorts
+          ++ map (port: "-i ethint0 -o 'br-+' -p udp --dport ${toString port} -j ACCEPT") allowedUDPPorts;
+      };
     };
     # NAT translation for docker bridge network
     # used by operational-nats
