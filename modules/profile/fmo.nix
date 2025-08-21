@@ -125,6 +125,9 @@ in
       # it allows read and write. Production should use the read-only version
       # that is coming with dm-verity
       partitioning.disko.enable = true;
+
+      # Enable power management
+      services.power-manager.enable = true;
     };
   };
 }
