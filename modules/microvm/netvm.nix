@@ -18,6 +18,38 @@ in
     # Adjust the MTU for the ethint0 interface
     systemd.network.links."10-ethint0".extraConfig = "MTUBytes=1372";
 
+    # Create vlan
+    systemd.network = {
+      netdevs = {
+        "20-vlan_control" = {
+          netdevConfig = {
+            Kind = "vlan";
+            Name = "vlan_control";
+          };
+          vlanConfig.Id = 100;
+        };
+      };
+
+      networks = {
+        "30-enpvlan" = {
+          matchConfig.Name = "enp*";
+          # tag vlan on this link
+          vlan = [
+            "vlan_control"
+          ];
+          networkConfig.LinkLocalAddressing = "no";
+          linkConfig.RequiredForOnline = "carrier";
+        };
+        "40-vlan_control" = {
+          matchConfig.Name = "vlan_control";
+          addresses = [
+            { Address = "192.168.254.200/24"; }
+          ];
+          # add relevant configuration here
+        };
+      };
+    };
+
     environment.systemPackages = [
       pkgs.vnstat
     ];

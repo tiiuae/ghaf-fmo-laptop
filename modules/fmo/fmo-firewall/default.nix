@@ -23,13 +23,14 @@ let
       sport,
       dport,
       proto,
+      action,
     }:
     ''
-      /run/current-system/sw/sbin/iptables -t nat -A ghaf-fw-pre-nat -i "$IFACE" -p ${proto} --dport ${sport} -j DNAT --to-destination ${dip}:${dport}
-      /run/current-system/sw/sbin/iptables -t filter -A ghaf-fw-fwd-filter -i "$IFACE" -p ${proto} --dport ${sport} -j ACCEPT
-      /run/current-system/sw/sbin/iptables -t nat -A ghaf-fw-post-nat -o "$IFACE" -p ${proto} --dport ${sport} -j MASQUERADE
+      /run/current-system/sw/sbin/iptables -t nat -${action} ghaf-fw-pre-nat -i "$IFACE" -p ${proto} --dport ${sport} -j DNAT --to-destination ${dip}:${dport} 2> /dev/null || true
+      /run/current-system/sw/sbin/iptables -t filter -${action} ghaf-fw-fwd-filter -i "$IFACE" -p ${proto} --dport ${sport} -j ACCEPT 2> /dev/null || true
+      /run/current-system/sw/sbin/iptables -t nat -${action} ghaf-fw-post-nat -o "$IFACE" -p ${proto} --dport ${sport} -j MASQUERADE 2> /dev/null || true
+      logger -t fmo-fw "${action} rule on $IFACE: ${proto} ${sport} -> ${dip}:${dport}"
     '';
-
 in
 {
   options.services.fmo-firewall = {
@@ -83,22 +84,41 @@ in
               inherit (rule) sport;
               inherit (rule) dport;
               inherit (rule) proto;
+              action = "A";
+            }
+          ) cfg.configuration}
+        }
+
+        remove_rules() {
+          ${concatMapStringsSep "\n" (
+            rule:
+            mkFirewallRules {
+              inherit (rule) dip;
+              inherit (rule) sport;
+              inherit (rule) dport;
+              inherit (rule) proto;
+              action = "D";
             }
           ) cfg.configuration}
         }
 
         # Exclude loopback interface
-        if [ "$IFACE" == "lo" ]; then
+        if [ "$IFACE" == "lo" ] || echo "$IFACE" | grep -q "^vlan"; then
           exit 0
         fi
 
         case "$STATUS" in
           up)
+            log "Interface $IFACE is up, applying rules"
             # Add port forwarding rules
             add_rules
 
             # Set MTU for the interface
             ${optionalString (cfg.mtu != null) ''ip link set dev "$IFACE" mtu ${toString cfg.mtu}''}
+          ;;
+          down)
+              log "Interface $IFACE is down, removing rules"
+              remove_rules
           ;;
         esac
       '';
