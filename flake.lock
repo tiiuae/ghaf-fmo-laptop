@@ -552,6 +552,31 @@
         "type": "github"
       }
     },
+    "kms-enrolment": {
+      "inputs": {
+        "flake-utils": [
+          "ghaf",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1755756512,
+        "narHash": "sha256-A1qcEPZl+sWZKRmYlBlCwL8/tPBM9TC8KWgxPh1kCIo=",
+        "ref": "build/nix-flake",
+        "rev": "f765c8b765bc7c3fb82d5e55232658eb2621ed42",
+        "revCount": 28,
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/enroll-mc"
+      },
+      "original": {
+        "ref": "build/nix-flake",
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/enroll-mc"
+      }
+    },
     "microvm": {
       "inputs": {
         "flake-utils": [
@@ -725,6 +750,7 @@
         "flake-root": "flake-root",
         "ghaf": "ghaf",
         "git-hooks-nix": "git-hooks-nix_2",
+        "kms-enrolment": "kms-enrolment",
         "nixpkgs": "nixpkgs",
         "onboarding-agent": "onboarding-agent",
         "treefmt-nix": "treefmt-nix_2"
