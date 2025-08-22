@@ -19,7 +19,7 @@ in
   options.services.dac-kms-enrolment = {
     enable = mkEnableOption "Enable KMS enrolment service on system";
 
-    config_path = mkOption {
+    config_file = mkOption {
       description = "Path to configuration file";
       type = types.path;
       default = "/var/lib/fogdata/kms/enrolment.conf";
@@ -64,7 +64,6 @@ in
   config = mkIf cfg.enable {
   systemd.services.dac-kms-enrolment =
     let
-      cfgFile = "${cfg.config_path}/enrolment.conf";
       kmsEnrolment = pkgs.writeShellApplication {
         name = "kms-enrolment";
         runtimeInputs = [
@@ -80,7 +79,7 @@ in
             [ ! -d ${cfg.key_path} ] && mkdir -p ${cfg.key_path}
 
             # Write config file
-            cat > ${cfgFile} << EOF
+            cat > ${cfg.config_file} << EOF
             log_level = "${cfg.log_level}"
             kms_address = "${cfg.kms_address}"
             certificate_path = "${cfg.certificates_path}"
@@ -89,7 +88,7 @@ in
             EOF
 
             # Start KMS enrolment
-            ${pkgs.kms-enrolment}/bin/enroll-mc --config-file ${cfgFile} --serial-number "$device_id"
+            ${pkgs.kms-enrolment}/bin/enroll-mc --config-file ${cfg.config_file} --serial-number "$device_id"
           '';
       };
     in

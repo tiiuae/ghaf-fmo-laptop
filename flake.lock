@@ -563,11 +563,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1755756512,
-        "narHash": "sha256-A1qcEPZl+sWZKRmYlBlCwL8/tPBM9TC8KWgxPh1kCIo=",
+        "lastModified": 1755844627,
+        "narHash": "sha256-2kncnb5sugsmZr5f/EaAcya8mbVQr4LHF+Z9xWMPW4U=",
         "ref": "build/nix-flake",
-        "rev": "f765c8b765bc7c3fb82d5e55232658eb2621ed42",
-        "revCount": 28,
+        "rev": "69f1bf03501b163413ecd35a14e8ed43cde26db2",
+        "revCount": 31,
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/enroll-mc"
       },
