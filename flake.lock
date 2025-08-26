@@ -86,6 +86,31 @@
         "type": "github"
       }
     },
+    "device-assembly-toolset": {
+      "inputs": {
+        "flake-utils": [
+          "ghaf",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1755689835,
+        "narHash": "sha256-6U9ayyMwTSoUE9R6MmMcT8ZWxBO+BIknNLuMvd+BiPk=",
+        "ref": "feature/pmc-agent",
+        "rev": "bfe8b2c146fa488a46864a12654284b98679492a",
+        "revCount": 134,
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
+      },
+      "original": {
+        "ref": "feature/pmc-agent",
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
+      }
+    },
     "devshell": {
       "inputs": {
         "nixpkgs": [
@@ -312,11 +337,11 @@
         "wireguard-gui": "wireguard-gui"
       },
       "locked": {
-        "lastModified": 1755504389,
-        "narHash": "sha256-qn57s4A9jLbpbxP4Qdo4fDOZxuX6adjC+yRyfLEHxtU=",
+        "lastModified": 1755882659,
+        "narHash": "sha256-oLXExWg8KfNnhqPQl6kMbP+5vuK1iNxHlZxpj/3eNuA=",
         "owner": "tiiuae",
         "repo": "ghaf",
-        "rev": "9e4056b6016dcdac7f11d9f5b3d6c2fcf5076d86",
+        "rev": "d25096bd68441068e5bf860e7253f7949fd558c5",
         "type": "github"
       },
       "original": {
@@ -407,11 +432,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1755446520,
-        "narHash": "sha256-I0Ok1OGDwc1jPd8cs2VvAYZsHriUVFGIUqW+7uSsOUM=",
+        "lastModified": 1755960406,
+        "narHash": "sha256-RF7j6C1TmSTK9tYWO6CdEMtg6XZaUKcvZwOCD2SICZs=",
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "rev": "4b04db83821b819bbbe32ed0a025b31e7971f22e",
+        "rev": "e891a93b193fcaf2fc8012d890dc7f0befe86ec2",
         "type": "github"
       },
       "original": {
@@ -492,11 +517,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1755234550,
-        "narHash": "sha256-iZfvg0m5HxQtBLjiLvmR3uJSpPRcXF1wEUY2oTCEp+4=",
+        "lastModified": 1755783641,
+        "narHash": "sha256-XNhGpAU/gJRKzad4ugtpUo5eRrbWqK2SrLV3pTM+Vak=",
         "owner": "tiiuae",
         "repo": "ghaf-givc",
-        "rev": "904f5541627161c5daed46ca8826e5b6bef22e02",
+        "rev": "49aeac38299ef07258bf6b44bae6fda509578496",
         "type": "github"
       },
       "original": {
@@ -525,6 +550,31 @@
         "ref": "final-stretch-extraConf",
         "repo": "jetpack-nixos",
         "type": "github"
+      }
+    },
+    "kms-enrolment": {
+      "inputs": {
+        "flake-utils": [
+          "ghaf",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1756106763,
+        "narHash": "sha256-CqH/wjI6U4Vv2oXEfvmoxyWzlmr2ErhzV9H6djefCsw=",
+        "ref": "build/nix-flake",
+        "rev": "0a347a71893b38cf037e516728410c16b184c8e8",
+        "revCount": 31,
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/enroll-mc"
+      },
+      "original": {
+        "ref": "build/nix-flake",
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/enroll-mc"
       }
     },
     "microvm": {
@@ -647,11 +697,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752043847,
-        "narHash": "sha256-EGdkF6yTsG1GGZPpPdAmd51+da2O9iU6OJliCGXj1K8=",
-        "ref": "refs/heads/main",
-        "rev": "537c6535aa320c222b45e3553394fa1d330cd200",
-        "revCount": 419,
+        "lastModified": 1755867836,
+        "narHash": "sha256-CAQ/cMQcF4/+7cseY2bXeWV4qJBe6Ho71rJVSOUW9a4=",
+        "ref": "feature/dac-verification",
+        "rev": "9f4fb5258f23cf53281f88d029e305da8564cc5c",
+        "revCount": 424,
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/onboarding-agent"
       },
@@ -693,11 +743,13 @@
     },
     "root": {
       "inputs": {
+        "device-assembly-toolset": "device-assembly-toolset",
         "devshell": "devshell",
         "flake-parts": "flake-parts",
         "flake-root": "flake-root",
         "ghaf": "ghaf",
         "git-hooks-nix": "git-hooks-nix_2",
+        "kms-enrolment": "kms-enrolment",
         "nixpkgs": "nixpkgs",
         "onboarding-agent": "onboarding-agent",
         "treefmt-nix": "treefmt-nix_2"
@@ -784,11 +836,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1754847726,
-        "narHash": "sha256-2vX8QjO5lRsDbNYvN9hVHXLU6oMl+V/PsmIiJREG4rE=",
+        "lastModified": 1755934250,
+        "narHash": "sha256-CsDojnMgYsfshQw3t4zjRUkmMmUdZGthl16bXVWgRYU=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "7d81f6fb2e19bf84f1c65135d1060d829fae2408",
+        "rev": "74e1a52d5bd9430312f8d1b8b0354c92c17453e5",
         "type": "github"
       },
       "original": {

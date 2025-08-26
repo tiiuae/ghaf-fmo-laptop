@@ -34,16 +34,12 @@ in
 
     ghaf.firewall = rec {
       allowedTCPPorts = [
-        80
-        # 123 # from net-vm config
-        # 4222 # from net-vm config
-        4223
-        4280
-        4290
-        5432
-        # 6422 # from net-vm config
-        # 7222 # from net-vm config
-        8888
+        123
+        6422
+        6423
+        4222
+        7222
+        9876
       ];
       allowedUDPPorts = [
         123
