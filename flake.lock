@@ -337,11 +337,11 @@
         "wireguard-gui": "wireguard-gui"
       },
       "locked": {
-        "lastModified": 1755882659,
-        "narHash": "sha256-oLXExWg8KfNnhqPQl6kMbP+5vuK1iNxHlZxpj/3eNuA=",
+        "lastModified": 1756220590,
+        "narHash": "sha256-l2mWu/0ccAH7qTHDH2UbJBdSwHebYL9VoOGJTX7jS9o=",
         "owner": "tiiuae",
         "repo": "ghaf",
-        "rev": "d25096bd68441068e5bf860e7253f7949fd558c5",
+        "rev": "d056528c50f7acc71b0a70833af8acb9848e40a8",
         "type": "github"
       },
       "original": {
@@ -563,16 +563,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1756106763,
-        "narHash": "sha256-CqH/wjI6U4Vv2oXEfvmoxyWzlmr2ErhzV9H6djefCsw=",
-        "ref": "build/nix-flake",
-        "rev": "0a347a71893b38cf037e516728410c16b184c8e8",
-        "revCount": 31,
+        "lastModified": 1756274224,
+        "narHash": "sha256-cFiP6pQKMJdISjnoFzksMO557ktqCOktvVFwf3ixgSU=",
+        "ref": "refs/heads/main",
+        "rev": "261c4483e431e52d44e5d9d3f6aa303e90b08c53",
+        "revCount": 36,
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/enroll-mc"
       },
       "original": {
-        "ref": "build/nix-flake",
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/enroll-mc"
       }
@@ -697,11 +696,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1755867836,
-        "narHash": "sha256-CAQ/cMQcF4/+7cseY2bXeWV4qJBe6Ho71rJVSOUW9a4=",
-        "ref": "feature/dac-verification",
-        "rev": "9f4fb5258f23cf53281f88d029e305da8564cc5c",
-        "revCount": 424,
+        "lastModified": 1756107705,
+        "narHash": "sha256-bFA7tSSnjjEcdMLTtu8lpqeo8LGyRYQIPZO4CNOrDiY=",
+        "ref": "refs/heads/main",
+        "rev": "54bc390bd1c73575b9f52bb9d633aa3a9254683b",
+        "revCount": 422,
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/onboarding-agent"
       },
