@@ -50,7 +50,7 @@
     };
 
     kms-enrolment = {
-      url = "git+ssh://git@github.com/tiiuae/enroll-mc?ref=build/nix-flake";
+      url = "git+ssh://git@github.com/tiiuae/enroll-mc";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "ghaf/flake-utils";
