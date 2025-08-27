@@ -35,21 +35,21 @@ in
     ghaf.firewall = rec {
       allowedTCPPorts = [
         80
-        # 123 # from net-vm config
-        # 4222 # from net-vm config
+        123
+        4222
         4223
         4280
         4290
         5432
-        # 6422 # from net-vm config
-        # 7222 # from net-vm config
+        6422
+        7222
         8888
       ];
       allowedUDPPorts = [
         123
-        # 4222 # from net-vm config
+        4222
         6423
-        # 7222 # from net-vm config
+        7222
       ];
       extra = {
         forward.filter =
