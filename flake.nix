@@ -42,7 +42,7 @@
     };
 
     device-assembly-toolset = {
-      url = "git+ssh://git@github.com/tiiuae/device_assembly_toolset?ref=feature/pmc-agent";
+      url = "git+ssh://git@github.com/tiiuae/device_assembly_toolset";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "ghaf/flake-utils";
