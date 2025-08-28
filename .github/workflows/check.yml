@@ -62,7 +62,7 @@ jobs:
         env:
           BASE_REF: ${{ github.base_ref }}
       - name: Install nix
-        uses: cachix/install-nix-action@fc6e360bedc9ee72d75e701397f0bb30dce77568 # v31
+        uses: cachix/install-nix-action@56a7bb7b56d9a92d4fd1bc05758de7eea4a370a8 # v31
       - name: Generate token
         id: auth
         uses: actions/create-github-app-token@a8d616148505b5069dccd32f177bb87d7f39123b # v2.1.1
