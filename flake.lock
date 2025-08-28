@@ -97,11 +97,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1755689835,
-        "narHash": "sha256-6U9ayyMwTSoUE9R6MmMcT8ZWxBO+BIknNLuMvd+BiPk=",
+        "lastModified": 1756384177,
+        "narHash": "sha256-xQ5NTVcbKkEREJh+5HhgUh+9/seeSylZZTvjG1CjBFE=",
         "ref": "feature/pmc-agent",
-        "rev": "bfe8b2c146fa488a46864a12654284b98679492a",
-        "revCount": 134,
+        "rev": "495cf928a32d7e17ae7b9384f10424f3ccf5dfeb",
+        "revCount": 144,
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
       },
