@@ -19,7 +19,6 @@ in
     ../../fmo/fmo-update-hostname
     ../../fmo/fmo-docker-networking
     ../../dac/dac-agent
-    ../../dac/dac-nats-server
     ../../dac/dac-kms-enrolment
   ];
 
@@ -175,10 +174,6 @@ in
       };
 
       dac-kms-enrolment = {
-        enable = true;
-      };
-
-      dac-nats-server = {
         enable = true;
       };
 
