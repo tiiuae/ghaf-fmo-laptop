@@ -44,7 +44,6 @@ in
         6422
         7222
         8888
-        9876
       ];
       allowedUDPPorts = [
         123

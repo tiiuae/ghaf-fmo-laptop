@@ -34,7 +34,7 @@ in
     nats_endpoint = mkOption {
       description = "The NATS server the agent will communicate with the server to receive the DAC";
       type = types.str;
-      default = "nats://localhost:9876";
+      default = "192.168.101.254";
     };
 
     serial_number_file = mkOption {
@@ -103,11 +103,10 @@ in
       description = "DAC agent";
       wantedBy = [ "multi-user.target" ];
       before = [ "multi-user.target" ];
-      after = [ 
+      after = [
         "fmo-hardware-id-manager.service" # Writes the hardware ID to /var/common/hardware-id.txt
         "dac-kms-enrolment.service" # Enrols this PMC into KMS
         "setup-dac-agent.service" # Sets up DAC agent configuration
-        "dac-nats-server.service"
       ];
       serviceConfig = {
         Type = "exec";

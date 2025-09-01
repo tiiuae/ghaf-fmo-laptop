@@ -62,11 +62,11 @@ in
     };
   };
   config = mkIf cfg.enable {
-  systemd.services.dac-kms-enrolment =
-    let
-      kmsEnrolment = pkgs.writeShellApplication {
-        name = "kms-enrolment";
-        runtimeInputs = [
+    systemd.services.dac-kms-enrolment =
+      let
+        kmsEnrolment = pkgs.writeShellApplication {
+          name = "kms-enrolment";
+          runtimeInputs = [
             pkgs.coreutils
             pkgs.kms-enrolment
           ];
@@ -90,26 +90,26 @@ in
             # Start KMS enrolment
             ${pkgs.kms-enrolment}/bin/enroll-mc --config-file ${cfg.config_file} --serial-number "$device_id"
           '';
-      };
-    in
-    {
-      description = "KMS enrolment";
-      wantedBy = [ "multi-user.target" ];
-      before = [ "multi-user.target" ];
-      after = [ 
-        "fmo-hardware-id-manager.service" # Writes the hardware ID to /var/common/hardware-id.txt
-      ];
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "${kmsEnrolment}/bin/kms-enrolment";
-        RemainAfterExit = true;
-        Restart = "on-failure";
-      };
-      unitConfig = {
-        ConditionPathExists = [
-          "${cfg.serial_number_file}"
+        };
+      in
+      {
+        description = "KMS enrolment";
+        wantedBy = [ "multi-user.target" ];
+        before = [ "multi-user.target" ];
+        after = [
+          "fmo-hardware-id-manager.service" # Writes the hardware ID to /var/common/hardware-id.txt
         ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${kmsEnrolment}/bin/kms-enrolment";
+          RemainAfterExit = true;
+          Restart = "on-failure";
+        };
+        unitConfig = {
+          ConditionPathExists = [
+            "${cfg.serial_number_file}"
+          ];
+        };
       };
-    };
   };
 }
