@@ -704,7 +704,6 @@
         "url": "ssh://git@github.com/tiiuae/onboarding-agent"
       },
       "original": {
-        "ref": "feature/dac-verification",
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/onboarding-agent"
       }
