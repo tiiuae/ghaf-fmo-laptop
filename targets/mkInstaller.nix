@@ -31,7 +31,7 @@ let
 
               networking.networkmanager.enable = true;
               networking.wireless.enable = false;
-              isoImage.isoBaseName = lib.mkForce "ghaf";
+              image.baseName = lib.mkForce "ghaf";
               networking.hostName = "ghaf-installer";
 
               environment.systemPackages = [
