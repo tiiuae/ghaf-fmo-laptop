@@ -52,6 +52,7 @@ in
 
     environment.systemPackages = [
       pkgs.vnstat
+      pkgs.fmo-set-netw-con
     ];
 
     # Services
