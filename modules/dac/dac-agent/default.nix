@@ -113,6 +113,7 @@ in
         ExecStart = "${pkgs.device-assembly-agent}/bin/device-assembly-agent";
         Restart = "on-failure";
         EnvironmentFile = "${cfg.env_path}/dac-agent.env";
+        RestartSec = "10";
       };
       unitConfig = {
         ConditionPathExists = [
@@ -120,6 +121,7 @@ in
           "${cfg.dac_store_path}"
           "${cfg.key_path}"
         ];
+        StartLimitIntervalSec = "0"; # Allows infinite restarts
       };
     };
   };
