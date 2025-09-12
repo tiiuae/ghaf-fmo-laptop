@@ -80,6 +80,7 @@ in
             KEY_PATH=${cfg.key_path}
             DEVICE_ID=$device_id
             NATS_HOST=${cfg.nats_endpoint}
+            DISABLED=true
             EOF
           '';
         };

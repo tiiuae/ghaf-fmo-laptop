@@ -85,6 +85,7 @@ in
             certificate_path = "${cfg.certificates_path}"
             key_source = "${cfg.key_source}"
             key_path = "${cfg.key_path}"
+            disable = true
             EOF
 
             # Start KMS enrolment

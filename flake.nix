@@ -42,7 +42,7 @@
     };
 
     device-assembly-toolset = {
-      url = "git+ssh://git@github.com/tiiuae/device_assembly_toolset";
+      url = "git+ssh://git@github.com/tiiuae/device_assembly_toolset?ref=feature/disable-via-env";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "ghaf/flake-utils";
@@ -50,7 +50,7 @@
     };
 
     kms-enrolment = {
-      url = "git+ssh://git@github.com/tiiuae/enroll-mc";
+      url = "git+ssh://git@github.com/tiiuae/enroll-mc?ref=feature/disable";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "ghaf/flake-utils";
