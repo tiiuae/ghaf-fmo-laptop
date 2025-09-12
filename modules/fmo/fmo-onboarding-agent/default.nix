@@ -75,6 +75,12 @@ in
       type = types.path;
       default = "/var/lib/fogdata/dac/dac.json";
     };
+
+    hardware_config_file = mkOption {
+      description = "Path to the HW configuration file";
+      type = types.path;
+      default = "/var/lib/fogdata/device_config.prototxt";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -112,6 +118,7 @@ in
               ConfigurationTemplateFile: "${cfg.config_path}/docker-compose.mustache"
               NatsLeafConfigurationFile: "${cfg.certs_path}/leaf.conf"
               ${if cfg.enable_dac then "AssemblyCardFile: \"${cfg.dac_file_path}\"" else ""}
+              HardwareConfigurationFile: "${cfg.hardware_config_file}"
             Identity:
               CaCertFile: "${cfg.certs_path}/identity_ca.crt"
               CertFile: "${cfg.certs_path}/identity.crt"
