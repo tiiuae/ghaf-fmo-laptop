@@ -67,6 +67,12 @@ in
       type = types.path;
       default = "/var/lib/fogdata/onboarding-agent.log";
     };
+
+    hardware_config_file = mkOption {
+      description = "Path to the hardware definition proto file";
+      type = types.path;
+      default = "/var/lib/fogdata/hw_conf.proto";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -102,6 +108,7 @@ in
               ConfigurationFile: "${cfg.config_path}/docker-compose.yml"
               ConfigurationTemplateFile: "${cfg.config_path}/docker-compose.mustache"
               NatsLeafConfigurationFile: "${cfg.certs_path}/leaf.conf"
+              HardwareConfigurationFile: "${cfg.hardware_config_file}"
             Identity:
               CaCertFile: "${cfg.certs_path}/identity_ca.crt"
               CertFile: "${cfg.certs_path}/identity.crt"
