@@ -62,18 +62,14 @@ in
     };
   };
   config = mkIf cfg.enable {
-    systemd.services.dac-kms-enrolment =
+    systemd.services.setup-dac-kms-enrolment =
       let
-        kmsEnrolment = pkgs.writeShellApplication {
-          name = "kms-enrolment";
+        kmsEnrolmentSetup = pkgs.writeShellApplication {
+          name = "setup-kms-enrolment";
           runtimeInputs = [
             pkgs.coreutils
-            pkgs.kms-enrolment
           ];
           text = ''
-            # Get device ID from hardware
-            device_id=$(cat ${cfg.serial_number_file})
-
             # Create required directories
             [ ! -d ${cfg.certificates_path} ] && mkdir -p ${cfg.certificates_path}
             [ ! -d ${cfg.key_path} ] && mkdir -p ${cfg.key_path}
@@ -86,7 +82,33 @@ in
             key_source = "${cfg.key_source}"
             key_path = "${cfg.key_path}"
             EOF
-
+          '';
+        };
+      in
+      {
+        description = "Setup KMS enrolment";
+        wantedBy = [ "multi-user.target" ];
+        before = [ "multi-user.target" ];
+        unitConfig.ConditionPathExists = [
+          "/var/lib/fogdata"
+        ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${kmsEnrolmentSetup}/bin/setup-kms-enrolment";
+          RemainAfterExit = true;
+        };
+      };
+    systemd.services.dac-kms-enrolment =
+      let
+        kmsEnrolment = pkgs.writeShellApplication {
+          name = "kms-enrolment";
+          runtimeInputs = [
+            pkgs.coreutils
+            pkgs.kms-enrolment
+          ];
+          text = ''
+            # Get device ID from hardware
+            device_id=$(cat ${cfg.serial_number_file})
             # Start KMS enrolment
             ${pkgs.kms-enrolment}/bin/enroll-mc --config-file ${cfg.config_file} --serial-number "$device_id"
           '';
@@ -98,6 +120,7 @@ in
         before = [ "multi-user.target" ];
         after = [
           "fmo-hardware-id-manager.service" # Writes the hardware ID to /var/common/hardware-id.txt
+          "setup-kms-enrolment.service" # Sets up enrolment configuration
         ];
         serviceConfig = {
           Type = "oneshot";

@@ -26,6 +26,10 @@ in
     inputs.self.nixosModules.fmo-personalize
   ];
 
+  options.dockervm = {
+    enableDac = lib.mkEnableOption "DAC creation";
+  };
+
   config = {
 
     ghaf = {
