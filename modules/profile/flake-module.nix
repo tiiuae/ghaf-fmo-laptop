@@ -6,6 +6,12 @@
     fmo-profile.imports = [
       (import ./fmo.nix { inherit inputs; })
     ];
+    fmo-profile-dac.imports = [
+      (import ./fmo.nix {
+        inherit inputs;
+        dockervm.enableDac = true;
+      })
+    ];
     fmo-personalize.imports = [
       inputs.ghaf.nixosModules.reference-personalize
       ./personalize.nix
