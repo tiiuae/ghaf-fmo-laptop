@@ -4,6 +4,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 let
@@ -169,16 +170,16 @@ in
         hostname_path = "/var/lib/fogdata";
         ip_path = "/var/lib/fogdata";
         post_install_path = "/var/lib/fogdata/certs";
-        enable_dac = true;
+        enable_dac = lib.mkDefault false;
         dac_file_path = "/var/lib/fogdata/dac/dac.json";
       };
 
       dac-kms-enrolment = {
-        enable = true;
+        enable = config.services.fmo-onboarding-agent.enable_dac;
       };
 
       dac-agent = {
-        enable = true;
+        enable = config.services.fmo-onboarding-agent.enable_dac;
       };
     }; # services
   }; # config
