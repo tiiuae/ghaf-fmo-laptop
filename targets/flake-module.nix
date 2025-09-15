@@ -137,6 +137,17 @@ let
     #   hardwareModule = nixMods.hardware-alienware-m18-r2;
     #   variant = "release";
     # })
+
+    # DAC-enabled images
+    (laptop-configuration "fmo-lenovo-x1-gen12-debug-dac" [
+      nixMods.hardware-lenovo-x1-carbon-gen12
+      nixMods.fmo-profile
+      {
+        ghaf.profiles.debug.enable = true;
+        fmo.personalize.debug.enable = true;
+        services.fmo-onboarding-agent.enable_dac = lib.mkForce true;
+      }
+    ])
   ];
 
   target-installers = map (

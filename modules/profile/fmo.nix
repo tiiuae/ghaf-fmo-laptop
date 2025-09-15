@@ -28,6 +28,10 @@ in
     inputs.self.nixosModules.msgvm
   ];
 
+  options.dockervm = {
+    enableDac = lib.mkEnableOption "DAC creation";
+  };
+
   config = {
     fmo.appvms.docker.enable = true;
 
