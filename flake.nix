@@ -24,7 +24,7 @@
 
     # Pinned to the version that ghaf is currently pinned to.
     nixpkgs = {
-      url = "github:tiiuae/nixpkgs/qemu-10-1-bump";
+      url = "github:NixOS/nixpkgs/c23193b943c6c689d70ee98ce3128239ed9e32d1";
     };
 
     ghaf = {
