@@ -117,7 +117,7 @@ in
 
         services = {
           enable = true;
-          google-chromecast = false;
+          google-chromecast.enable = false;
         };
       };
 
