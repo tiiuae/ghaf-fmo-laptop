@@ -27,15 +27,6 @@ let
 
   # create a configuration for each live image
   target-configs = [
-    # DAC
-    (laptop-configuration "fmo-lenovo-x1-gen12-debug-dac" [
-      nixMods.hardware-lenovo-x1-carbon-gen12
-      nixMods.fmo-profile-dac
-      {
-        ghaf.profiles.debug.enable = true;
-        fmo.personalize.debug.enable = true;
-      }
-    ])
     (laptop-configuration "fmo-alienware-m18-r2-debug" [
       nixMods.hardware-alienware-m18-r2
       nixMods.fmo-profile
@@ -133,7 +124,7 @@ let
       {
         ghaf.profiles.debug.enable = true;
         fmo.personalize.debug.enable = true;
-        services.fmo-onboarding-agent.enable_dac = lib.mkForce true;
+        dockervm.enableDac = true;
       }
     ])
   ];
