@@ -81,6 +81,9 @@ in
             certificate_path = "${cfg.certificates_path}"
             key_source = "${cfg.key_source}"
             key_path = "${cfg.key_path}"
+            ca_name = ""
+            end_entity_profile_name = ""
+            certificate_profile_name = ""
             EOF
           '';
         };

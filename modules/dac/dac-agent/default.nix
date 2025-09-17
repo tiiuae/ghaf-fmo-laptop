@@ -78,7 +78,7 @@ in
             LOG_LEVEL=${cfg.log_level}
             DAC_STORE_PATH=${cfg.dac_store_path}
             KEY_PATH=${cfg.key_path}
-            DEVICE_ID=$device_id
+            DEVICE_NAME=$device_id
             NATS_HOST=${cfg.nats_endpoint}
             EOF
           '';
