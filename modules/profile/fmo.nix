@@ -22,7 +22,7 @@ in
 
     # FMO imports
     inputs.self.nixosModules.host
-    inputs.self.nixosModules.fmo-services
+    inputs.self.nixosModules.fmo-services-host
     inputs.self.nixosModules.fmo-personalize
   ];
 
