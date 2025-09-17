@@ -6,17 +6,21 @@
 #
 {
   flake.nixosModules = {
-    # Combined module for host (all services)
+    # Dockervm specific fmo services
     fmo-services.imports = [
       ./fmo-dci-service
       ./fmo-firewall
-      ./fmo-certs-distribution-host
       ./fmo-dci-passthrough
       ./fmo-onboarding-agent
       ./fmo-nats-server
       ./fmo-update-hostname
       ./fmo-docker-networking
       ./hardware-id-manager
+    ];
+
+    # Host specific fmo services
+    fmo-services-host.imports = [
+      ./fmo-certs-distribution-host
     ];
   };
 }

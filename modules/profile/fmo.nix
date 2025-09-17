@@ -22,7 +22,7 @@ in
     inputs.ghaf.nixosModules.reference-services
     inputs.ghaf.nixosModules.reference-desktop
     inputs.self.nixosModules.host
-    inputs.self.nixosModules.fmo-services
+    inputs.self.nixosModules.fmo-services-host
     inputs.self.nixosModules.fmo-personalize
     inputs.self.nixosModules.dockervm
     inputs.self.nixosModules.msgvm

@@ -3,7 +3,6 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }:
 let
@@ -143,16 +142,16 @@ in
         hostname_path = "/var/lib/fogdata";
         ip_path = "/var/lib/fogdata";
         post_install_path = "/var/lib/fogdata/certs";
-        enable_dac = lib.mkDefault false;
+        enable_dac = config.dockervm.enableDac; # Disabled by default, enabled via profile option
         dac_file_path = "/var/lib/fogdata/dac/dac.json";
       };
 
       dac-kms-enrolment = {
-        enable = config.services.fmo-onboarding-agent.enable_dac;
+        enable = config.dockervm.enableDac; # Disabled by default, enabled via profile option
       };
 
       dac-agent = {
-        enable = config.services.fmo-onboarding-agent.enable_dac;
+        enable = config.dockervm.enableDac; # Disabled by default, enabled via profile option
       };
     };
   };

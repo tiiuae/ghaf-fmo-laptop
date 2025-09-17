@@ -145,7 +145,7 @@ let
       {
         ghaf.profiles.debug.enable = true;
         fmo.personalize.debug.enable = true;
-        services.fmo-onboarding-agent.enable_dac = lib.mkForce true;
+        dockervm.enableDac = true;
       }
     ])
   ];
