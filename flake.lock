@@ -122,11 +122,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1756389316,
-        "narHash": "sha256-xQ5NTVcbKkEREJh+5HhgUh+9/seeSylZZTvjG1CjBFE=",
+        "lastModified": 1758107855,
+        "narHash": "sha256-bzk5KVK7bq3nMRNu8JQshtYv1i4Q6HcLyXZ5qZ1Nu+k=",
         "ref": "refs/heads/main",
-        "rev": "b8589f4071e73af8253681f8ec5f1d61772cbc46",
-        "revCount": 145,
+        "rev": "b20407a6ed7c7b11cf8824f46850f450995adf1e",
+        "revCount": 165,
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
       },
@@ -614,11 +614,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1756274224,
-        "narHash": "sha256-cFiP6pQKMJdISjnoFzksMO557ktqCOktvVFwf3ixgSU=",
+        "lastModified": 1758091162,
+        "narHash": "sha256-p1dIpE2nmsgktTjTagvZ/+HkwvMD6/hJF2vKULO86OQ=",
         "ref": "refs/heads/main",
-        "rev": "261c4483e431e52d44e5d9d3f6aa303e90b08c53",
-        "revCount": 36,
+        "rev": "3e77d96f93d0b5049a082b16b34759a366946edc",
+        "revCount": 43,
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/enroll-mc"
       },

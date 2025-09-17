@@ -103,7 +103,7 @@ in
 
             # Write config.yaml file
             cat > ${cfg.env_path}/config.yaml << EOF
-            ${if cfg.enable_dac then "EnableDAC: true" else ""}
+            EnableDAC: "${toString cfg.enable_dac}"
             TLS: true
             MDNS: true
             NatsEndpointFile: "${cfg.certs_path}/service_nats_url.txt"
@@ -117,7 +117,7 @@ in
               ConfigurationFile: "${cfg.config_path}/docker-compose.yml"
               ConfigurationTemplateFile: "${cfg.config_path}/docker-compose.mustache"
               NatsLeafConfigurationFile: "${cfg.certs_path}/leaf.conf"
-              ${if cfg.enable_dac then "AssemblyCardFile: \"${cfg.dac_file_path}\"" else ""}
+              AssemblyCardFile: "${cfg.dac_file_path}"
               HardwareConfigurationFile: "${cfg.hardware_config_file}"
             Identity:
               CaCertFile: "${cfg.certs_path}/identity_ca.crt"
