@@ -12,8 +12,11 @@ let
   isMsgvmEnabled = hasAttr "msg-vm" config.microvm.vms;
 in
 {
-  config = {
+  imports = [
+    ../fmo/hardware-id-manager
+  ];
 
+  config = {
     # TODO FMO_BUILD_VERSION
     # TODO RAV version, we will not support the hyperconfig
     # fmo-system = {
@@ -31,6 +34,10 @@ in
 
       # TODO check if this is required and its dependencies (fmo-config.yaml?)
       # environment.systemPackages = [ pkgs.fmo-tool ];
+
+      fmo-hardware-id-manager = {
+        enable = config.dockervm.enableDac; # This is used only by DAC at the moment
+      };
 
       fmo-certs-distribution-service-host = {
         enable = true;
