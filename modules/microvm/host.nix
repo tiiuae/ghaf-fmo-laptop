@@ -6,6 +6,10 @@
   ...
 }:
 {
+  imports = [
+    ../fmo/hardware-id-manager
+  ];
+
   config = {
     environment.systemPackages = [
       pkgs.vim
@@ -15,6 +19,14 @@
     ];
 
     services = {
+
+      # TODO check if this is required and its dependencies (fmo-config.yaml?)
+      # environment.systemPackages = [ pkgs.fmo-tool ];
+
+      fmo-hardware-id-manager = {
+        enable = config.dockervm.enableDac; # This is used only by DAC at the moment
+      };
+
       fmo-certs-distribution-service-host = {
         enable = true;
         ca-name = "NATS CA";
