@@ -65,6 +65,22 @@ in
         enable = true;
         nssmdns4 = true;
         reflector = true;
+        publish = {
+          enable = true;
+          domain = true;
+          addresses = true;
+        };
+        extraServiceFiles = {
+          ntp = ''
+            <service-group>
+              <name>NTP Server</name>
+              <service>
+                <type>_ntp._udp</type>
+                <port>123</port>
+              </service>
+            </service-group>
+          '';
+        };
       };
 
       fmo-firewall = {
