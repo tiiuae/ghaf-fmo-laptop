@@ -73,11 +73,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1757402219,
-        "narHash": "sha256-EoDW8zFAyA0a2m3T0dSeFtyghdbINpZlYSV4sN0aYJ4=",
+        "lastModified": 1758180565,
+        "narHash": "sha256-IxmECgMs/j/fVSbx1tESJVdu82cT27WwTSS7cgH03d8=",
         "owner": "tiiuae",
         "repo": "ghaf-ctrl-panel",
-        "rev": "ad99a2074f32f98dac9919096d673fcd4694f33f",
+        "rev": "52d01dedafbe5e650e2fd2e77afff6a0225650e5",
         "type": "github"
       },
       "original": {
@@ -313,11 +313,11 @@
         "wireguard-gui": "wireguard-gui"
       },
       "locked": {
-        "lastModified": 1758026357,
-        "narHash": "sha256-bK3dz+9fJNTWPE9N7K2kMAq64XNJ5+T/lfGxF2AOsYo=",
+        "lastModified": 1759407051,
+        "narHash": "sha256-/JIwlZG1az6E/HZ+CXEbarICjp46e+hCeSihoRDNJT8=",
         "owner": "tiiuae",
         "repo": "ghaf",
-        "rev": "63ed3fbdc2d174d151dae4f24dea8900d11f9777",
+        "rev": "bef319ff2ea9af179dc60c6921b81b08e25c479e",
         "type": "github"
       },
       "original": {
@@ -360,17 +360,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1757567943,
-        "narHash": "sha256-mdYISYtn74IYJu52Ep9pjywnYhdWaxELI8MiGh7FVVg=",
+        "lastModified": 1759236702,
+        "narHash": "sha256-uKiTdKBWFDv0ea26D2znWeGYhavGX/RiSJZ22iKWv1E=",
         "owner": "tiiuae",
         "repo": "ghafpkgs",
-        "rev": "7127f73cd9962d4ad28c024c57ee23fa487926df",
+        "rev": "fb984db0c6644f7a4f33903c110c8f8286eeef53",
         "type": "github"
       },
       "original": {
         "owner": "tiiuae",
         "repo": "ghafpkgs",
-        "rev": "7127f73cd9962d4ad28c024c57ee23fa487926df",
         "type": "github"
       }
     },
@@ -494,11 +493,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1757683017,
-        "narHash": "sha256-hLxS6SD36nVqagZdHDSHNLzvTPlDhwZv9Ca82BUQa3Y=",
+        "lastModified": 1758118765,
+        "narHash": "sha256-M0aK5uII9NqtxbL7nm/NMtHNNRqxHkem5FBz/bY3lZ8=",
         "owner": "tiiuae",
         "repo": "ghaf-givc",
-        "rev": "d1299d566bb443070b16dff1930be47d4c8d1479",
+        "rev": "a499977643d0013ad93369311157fa3f878e3eb0",
         "type": "github"
       },
       "original": {
@@ -515,16 +514,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1756193919,
-        "narHash": "sha256-w18hTzI6zIQjxMh5Rhvhvkguh/bx4Ncx8Uz7DO5XWk8=",
+        "lastModified": 1759184511,
+        "narHash": "sha256-Z3w2b7AlgHng5ktnnGp0CAoiMEB2Q3gHLvxiu5s0rd8=",
         "owner": "tiiuae",
         "repo": "jetpack-nixos",
-        "rev": "0abcdd7d6840df9c6917939180002b7295f1c415",
+        "rev": "00c33d0535659864c77813a26d8b9bc47f821ec1",
         "type": "github"
       },
       "original": {
         "owner": "tiiuae",
-        "ref": "final-stretch-extraConf-gcc13",
+        "ref": "another-fix-kernel",
         "repo": "jetpack-nixos",
         "type": "github"
       }
