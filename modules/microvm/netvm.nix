@@ -54,6 +54,12 @@ in
       pkgs.vnstat
     ];
 
+    # Firewall attack mitigation configuration
+    ghaf.firewall.attack-mitigation.ping.rule = {
+      burstNum = 5;
+      maxPacketFreq = "2/s";
+    };
+
     # Services
     services = {
 
