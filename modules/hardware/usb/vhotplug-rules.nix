@@ -6,11 +6,11 @@
     # have support for it
     ghaf.hardware.usb.vhotplug.prependRules = [
       {
-        name = "DockerVM";
-        qmpSocket = "/var/lib/microvms/docker-vm/docker-vm.sock";
-        usbPassthrough = [
+        description = "Devices for DockerVM";
+        targetVm = "docker-vm";
+        allow = [
           {
-            class = 11;
+            interfaceClass = 11;
             description = "Chip/SmartCard (e.g. YubiKey)";
           }
           {
