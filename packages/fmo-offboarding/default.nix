@@ -23,7 +23,8 @@ writeShellApplication {
       # Remove data
       echo -n "Removing FMO data..."
       rm -rf /var/lib/fogdata/*
-      rm -rf /var/common/*
+      rm -rf /var/common/hostname
+      rm -rf /var/common/ip-address
       rm -rf /var/lib/internal/*
       rm -rf /var/lib/docker/*
       echo " done."
