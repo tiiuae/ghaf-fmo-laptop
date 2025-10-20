@@ -36,7 +36,6 @@
     onboarding-agent = {
       url = "git+ssh://git@github.com/tiiuae/onboarding-agent";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "ghaf/flake-utils";
       };
     };
@@ -44,7 +43,6 @@
     device-assembly-toolset = {
       url = "git+ssh://git@github.com/tiiuae/device_assembly_toolset";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "ghaf/flake-utils";
       };
     };
@@ -52,7 +50,6 @@
     kms-enrolment = {
       url = "git+ssh://git@github.com/tiiuae/enroll-mc";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "ghaf/flake-utils";
       };
     };
