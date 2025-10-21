@@ -24,7 +24,8 @@
 
     # Pinned to the version that ghaf is currently pinned to.
     nixpkgs = {
-      url = "github:NixOS/nixpkgs/c23193b943c6c689d70ee98ce3128239ed9e32d1";
+      #url = "github:NixOS/nixpkgs/c23193b943c6c689d70ee98ce3128239ed9e32d1";
+      url = "github:tiiuae/nixpkgs/britty-gst-python";
     };
 
     ghaf = {
