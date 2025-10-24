@@ -107,7 +107,6 @@ in
               HostnameFile: "${cfg.hostname_path}/hostname"
               ConfigurationFile: "${cfg.config_path}/docker-compose.yml"
               ConfigurationTemplateFile: "${cfg.config_path}/docker-compose.mustache"
-              NatsLeafConfigurationFile: "${cfg.certs_path}/leaf.conf"
               HardwareConfigurationFile: "${cfg.hardware_config_file}"
             Identity:
               CaCertFile: "${cfg.certs_path}/identity_ca.crt"
@@ -116,13 +115,6 @@ in
               SerialNumberFile: "${cfg.certs_path}/serial_number.txt"
               CertificateRequestFile: "${cfg.certs_path}/identity.csr"
               File: "${cfg.certs_path}/device_id.json"
-              FleetClusterCertificateRequestFile: "${cfg.certs_path}/fleet.csr"
-              FleetLeafCertificateFile: "${cfg.certs_path}/fleet.crt"
-              FleetLeafCaFile: "${cfg.certs_path}/fleet_ca.crt"
-              SwarmCaCertificateRequestFile: "${cfg.certs_path}/swarm.csr"
-              SwarmCaFile: "${cfg.certs_path}/swarm.crt"
-              SwarmKeyFile: "${cfg.certs_path}/swarm.key"
-              SwarmRootCaFile: "${cfg.certs_path}/swarm_root_ca.crt"
             Secrets:
               AuthTokenFile: "${cfg.token_path}/PAT.pat"
               UtmSecretFile: "${cfg.certs_path}/utm-client-secret.txt"
