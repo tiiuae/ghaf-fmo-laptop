@@ -28,11 +28,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1760962771,
-        "narHash": "sha256-eE+2r0jOt2ePiD36JsReJGQfwUnDNC5GFJOPwt9Vjmc=",
+        "lastModified": 1761125875,
+        "narHash": "sha256-Xn98t+2W2rm4/QL48Ca4be7RV+iQOn9WiUM18SkkBcA=",
         "owner": "tiiuae",
         "repo": "ci-test-automation",
-        "rev": "b4ae6847e9f8b52abaf177e4712f5b8ea854efad",
+        "rev": "0bb9b970e58ccf43d6c41a468c4e9100144f49fd",
         "type": "github"
       },
       "original": {
@@ -313,11 +313,11 @@
         "wireguard-gui": "wireguard-gui"
       },
       "locked": {
-        "lastModified": 1761136324,
-        "narHash": "sha256-eWAgkDI+trhksvWbQcoaJVyk3UF7J3dAzglrlYKX4n8=",
+        "lastModified": 1761306801,
+        "narHash": "sha256-jPTGAM/tCCah0dCEwff1rdvkSDavZCSYeRqowiP1w1I=",
         "owner": "tiiuae",
         "repo": "ghaf",
-        "rev": "c44a1269eb511030b9d878572b829ef0c9ebbd17",
+        "rev": "f042eeeb32c3ee88aa9bbf6fcdbaa108102e677a",
         "type": "github"
       },
       "original": {
@@ -346,13 +346,13 @@
           "flake-parts"
         ],
         "flake-root": "flake-root_3",
+        "git-hooks-nix": [
+          "ghaf",
+          "git-hooks-nix"
+        ],
         "nixpkgs": [
           "ghaf",
           "nixpkgs"
-        ],
-        "pre-commit-hooks-nix": [
-          "ghaf",
-          "git-hooks-nix"
         ],
         "treefmt-nix": [
           "ghaf",
@@ -360,11 +360,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1761026514,
-        "narHash": "sha256-xt0uvfZPXDuHJqzgUbHBl1o5KQS5jNSPoOvQ88/UXus=",
+        "lastModified": 1761196524,
+        "narHash": "sha256-wBGkkcxc0QUERdkUVBIAP5zc33AX4NuAwfRaK0IjLSA=",
         "owner": "tiiuae",
         "repo": "ghafpkgs",
-        "rev": "f86f3ee0d3148d292d829686cad023eda3caf183",
+        "rev": "a10d6ea04920329cba5f3ab445be68f9a186d0d2",
         "type": "github"
       },
       "original": {
