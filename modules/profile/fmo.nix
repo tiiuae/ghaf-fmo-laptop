@@ -14,7 +14,7 @@ in
   imports = [
     # Ghaf imports
     inputs.ghaf.nixosModules.disko-debug-partition
-    inputs.ghaf.nixosModules.profiles-workstation
+    # Note: profiles-workstation is already included by the ghaf builder
     inputs.ghaf.nixosModules.reference-appvms
     inputs.ghaf.nixosModules.reference-programs
     inputs.ghaf.nixosModules.reference-services
