@@ -6,8 +6,74 @@ let
   nixMods = inputs.self.nixosModules;
   inherit (inputs.self) lib;
 
-  laptop-configuration = import ./mkLaptopConfiguration.nix { inherit inputs; };
-  installer-config = import ./mkInstaller.nix { inherit inputs; };
+  # The versionRev is used to identify the current version of the configuration.
+  # rev is used when there is a clean repo
+  # dirtyRev is used when there are uncommitted changes
+  # if building in a rebased ci pre-merge check the state will be unknown.
+  versionRev =
+    if (inputs.self ? shortRev) then
+      inputs.self.shortRev
+    else if (inputs.self ? dirtyShortRev) then
+      inputs.self.dirtyShortRev
+    else
+      "unknown-dirty-rev";
+
+  # Use the builder functions exported from ghaf
+  mkLaptopConfiguration = inputs.ghaf.builders.mkLaptopConfiguration {
+    self = inputs.ghaf;
+    inherit inputs;
+    inherit (inputs.ghaf) lib;
+    inherit system;
+  };
+
+  mkLaptopInstaller = inputs.ghaf.builders.mkLaptopInstaller {
+    self = inputs.ghaf;
+    inherit (inputs.ghaf) lib;
+    inherit system;
+  };
+
+  # Wrapper function to adapt to our naming convention and add versionRev
+  laptop-configuration =
+    name: extraModules:
+    let
+      # Extract machine type from name (everything before the last "-debug" or "-release")
+      parts = lib.splitString "-" name;
+      variant = lib.last parts;
+      machineType = lib.concatStringsSep "-" (lib.init parts);
+
+      # Create base configuration with ghaf function
+      baseConfig = mkLaptopConfiguration machineType variant (
+        [
+          {
+            nixpkgs.overlays = [
+              inputs.self.overlays.custom-packages
+              inputs.self.overlays.own-pkgs-overlay
+            ];
+            system = {
+              configurationRevision = versionRev;
+              nixos.label = versionRev;
+            };
+          }
+        ]
+        ++ extraModules
+      );
+    in
+    {
+      hostConfig = baseConfig.hostConfiguration;
+      inherit (baseConfig) package variant;
+      inherit name; # Use original FMO name for output
+    };
+
+  # Wrapper function for installer to match our existing interface
+  installer-config =
+    name: imagePath: extraModules:
+    let
+      installerResult = mkLaptopInstaller name imagePath extraModules;
+    in
+    {
+      hostConfig = installerResult.hostConfiguration;
+      inherit (installerResult) name package;
+    };
 
   installerModules = [
     (
