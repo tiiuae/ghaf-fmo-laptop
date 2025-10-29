@@ -178,7 +178,7 @@ let
     # ])
 
     # DAC-enabled images
-    (laptop-configuration "fmo-alienware-m18-r2-debug-dac" [
+    (laptop-configuration "fmo-alienware-m18-r2-dac-debug" [
       nixMods.hardware-alienware-m18-r2
       nixMods.fmo-profile
       {
@@ -187,7 +187,7 @@ let
         dockervm.enableDac = true;
       }
     ])
-    (laptop-configuration "fmo-dell-7230-debug-dac" [
+    (laptop-configuration "fmo-dell-7230-dac-debug" [
       nixMods.hardware-dell-latitude-7230
       nixMods.fmo-profile
       {
@@ -196,7 +196,7 @@ let
         dockervm.enableDac = true;
       }
     ])
-    (laptop-configuration "fmo-dell-7330-debug-dac" [
+    (laptop-configuration "fmo-dell-7330-dac-debug" [
       nixMods.hardware-dell-latitude-7330
       nixMods.fmo-profile
       {
@@ -205,7 +205,7 @@ let
         dockervm.enableDac = true;
       }
     ])
-    (laptop-configuration "fmo-lenovo-x1-gen11-debug-dac" [
+    (laptop-configuration "fmo-lenovo-x1-gen11-dac-debug" [
       nixMods.hardware-lenovo-x1-carbon-gen11
       nixMods.fmo-profile
       {
@@ -214,7 +214,7 @@ let
         dockervm.enableDac = true;
       }
     ])
-    (laptop-configuration "fmo-lenovo-x1-gen12-debug-dac" [
+    (laptop-configuration "fmo-lenovo-x1-gen12-dac-debug" [
       nixMods.hardware-lenovo-x1-carbon-gen12
       nixMods.fmo-profile
       {
@@ -223,7 +223,7 @@ let
         dockervm.enableDac = true;
       }
     ])
-    (laptop-configuration "fmo-demo-tower-mk1-debug-dac" [
+    (laptop-configuration "fmo-demo-tower-mk1-dac-debug" [
       nixMods.hardware-demo-tower-mk1
       nixMods.fmo-profile
       {
@@ -232,7 +232,7 @@ let
         dockervm.enableDac = true;
       }
     ])
-    (laptop-configuration "fmo-tower-5080-debug-dac" [
+    (laptop-configuration "fmo-tower-5080-dac-debug" [
       nixMods.hardware-tower-5080
       nixMods.fmo-profile
       {
