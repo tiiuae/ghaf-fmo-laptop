@@ -34,13 +34,8 @@ let
 
   # Wrapper function to adapt to our naming convention and add versionRev
   laptop-configuration =
-    name: extraModules:
+    machineType: variant: extraModules:
     let
-      # Extract machine type from name (everything before the last "-debug" or "-release")
-      parts = lib.splitString "-" name;
-      variant = lib.last parts;
-      machineType = lib.concatStringsSep "-" (lib.init parts);
-
       # Create base configuration with ghaf function
       baseConfig = mkLaptopConfiguration machineType variant (
         [
@@ -60,8 +55,7 @@ let
     in
     {
       hostConfig = baseConfig.hostConfiguration;
-      inherit (baseConfig) package variant;
-      inherit name; # Use original FMO name for output
+      inherit (baseConfig) package variant name;
     };
 
   # Wrapper function for installer to match our existing interface
@@ -93,7 +87,7 @@ let
 
   # create a configuration for each live image
   target-configs = [
-    (laptop-configuration "fmo-alienware-m18-r2-debug" [
+    (laptop-configuration "fmo-alienware-m18-r2" "debug" [
       nixMods.hardware-alienware-m18-r2
       nixMods.fmo-profile
       {
@@ -101,7 +95,7 @@ let
         fmo.personalize.debug.enable = true;
       }
     ])
-    (laptop-configuration "fmo-dell-7230-debug" [
+    (laptop-configuration "fmo-dell-7230" "debug" [
       nixMods.hardware-dell-latitude-7230
       nixMods.fmo-profile
       {
@@ -109,7 +103,7 @@ let
         fmo.personalize.debug.enable = true;
       }
     ])
-    (laptop-configuration "fmo-dell-7330-debug" [
+    (laptop-configuration "fmo-dell-7330" "debug" [
       nixMods.hardware-dell-latitude-7330
       nixMods.fmo-profile
       {
@@ -117,7 +111,7 @@ let
         fmo.personalize.debug.enable = true;
       }
     ])
-    (laptop-configuration "fmo-lenovo-x1-gen11-debug" [
+    (laptop-configuration "fmo-lenovo-x1-gen11" "debug" [
       nixMods.hardware-lenovo-x1-carbon-gen11
       nixMods.fmo-profile
       {
@@ -125,7 +119,7 @@ let
         fmo.personalize.debug.enable = true;
       }
     ])
-    (laptop-configuration "fmo-lenovo-x1-gen12-debug" [
+    (laptop-configuration "fmo-lenovo-x1-gen12" "debug" [
       nixMods.hardware-lenovo-x1-carbon-gen12
       nixMods.fmo-profile
       {
@@ -133,7 +127,7 @@ let
         fmo.personalize.debug.enable = true;
       }
     ])
-    (laptop-configuration "fmo-demo-tower-mk1-debug" [
+    (laptop-configuration "fmo-demo-tower-mk1" "debug" [
       nixMods.hardware-demo-tower-mk1
       nixMods.fmo-profile
       {
@@ -141,7 +135,7 @@ let
         fmo.personalize.debug.enable = true;
       }
     ])
-    (laptop-configuration "fmo-tower-5080-debug" [
+    (laptop-configuration "fmo-tower-5080" "debug" [
       nixMods.hardware-tower-5080
       nixMods.fmo-profile
       {
@@ -154,28 +148,28 @@ let
     #
     # TODO: enable in a later release
     #
-    # (laptop-configuration "fmo-alienware-m18-r2-release" [
+    # (laptop-configuration "fmo-alienware-m18-r2" "release" [
     #   nixMods.hardware-alienware-m18-r2
     #   nixMods.fmo-profile
     #   {
     #     ghaf.profiles.release.enable = true;
     #   }
     # ])
-    # (laptop-configuration "fmo-dell-7230-release" [
+    # (laptop-configuration "fmo-dell-7230" "release" [
     #   nixMods.hardware-dell-latitude-7230
     #   nixMods.fmo-profile
     #   {
     #     ghaf.profiles.release.enable = true;
     #   }
     # ])
-    # (laptop-configuration "fmo-dell-7330-release" [
+    # (laptop-configuration "fmo-dell-7330" "release" [
     #   nixMods.hardware-dell-latitude-7330
     #   nixMods.fmo-profile
     #   {
     #     ghaf.profiles.release.enable = true;
     #   }
     # ])
-    # (laptop-configuration "fmo-lenovo-x1-gen11-release" [
+    # (laptop-configuration "fmo-lenovo-x1-gen11" "release" [
     #   nixMods.hardware-lenovo-x1-carbon-gen11
     #   nixMods.fmo-profile
     #   {
