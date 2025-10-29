@@ -7,6 +7,7 @@
 }:
 let
   inherit (config.ghaf.networking) hosts;
+  hostConfig = config;
 in
 {
   imports = [
@@ -145,17 +146,21 @@ in
       };
     }; # services
 
-    microvm = {
-      volumes = [
+    ghaf.storagevm = {
+      enable = true;
+      name = "net-vm";
+      encryption.enable = hostConfig.ghaf.virtualization.storagevm-encryption.enable;
+      directories = [
         {
-          image = "/persist/tmp/netvm_internal.img";
-          mountPoint = "/var/lib/internal";
-          size = 10240;
-          autoCreate = true;
-          fsType = "ext4";
+          directory = "/var/lib/internal";
+          user = "root";
+          group = "root";
+          mode = "0755";
         }
       ];
+    };
 
+    microvm = {
       shares = [
         {
           source = "/persist/common";
