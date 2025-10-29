@@ -9,6 +9,7 @@
 }:
 let
   inherit (lib) mkForce;
+  hostConfig = config;
 in
 {
   # TODO implement appvm interface and remove these imports
@@ -40,28 +41,22 @@ in
         ;
       services = [ "fmo-nats-server.service" ];
     };
+    ghaf.storagevm = {
+      enable = true;
+      name = "msg-vm";
+      encryption.enable = hostConfig.ghaf.virtualization.storagevm-encryption.enable;
+      directories = [
+        {
+          directory = "/var";
+          user = "root";
+          group = "root";
+          mode = "0755";
+        }
+      ];
+    };
 
     # MicroVM
     microvm = {
-
-      # TODO Should we use storagevm instead?
-      volumes = [
-        {
-          image = "/persist/tmp/msgvm_internal.img";
-          mountPoint = "/var/lib/internal";
-          size = 10240;
-          autoCreate = true;
-          fsType = "ext4";
-        }
-        {
-          image = "/persist/tmp/msgvm_var.img";
-          mountPoint = "/var";
-          size = 10240;
-          autoCreate = true;
-          fsType = "ext4";
-        }
-      ];
-
       shares = [
         {
           source = "/persist/common";

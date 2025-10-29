@@ -54,8 +54,6 @@ in
     systemd.tmpfiles.rules = [
       "d /persist/common 0700 root root -"
       "d /persist/fogdata 0700 ${toString config.ghaf.users.loginUser.uid} users -"
-      # TODO is this actually meant to be temporary?
-      "d /persist/tmp 0700 microvm kvm -"
       # TODO remove this when better hostname/ip setting option is implemented
       "f /persist/common/hostname 0600 root root -"
       "f /persist/common/ip-address 0600 root root -"

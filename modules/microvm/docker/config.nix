@@ -7,7 +7,7 @@
   ...
 }:
 let
-
+  hostConfig = config;
   appuser = config.ghaf.users.appUser.name;
 in
 {
@@ -34,27 +34,28 @@ in
 
     # MTU
     systemd.network.links."10-ethint0".extraConfig = "MTUBytes=1372";
+    ghaf.storagevm = {
+      enable = true;
+      name = "docker-vm";
+      encryption.enable = hostConfig.ghaf.virtualization.storagevm-encryption.enable;
+      directories = [
+        {
+          directory = "/var/lib/internal";
+          user = "root";
+          group = "root";
+          mode = "0755";
+        }
+        {
+          directory = "/var/lib/docker";
+          user = "root";
+          group = "root";
+          mode = "0710";
+        }
+      ];
+    };
 
     # MicroVM
     microvm = {
-      # TODO Should we use storagevm instead?
-      volumes = [
-        {
-          image = "/persist/tmp/dockervm_internal.img";
-          mountPoint = "/var/lib/internal";
-          size = 10240;
-          autoCreate = true;
-          fsType = "ext4";
-        }
-        {
-          image = "/persist/tmp/dockervm.img";
-          mountPoint = "/var/lib/docker";
-          size = 51200;
-          autoCreate = true;
-          fsType = "ext4";
-        }
-      ]; # microvm.volumes
-
       shares = [
         {
           source = "/persist/common";
