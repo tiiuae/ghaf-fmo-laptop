@@ -14,6 +14,7 @@ let
     mkOption
     mkIf
     types
+    boolToString
     ;
 in
 {
@@ -103,7 +104,7 @@ in
 
             # Write config.yaml file
             cat > ${cfg.env_path}/config.yaml << EOF
-            EnableDAC: "${toString cfg.enable_dac}"
+            EnableDAC: "${boolToString cfg.enable_dac}"
             TLS: true
             MDNS: true
             NatsEndpointFile: "${cfg.certs_path}/service_nats_url.txt"
