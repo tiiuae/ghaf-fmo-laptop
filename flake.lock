@@ -614,15 +614,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1761722005,
-        "narHash": "sha256-44PFqjng7ZM1cWqeMXpeYFJcs9iYYgMQVgEQDzUjPuU=",
-        "ref": "refs/heads/main",
-        "rev": "aa18fa3fccf0d3ddf252db8569621a966665db3b",
-        "revCount": 51,
+        "lastModified": 1761827174,
+        "narHash": "sha256-wG5lFkotLgWtoVzhzhD+98U7m6qtEAEeKGI5Eus9l/U=",
+        "ref": "feature/request-timeout",
+        "rev": "9d3d4f7f9a33f669fe868d4cff71ebae4dbe9ea9",
+        "revCount": 52,
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/enroll-mc"
       },
       "original": {
+        "ref": "feature/request-timeout",
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/enroll-mc"
       }

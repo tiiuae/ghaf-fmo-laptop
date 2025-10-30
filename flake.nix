@@ -51,7 +51,7 @@
     };
 
     kms-enrolment = {
-      url = "git+ssh://git@github.com/tiiuae/enroll-mc";
+      url = "git+ssh://git@github.com/tiiuae/enroll-mc?ref=feature/request-timeout";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "ghaf/flake-utils";
