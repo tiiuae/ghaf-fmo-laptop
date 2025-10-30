@@ -103,7 +103,7 @@ in
       description = "DAC agent";
       wantedBy = [ "multi-user.target" ];
       before = [ "multi-user.target" ];
-      after = [
+      requires = [
         "fmo-hardware-id-manager.service" # Writes the hardware ID to /var/common/hardware-id.txt
         "dac-kms-enrolment.service" # Enrols this PMC into KMS
         "setup-dac-agent.service" # Sets up DAC agent configuration
