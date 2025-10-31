@@ -180,6 +180,10 @@ in
       dac-agent = {
         enable = config.dockervm.enableDac; # Disabled by default, enabled via profile option
       };
+
+      hardware-id-manager = {
+        enable = config.dockervm.enableDac; # Disabled by default, enabled via profile option
+      };
     }; # services
   }; # config
 }
