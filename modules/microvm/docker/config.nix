@@ -18,6 +18,7 @@ in
     ../../fmo/fmo-docker-networking
     ../../dac/dac-agent
     ../../dac/dac-kms-enrolment
+    ../../fmo/hardware-id-manager
   ];
 
   config = {
@@ -154,7 +155,7 @@ in
         enable = config.dockervm.enableDac; # Disabled by default, enabled via profile option
       };
 
-      hardware-id-manager = {
+      fmo-hardware-id-manager = {
         enable = config.dockervm.enableDac; # Disabled by default, enabled via profile option
       };
     }; # services
