@@ -54,6 +54,12 @@ in
       type = types.path;
       default = "/var/lib/fogdata/dac";
     };
+
+    hardware_id_file = mkOption {
+      description = "Path to hardware ID file";
+      type = types.path;
+      default = "/var/common/hardware-id.txt";
+    };
   };
   config = mkIf cfg.enable {
 
@@ -104,7 +110,6 @@ in
       wantedBy = [ "multi-user.target" ];
       before = [ "multi-user.target" ];
       requires = [
-        "fmo-hardware-id-manager.service" # Writes the hardware ID to /var/common/hardware-id.txt
         "dac-kms-enrolment.service" # Enrols this PMC into KMS
         "setup-dac-agent.service" # Sets up DAC agent configuration
       ];
@@ -120,6 +125,7 @@ in
           "${cfg.env_path}"
           "${cfg.dac_store_path}"
           "${cfg.key_path}"
+          "${cfg.hardware_id_file}"
         ];
         StartLimitIntervalSec = "0"; # Allows infinite restarts
       };
