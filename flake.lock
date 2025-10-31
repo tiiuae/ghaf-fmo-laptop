@@ -86,6 +86,30 @@
         "type": "github"
       }
     },
+    "device-assembly-toolset": {
+      "inputs": {
+        "flake-utils": [
+          "ghaf",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1761720384,
+        "narHash": "sha256-c4qH3noLOYcTF5OFbKJ71Tn0rKGTOyQNT20GRm+8KwQ=",
+        "ref": "refs/heads/main",
+        "rev": "ebabc55769669f4c99200b8d90dcb0e7838dbe8e",
+        "revCount": 170,
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
+      }
+    },
     "devshell": {
       "inputs": {
         "nixpkgs": [
@@ -528,6 +552,31 @@
         "type": "github"
       }
     },
+    "kms-enrolment": {
+      "inputs": {
+        "flake-utils": [
+          "ghaf",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1761827174,
+        "narHash": "sha256-wG5lFkotLgWtoVzhzhD+98U7m6qtEAEeKGI5Eus9l/U=",
+        "ref": "feature/request-timeout",
+        "rev": "9d3d4f7f9a33f669fe868d4cff71ebae4dbe9ea9",
+        "revCount": 52,
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/enroll-mc"
+      },
+      "original": {
+        "ref": "feature/request-timeout",
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/enroll-mc"
+      }
+    },
     "microvm": {
       "inputs": {
         "flake-utils": [
@@ -694,11 +743,13 @@
     },
     "root": {
       "inputs": {
+        "device-assembly-toolset": "device-assembly-toolset",
         "devshell": "devshell",
         "flake-parts": "flake-parts",
         "flake-root": "flake-root",
         "ghaf": "ghaf",
         "git-hooks-nix": "git-hooks-nix_2",
+        "kms-enrolment": "kms-enrolment",
         "nixpkgs": "nixpkgs",
         "onboarding-agent": "onboarding-agent",
         "treefmt-nix": "treefmt-nix_2"
