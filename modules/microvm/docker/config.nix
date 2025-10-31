@@ -179,6 +179,7 @@ in
 
       dac-agent = {
         enable = config.dockervm.enableDac; # Disabled by default, enabled via profile option
+        hardware_id_file = "/var/common/hardware-id.txt";
       };
     }; # services
   }; # config
