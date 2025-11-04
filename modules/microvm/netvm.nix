@@ -68,7 +68,7 @@ in
         "40-vlan_control" = {
           matchConfig.Name = "vlan_control";
           addresses = [
-            { Address = "192.168.254.200/24"; }
+            { Address = "192.168.244.200/24"; }
           ];
           # add relevant configuration here
         };
