@@ -37,6 +37,12 @@ in
       default = "192.168.101.254"; # NOTE: Fixed terminal laptop IP address
     };
 
+    cm_nats_endpoint = mkOption {
+      description = "The CM NATS server the agent will communicate with";
+      type = types.str;
+      default = "192.168.254.254:5222"; # NOTE: Fixed cm nats server IP address
+    };
+
     serial_number_file = mkOption {
       description = "The hardware-based device ID file";
       type = types.path;
@@ -85,6 +91,7 @@ in
             DAC_STORE_PATH=${cfg.dac_store_path}
             KEY_PATH=${cfg.key_path}
             DEVICE_NAME=$device_id
+            CM_NATS_HOST=${cfg.cm_nats_endpoint}
             NATS_HOST=${cfg.nats_endpoint}
             EOF
           '';
