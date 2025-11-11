@@ -6,7 +6,7 @@
   ...
 }:
 let
-  cfg = config.services.fmo-firewall;
+  cfg = config.services.dac-firewall;
 
   inherit (lib)
     mkIf
@@ -14,7 +14,6 @@ let
     mkOption
     types
     optionalString
-    concatMapStringsSep
     ;
 
   mkFirewallRules =
@@ -26,14 +25,14 @@ let
       gwip,
     }:
     ''
-    /run/current-system/sw/bin/ip ad ${action} ${ip} dev "$IFACE" 2> /dev/null || true
-    logger -t fmo-fw "${action} IP ${ip} to $IFACE"
+      /run/current-system/sw/bin/ip ad ${action} ${ip} dev "$1" 2> /dev/null || true
+      logger -t fmo-fw "${action} IP ${ip} to $1"
 
-    /run/current-system/sw/bin/ip link set dev "$IFACE" ${state} 2> /dev/null || true
-    logger -t fmo-fw "$IFACE set to ${state}"
+      /run/current-system/sw/bin/ip link set dev "$1" ${state} 2> /dev/null || true
+      logger -t fmo-fw "$1 set to ${state}"
 
-    /run/current-system/sw/bin/ip route ${action} ${kmsip} via ${gwip} dev "$IFACE" 2> /dev/null || true
-    logger -t fmo-fw "${action}: $IFACE -> ${kmsip} via ${gwip}"
+      /run/current-system/sw/bin/ip route ${action} ${kmsip} via ${gwip} dev "$1" 2> /dev/null || true
+      logger -t fmo-fw "${action}: $1 -> ${kmsip} via ${gwip}"
     '';
 in
 {
@@ -51,7 +50,7 @@ in
     ip = mkOption {
       type = types.str;
       description = ''
-          IP address to be assigned to the external network interfaces.
+        IP address to be assigned to the external network interfaces.
       '';
       default = "192.168.101.200/24";
     };
@@ -59,7 +58,7 @@ in
     kmsip = mkOption {
       type = types.str;
       description = ''
-          KMS server IP address.
+        KMS server IP address.
       '';
       default = "100.66.96.2/32";
     };
@@ -67,7 +66,7 @@ in
     gwip = mkOption {
       type = types.str;
       description = ''
-          Gateway IP address for the external network interfaces.
+        Gateway IP address for the external network interfaces.
       '';
       default = "192.168.101.254";
     };
@@ -91,24 +90,22 @@ in
 
         add_rules(){
             ${mkFirewallRules {
-                    inherit (cfg) ip;
-                    action = "add";
-                    state = "up";
-                    inherit (cfg) kmsip;
-                    inherit (cfg) gwip;
-                }
-            }
+              inherit (cfg) ip;
+              action = "add";
+              state = "up";
+              inherit (cfg) kmsip;
+              inherit (cfg) gwip;
+            }}
         }
 
         remove_rules(){
             ${mkFirewallRules {
-                    inherit (cfg) ip;
-                    action = "add";
-                    state = "up";
-                    inherit (cfg) kmsip;
-                    inherit (cfg) gwip;
-                }
-            }
+              inherit (cfg) ip;
+              action = "add";
+              state = "up";
+              inherit (cfg) kmsip;
+              inherit (cfg) gwip;
+            }}
         }
 
         echo "Detecting USB Ethernet adapters..."
@@ -132,13 +129,13 @@ in
                 status=$(cat /sys/class/net/$iface/operstate)
                 if [ "$status" = "up" ]; then
                     log "Interface $iface is up, applying rules"
-                    add_rules
+                    add_rules "$iface"
 
                     # Set MTU for the interface
                     ${optionalString (cfg.mtu != null) ''ip link set dev "$iface" mtu ${toString cfg.mtu}''}
                 else
                     log "Interface $iface is down, removing rules"
-                    remove_rules
+                    remove_rules "$iface"
                 fi
             fi
         done
