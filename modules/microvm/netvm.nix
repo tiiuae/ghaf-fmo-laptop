@@ -15,6 +15,7 @@ in
   imports = [
     ../fmo/fmo-update-hostname
     ../fmo/fmo-firewall
+    ../dac/dac-firewall
   ];
   config = {
 
@@ -168,6 +169,17 @@ in
           }
         ];
       };
+
+      dac-firewall = {
+        enable = true;
+        mtu = 1372;
+        configuration = {
+          ip = "192.168.101.200/24";
+          kmsip = "100.66.96.2/32";
+          gwip = "192.168.101.254";
+        };
+      };
+
     }; # services
 
     microvm = {

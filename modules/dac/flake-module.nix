@@ -5,6 +5,7 @@
     dac-services.imports = [
       ./dac-agent
       ./dac-kms-enrolment
+      ./dac-firewall
     ];
   };
 }
