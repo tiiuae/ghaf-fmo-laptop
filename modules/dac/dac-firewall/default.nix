@@ -37,8 +37,8 @@ let
     '';
 in
 {
-  options.services.fmo-firewall = {
-    enable = mkEnableOption "fmo-firewall";
+  options.services.dac-firewall = {
+    enable = mkEnableOption "dac-firewall";
 
     mtu = mkOption {
       type = types.nullOr types.int;
