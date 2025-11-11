@@ -12,6 +12,11 @@ let
   ueth-ip = "192.168.101.200/24";
 in
 {
+  imports = [
+    ../fmo/fmo-update-hostname
+    ../fmo/fmo-firewall
+    ../dac/dac-firewall
+  ];
   config = {
     services.udev.extraRules = ''
       SUBSYSTEM=="net", ACTION=="add", DRIVERS=="usb", \
@@ -142,7 +147,18 @@ in
           }
         ];
       };
-    };
+
+      dac-firewall = {
+        enable = true;
+        mtu = 1372;
+        configuration = {
+          ip = "192.168.101.200/24";
+          kmsip = "100.66.96.2/32";
+          gwip = "192.168.101.254";
+        };
+      };
+
+    }; # services
 
     microvm = {
       volumes = [
