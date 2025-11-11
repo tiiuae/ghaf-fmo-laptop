@@ -48,14 +48,24 @@ in
       '';
     };
 
-    configuration = mkOption {
-      type = types.attrs;
+    ip = mkOption {
+      type = types.str;
       description = ''
-        {
-            ip = interface IP address,
-            kmsip = KMS IP address,
-            gwip = gateway IP address,
-        }
+          IP address to be assigned to the external network interfaces.
+      '';
+    };
+
+    kmsip = mkOption {
+      type = types.str;
+      description = ''
+          KMS server IP address.
+      '';
+    };
+
+    gwip = mkOption {
+      type = types.str;
+      description = ''
+          Gateway IP address for the external network interfaces.
       '';
     };
   };
@@ -78,22 +88,22 @@ in
 
         add_rules(){
             ${mkFirewallRules {
-                    inherit (cfg.configuration) ip;
+                    inherit (cfg) ip;
                     action = "add";
                     state = "up";
-                    inherit (cfg.configuration) kmsip;
-                    inherit (cfg.configuration) gwip;
+                    inherit (cfg) kmsip;
+                    inherit (cfg) gwip;
                 }
             }
         }
 
         remove_rules(){
             ${mkFirewallRules {
-                    inherit (cfg.configuration) ip;
+                    inherit (cfg) ip;
                     action = "add";
                     state = "up";
-                    inherit (cfg.configuration) kmsip;
-                    inherit (cfg.configuration) gwip;
+                    inherit (cfg) kmsip;
+                    inherit (cfg) gwip;
                 }
             }
         }
