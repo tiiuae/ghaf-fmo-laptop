@@ -53,6 +53,7 @@ in
       description = ''
           IP address to be assigned to the external network interfaces.
       '';
+      default = "192.168.101.200/24";
     };
 
     kmsip = mkOption {
@@ -60,6 +61,7 @@ in
       description = ''
           KMS server IP address.
       '';
+      default = "100.66.96.2/32";
     };
 
     gwip = mkOption {
@@ -67,6 +69,7 @@ in
       description = ''
           Gateway IP address for the external network interfaces.
       '';
+      default = "192.168.101.254";
     };
   };
 
