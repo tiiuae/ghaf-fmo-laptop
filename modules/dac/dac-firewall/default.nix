@@ -74,6 +74,8 @@ in
         IFACE="$1"
         STATUS="$2"
 
+	      logger -t dac-usb-network-configuration "Dispatcher triggered: IFACE=$IFACE STATUS=$STATUS"
+
         add_rules(){
             ${mkFirewallRules {
               inherit (cfg) ip;
@@ -93,6 +95,14 @@ in
               inherit (cfg) gwip;
             }}
         }
+	
+        # Skip loopback and common virtual interfaces
+        [[ "$IFACE" == "lo" ]] && exit
+        [[ "$IFACE" =~ tun|vbox|docker|veth|br-|virbr ]] && exit
+
+        # Only Ethernet type (1)
+        type=$(cat /sys/class/net/$IFACE/type)
+        [[ "$type" != "1" ]] && exit            
 
         # Check if backed by USB
         if readlink -f /sys/class/net/$IFACE | grep -q '/usb'; then
