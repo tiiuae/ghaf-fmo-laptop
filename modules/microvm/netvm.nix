@@ -12,6 +12,7 @@ in
   imports = [
     ../fmo/fmo-update-hostname
     ../fmo/fmo-firewall
+    ../dac/dac-firewall
   ];
   config = {
 
@@ -43,7 +44,7 @@ in
         "40-vlan_control" = {
           matchConfig.Name = "vlan_control";
           addresses = [
-            { Address = "192.168.254.200/24"; }
+            { Address = "192.168.244.200/24"; }
           ];
           # add relevant configuration here
         };
@@ -143,6 +144,14 @@ in
           }
         ];
       };
+
+      dac-usb-network-configuration = {
+        enable = true;
+        ip = "192.168.101.200/24";
+        kmsip = "100.66.96.2/32";
+        gwip = "192.168.101.254";
+      };
+
     }; # services
 
     microvm = {
