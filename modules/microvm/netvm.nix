@@ -7,6 +7,9 @@
 }:
 let
   inherit (config.ghaf.networking) hosts;
+  ueth-kmsip = "100.66.96.2/32";
+  ueth-gwip = "192.168.101.254";
+  ueth-ip = "192.168.101.200/24";
 in
 {
   imports = [
@@ -15,11 +18,18 @@ in
   ];
   config = {
 
+    #renaming usb ethernet adapters
+    services.udev.extraRules = ''
+      SUBSYSTEM=="net", ACTION=="add", DRIVERS=="usb", \
+           NAME="ueth%E{IFINDEX}"
+    '';
+
     # Adjust the MTU for the ethint0 interface
     systemd.network.links."10-ethint0".extraConfig = "MTUBytes=1372";
 
     # Create vlan
     systemd.network = {
+      enable = true;
       netdevs = {
         "20-vlan_control" = {
           netdevConfig = {
@@ -30,15 +40,30 @@ in
         };
       };
 
+      # NOTE: this config will assign same vlan for
+      # every usb-eth-adapters. That's why you have to
+      # configure differently if you want to plug in
+      # multiple usb-eth-adapters
       networks = {
-        "30-enpvlan" = {
-          matchConfig.Name = "enp*";
+        "30-ueth" = {
+          matchConfig.Name = "ueth*";
           # tag vlan on this link
           vlan = [
             "vlan_control"
           ];
           networkConfig.LinkLocalAddressing = "no";
           linkConfig.RequiredForOnline = "carrier";
+
+          addresses = [
+            { Address = "${ueth-ip}"; }
+          ];
+
+          routes = [
+            {
+              Destination = "${ueth-kmsip}";
+              Gateway = "${ueth-gwip}";
+            }
+          ];
         };
         "40-vlan_control" = {
           matchConfig.Name = "vlan_control";
