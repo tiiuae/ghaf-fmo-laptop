@@ -122,11 +122,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1761720384,
-        "narHash": "sha256-c4qH3noLOYcTF5OFbKJ71Tn0rKGTOyQNT20GRm+8KwQ=",
+        "lastModified": 1763451090,
+        "narHash": "sha256-kOIddWoRyFuMQfk13dCkOH1tAqdZUZS78xVtScBqq6w=",
         "ref": "refs/heads/main",
-        "rev": "ebabc55769669f4c99200b8d90dcb0e7838dbe8e",
-        "revCount": 170,
+        "rev": "4fc6b2abb57cde9bc108485d841de86a49f7affd",
+        "revCount": 172,
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
       },
