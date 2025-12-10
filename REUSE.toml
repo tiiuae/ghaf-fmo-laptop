@@ -18,5 +18,6 @@ path = [
   "flake.lock",
   ".version",
   "README.md",
-  "justfile"
+  "justfile",
+  "overlays/custom-packages/cosmic-panel/0001-Fix-touchscreen-click-events-for-panel-applets.patch"
 ]

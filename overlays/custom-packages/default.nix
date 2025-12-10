@@ -6,4 +6,5 @@
 #
 (_final: prev: {
   lisgd = import ./lisgd { inherit prev; };
+  cosmic-panel = import ./cosmic-panel { inherit prev; };
 })
