@@ -1,0 +1,82 @@
+From d4b59a2113cf47fe598f3b147ae4d338fd850c79 Mon Sep 17 00:00:00 2001
+From: Kajus Naujokaitis <kajus.naujokaitis@unikie.com>
+Date: Wed, 10 Dec 2025 08:37:05 +0200
+Subject: [PATCH] Fix touchscreen click events for panel applets
+
+Signed-off-by: Kajus Naujokaitis <kajus.naujokaitis@unikie.com>
+---
+ .../client/handlers/touch.rs                  | 36 +++++++++++++++++--
+ 1 file changed, 34 insertions(+), 2 deletions(-)
+
+diff --git a/cosmic-panel-bin/src/xdg_shell_wrapper/client/handlers/touch.rs b/cosmic-panel-bin/src/xdg_shell_wrapper/client/handlers/touch.rs
+index 2ba105e..2d38f66 100644
+--- a/cosmic-panel-bin/src/xdg_shell_wrapper/client/handlers/touch.rs
++++ b/cosmic-panel-bin/src/xdg_shell_wrapper/client/handlers/touch.rs
+@@ -1,4 +1,5 @@
+ use crate::xdg_shell_wrapper::{
++    client_state::FocusStatus,
+     server_state::{SeatPair, ServerPointerFocus},
+     shared_state::GlobalState,
+     space::WrapperSpace,
+@@ -12,10 +13,14 @@ use sctk::{
+     seat::touch::TouchHandler,
+ };
+ use smithay::{
+-    input::touch::{self, TouchHandle},
++    backend::input::ButtonState,
++    input::{touch::{self, TouchHandle}, pointer::{ButtonEvent, MotionEvent}},
+     utils::{Point, SERIAL_COUNTER},
+ };
+
++// Timeout in milliseconds for converting touch to click
++const TOUCH_CLICK_TIMEOUT_MS: u32 = 200;
++
+ fn get_touch_handle(state: &GlobalState, touch: &WlTouch) -> (String, TouchHandle<GlobalState>) {
+     let seat_index = state
+         .server_state
+@@ -56,9 +61,36 @@ impl TouchHandler for GlobalState {
+
+         self.client_state.touch_surfaces.insert(id, surface.clone());
+
++    // WIP
++        let seat = &mut self.server_state.seats[seat_index];
++        let ptr = seat.server.seat.get_pointer().unwrap();
++        seat.client.last_enter = serial;
++
++        {
++            let mut c_hovered_surface = self.client_state.hovered_surface.borrow_mut();
++            c_hovered_surface.clear();
++            c_hovered_surface.push((
++                surface.clone(),
++                seat_name.to_string(),
++                FocusStatus::Focused,
++            ));
++        }
++    // WIP
++
+         if let Some(ServerPointerFocus { surface, c_pos, s_pos, .. }) =
+             self.space.touch_under((location.0 as i32, location.1 as i32), &seat_name, surface)
+         {
++            ptr.motion(
++                self,
++                Some((surface.clone(), s_pos)),
++                &MotionEvent {
++                    location: c_pos.to_f64() + Point::from(location),
++                    serial: SERIAL_COUNTER.next_serial(),
++                    time: time.try_into().unwrap(),
++                },
++            );
++            ptr.frame(self);
++
+             touch.down(
+                 self,
+                 Some((surface, s_pos)),
+@@ -154,4 +186,4 @@ impl TouchHandler for GlobalState {
+     }
+ }
+
+-delegate_touch!(GlobalState);
++delegate_touch!(GlobalState);
+\ No newline at end of file
+--
+2.51.2
