@@ -65,12 +65,6 @@ in
         listener.address = config.ghaf.networking.hosts.admin-vm.ipv4;
       };
 
-      graphics = {
-        labwc = {
-          autologinUser = lib.mkForce null;
-        };
-      };
-
       # Enable shared directories for the selected VMs
       virtualization.microvm-host.sharedVmDirectory.vms =
         optionals
