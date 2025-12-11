@@ -4,7 +4,7 @@
   config = {
     # TODO: Cleanup VM specific rules once vhotplug module
     # have support for it
-    ghaf.hardware.usb.vhotplug.prependRules = [
+    ghaf.hardware.passthrough.vhotplug.prependUsbRules = [
       {
         description = "Devices for DockerVM";
         targetVm = "docker-vm";

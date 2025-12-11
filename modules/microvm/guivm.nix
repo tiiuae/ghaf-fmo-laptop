@@ -16,18 +16,10 @@ let
 
   rmDesktopEntry =
     pkg:
-    pkg.overrideAttrs (
-      old:
-      let
-        pInst = if (old ? postInstall) then old.postInstall else "";
-      in
-      {
-        postInstall = pInst + "rm -rf \"$out/share/applications\"";
-      }
-      // lib.optionalAttrs (old ? buildCommand) {
-        buildCommand = old.buildCommand + "rm -rf \"$out/share/applications\"";
-      }
-    );
+    pkg.overrideAttrs (old: {
+      postInstall = old.postInstall or "" + "rm -rf \"$out/share/applications\"";
+      buildCommand = old.buildCommand or "" + "rm -rf \"$out/share/applications\"";
+    });
   nvidiaEnabled = config.ghaf.graphics.nvidia-setup.enable;
   chromeExtraArgs =
     optionalString (!nvidiaEnabled) ",UseOzonePlatform"
