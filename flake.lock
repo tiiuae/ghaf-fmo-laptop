@@ -86,6 +86,30 @@
         "type": "github"
       }
     },
+    "device-assembly-toolset": {
+      "inputs": {
+        "flake-utils": [
+          "ghaf",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1763451090,
+        "narHash": "sha256-kOIddWoRyFuMQfk13dCkOH1tAqdZUZS78xVtScBqq6w=",
+        "ref": "refs/heads/main",
+        "rev": "4fc6b2abb57cde9bc108485d841de86a49f7affd",
+        "revCount": 172,
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
+      }
+    },
     "devshell": {
       "inputs": {
         "nixpkgs": [
@@ -528,6 +552,30 @@
         "type": "github"
       }
     },
+    "kms-enrolment": {
+      "inputs": {
+        "flake-utils": [
+          "ghaf",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1762164057,
+        "narHash": "sha256-K2brQIBgdoDW06W+GjnMyzhIXw6Y/D2atBEIRKjlFS8=",
+        "ref": "refs/heads/main",
+        "rev": "f02f30d301f9677a84c6b74b83c8750bc80945bc",
+        "revCount": 52,
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/enroll-mc"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/tiiuae/enroll-mc"
+      }
+    },
     "microvm": {
       "inputs": {
         "flake-utils": [
@@ -694,11 +742,13 @@
     },
     "root": {
       "inputs": {
+        "device-assembly-toolset": "device-assembly-toolset",
         "devshell": "devshell",
         "flake-parts": "flake-parts",
         "flake-root": "flake-root",
         "ghaf": "ghaf",
         "git-hooks-nix": "git-hooks-nix_2",
+        "kms-enrolment": "kms-enrolment",
         "nixpkgs": "nixpkgs",
         "onboarding-agent": "onboarding-agent",
         "treefmt-nix": "treefmt-nix_2"
