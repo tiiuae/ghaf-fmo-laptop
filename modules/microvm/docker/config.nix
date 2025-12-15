@@ -18,6 +18,9 @@ in
     ../../fmo/fmo-onboarding-agent
     ../../fmo/fmo-update-hostname
     ../../fmo/fmo-docker-networking
+    ../../dac/dac-agent
+    ../../dac/dac-kms-enrolment
+    ../../fmo/hardware-id-manager
   ];
 
   config = {
@@ -27,6 +30,8 @@ in
       pkgs.tcpdump
       pkgs.gpsd
       pkgs.natscli
+      pkgs.device-assembly-agent
+      pkgs.nats-server
     ];
 
     # Use givc service & app manager
@@ -94,10 +99,12 @@ in
       settings.main.font = "FiraCode Nerd Font Mono:size=10";
     };
 
-    # Allow app user in this vm to run root commands for on-/offboarding
+    # Allow app user in this vm to run root commands
     security.sudo.extraConfig = ''
       ${appuser} ALL=(root) NOPASSWD: ${pkgs.fmo-onboarding}/bin/fmo-onboarding
       ${appuser} ALL=(root) NOPASSWD: ${pkgs.fmo-offboarding}/bin/fmo-offboarding
+      ${appuser} ALL=(root) NOPASSWD: ${pkgs.device-assembly-agent}/bin/device-assembly-agent
+      ${appuser} ALL=(root) NOPASSWD: ${pkgs.kms-enrolment}/bin/enroll-mc
     '';
 
     users.groups."plugdev" = { };
@@ -163,6 +170,21 @@ in
         hostname_path = "/var/lib/fogdata";
         ip_path = "/var/lib/fogdata";
         post_install_path = "/var/lib/fogdata/certs";
+        enable_dac = config.dockervm.enableDac; # Disabled by default, enabled via profile option
+        dac_file_path = "/var/lib/fogdata/dac/dac.json";
+      };
+
+      dac-kms-enrolment = {
+        enable = config.dockervm.enableDac; # Disabled by default, enabled via profile option
+      };
+
+      dac-agent = {
+        enable = config.dockervm.enableDac; # Disabled by default, enabled via profile option
+        hardware_id_file = "/var/common/hardware-id.txt";
+      };
+
+      fmo-hardware-id-manager = {
+        enable = config.dockervm.enableDac; # Disabled by default, enabled via profile option
       };
     }; # services
   }; # config
