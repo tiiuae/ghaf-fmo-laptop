@@ -135,8 +135,16 @@ let
         fmo.personalize.debug.enable = true;
       }
     ])
-    (laptop-configuration "fmo-tower-5080" "debug" [
-      nixMods.hardware-tower-5080
+    (laptop-configuration "fmo-tower-5080-mk1" "debug" [
+      nixMods.hardware-tower-5080-mk1 # we keep this as legacy for now
+      nixMods.fmo-profile
+      {
+        ghaf.profiles.debug.enable = true;
+        fmo.personalize.debug.enable = true;
+      }
+    ])
+    (laptop-configuration "fmo-tower-5080-mk2" "debug" [
+      nixMods.hardware-tower-5080-mk2
       nixMods.fmo-profile
       {
         ghaf.profiles.debug.enable = true;
