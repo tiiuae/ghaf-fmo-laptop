@@ -8,7 +8,6 @@
 }:
 let
   inherit (lib)
-    any
     optionals
     optionalString
     mkForce
@@ -51,17 +50,18 @@ in
     ghaf.graphics = {
 
       nvidia-setup = {
-        enable = any (d: d.vendorId == "10de") config.ghaf.common.hardware.gpus;
+        enable = lib.any (d: d.vendorId == "10de") config.ghaf.common.hardware.gpus;
       };
 
       intel-setup = {
-        enable = any (d: d.vendorId == "8086") config.ghaf.common.hardware.gpus;
+        enable = lib.any (d: d.vendorId == "8086") config.ghaf.common.hardware.gpus;
       };
     };
 
     environment.systemPackages = [
       google-chrome
       pkgs.resources
+      pkgs.nvtopPackages.full
     ];
 
     programs.firefox = {

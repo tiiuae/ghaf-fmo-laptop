@@ -1,6 +1,6 @@
 # Copyright 2022-2025 TII (SSRC) and the Ghaf contributors
 # SPDX-License-Identifier: Apache-2.0
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
   flake.nixosModules = {
     hardware-alienware-m18-r2.imports = [
@@ -11,7 +11,6 @@
     hardware-dell-latitude-7230.imports = [
       inputs.ghaf.nixosModules.hardware-dell-latitude-7230
       ./resources/dell-latitude-7230.nix
-      ./definition/dell-latitude-7230.nix
       ./usb
     ];
     hardware-dell-latitude-7330.imports = [
@@ -28,6 +27,9 @@
     hardware-tower-5080.imports = [
       inputs.ghaf.nixosModules.hardware-tower-5080
       ./resources/tower-5080.nix
+      {
+        ghaf.hardware.definition.network.pciDevices = lib.mkForce [ ];
+      }
     ];
     hardware-lenovo-x1-carbon-gen11.imports = [
       inputs.ghaf.nixosModules.hardware-lenovo-x1-carbon-gen11
