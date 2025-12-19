@@ -27,6 +27,7 @@
     hardware-tower-5080.imports = [
       inputs.ghaf.nixosModules.hardware-tower-5080
       ./resources/tower-5080.nix
+      ./usb
       {
         ghaf.hardware.definition.network.pciDevices = lib.mkForce [ ];
       }
