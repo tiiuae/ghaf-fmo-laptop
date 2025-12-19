@@ -7,4 +7,5 @@
 (_final: prev: {
   lisgd = import ./lisgd { inherit prev; };
   cosmic-panel = import ./cosmic-panel { inherit prev; };
+  cosmic-applibrary = import ./cosmic-applibrary { inherit prev; };
 })
