@@ -12,6 +12,9 @@ let
   isMsgvmEnabled = hasAttr "msg-vm" config.microvm.vms;
 in
 {
+  imports = [
+    ../fmo/fmo-hardware-id-manager
+  ];
   config = {
 
     # TODO FMO_BUILD_VERSION
@@ -31,6 +34,10 @@ in
 
       # TODO check if this is required and its dependencies (fmo-config.yaml?)
       # environment.systemPackages = [ pkgs.fmo-tool ];
+
+      fmo-hardware-id-manager = {
+        enable = true;
+      };
 
       fmo-certs-distribution-service-host = {
         enable = true;

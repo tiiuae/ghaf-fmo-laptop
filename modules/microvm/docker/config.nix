@@ -18,6 +18,7 @@ in
     ../../fmo/fmo-onboarding-agent
     ../../fmo/fmo-update-hostname
     ../../fmo/fmo-docker-networking
+    ../../fmo/fmo-hardware-id-manager
   ];
 
   config = {
@@ -163,6 +164,10 @@ in
         hostname_path = "/var/lib/fogdata";
         ip_path = "/var/lib/fogdata";
         post_install_path = "/var/lib/fogdata/certs";
+      };
+
+      fmo-hardware-id-manager = {
+        enable = true;
       };
     }; # services
   }; # config
