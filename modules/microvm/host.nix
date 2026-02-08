@@ -3,23 +3,10 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }:
-let
-  inherit (lib) hasAttr optionals;
-  inherit (config.ghaf.networking) hosts;
-  isMsgvmEnabled = hasAttr "msg-vm" config.microvm.vms;
-in
 {
   config = {
-
-    # TODO FMO_BUILD_VERSION
-    # TODO RAV version, we will not support the hyperconfig
-    # fmo-system = {
-    #   RAversion = "v0.8.4";
-    # };
-
     environment.systemPackages = [
       pkgs.vim
       pkgs.tcpdump
@@ -28,18 +15,12 @@ in
     ];
 
     services = {
-
-      # TODO check if this is required and its dependencies (fmo-config.yaml?)
-      # environment.systemPackages = [ pkgs.fmo-tool ];
-
       fmo-certs-distribution-service-host = {
         enable = true;
         ca-name = "NATS CA";
         ca-path = "/run/certs/nats/ca";
-        server-ips = [
-          "127.0.0.1"
-        ]
-        ++ optionals isMsgvmEnabled "${hosts.msg-vm.ipv4}";
+        # Base server-ips, msg-vm adds its IP when enabled (see msg/vm.nix)
+        server-ips = [ "127.0.0.1" ];
         server-name = "NATS-server";
         server-path = "/run/certs/nats/server";
         clients-paths = [
@@ -47,16 +28,14 @@ in
           "/run/certs/nats/clients/netvm"
           "/run/certs/nats/clients/dockervm"
         ];
-      }; # services.fmo-certs-distribution-service-host
+      };
     };
 
     # Create MicroVM host share folders
     systemd.tmpfiles.rules = [
       "d /persist/common 0700 root root -"
-      "d /persist/fogdata 0700 ${toString config.ghaf.users.loginUser.uid} users -"
-      # TODO is this actually meant to be temporary?
+      "d /persist/fogdata 0700 ${toString config.ghaf.users.homedUser.uid} users -"
       "d /persist/tmp 0700 microvm kvm -"
-      # TODO remove this when better hostname/ip setting option is implemented
       "f /persist/common/hostname 0600 root root -"
       "f /persist/common/ip-address 0600 root root -"
     ];

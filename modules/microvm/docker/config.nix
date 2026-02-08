@@ -1,27 +1,15 @@
 # Copyright 2022-2025 TII (SSRC) and the Ghaf contributors
 # SPDX-License-Identifier: Apache-2.0
-#
 {
   config,
   pkgs,
   ...
 }:
 let
-
   appuser = config.ghaf.users.appUser.name;
 in
 {
-  # TODO implement appvm interface and remove these imports
-  imports = [
-    ../../fmo/fmo-dci-service
-    ../../fmo/fmo-dci-passthrough
-    ../../fmo/fmo-onboarding-agent
-    ../../fmo/fmo-update-hostname
-    ../../fmo/fmo-docker-networking
-  ];
-
   config = {
-    # Packages
     environment.systemPackages = [
       pkgs.vim
       pkgs.tcpdump
@@ -29,15 +17,9 @@ in
       pkgs.natscli
     ];
 
-    # Use givc service & app manager
-    # TODO This is currently not supported in givc as it has a microvm dependency
-
-    # MTU
     systemd.network.links."10-ethint0".extraConfig = "MTUBytes=1372";
 
-    # MicroVM
     microvm = {
-      # TODO Should we use storagevm instead?
       volumes = [
         {
           image = "/persist/tmp/dockervm_internal.img";
@@ -53,7 +35,7 @@ in
           autoCreate = true;
           fsType = "ext4";
         }
-      ]; # microvm.volumes
+      ];
 
       shares = [
         {
@@ -84,17 +66,15 @@ in
           proto = "virtiofs";
           socket = "nats_dockervm_ca_certs.sock";
         }
-      ]; # microvm.shares
-    }; # microvm
+      ];
+    };
 
-    # Terminal and fonts
     fonts.packages = [ pkgs.nerd-fonts.fira-code ];
     programs.foot = {
       enable = true;
       settings.main.font = "FiraCode Nerd Font Mono:size=10";
     };
 
-    # Allow app user in this vm to run root commands for on-/offboarding
     security.sudo.extraConfig = ''
       ${appuser} ALL=(root) NOPASSWD: ${pkgs.fmo-onboarding}/bin/fmo-onboarding
       ${appuser} ALL=(root) NOPASSWD: ${pkgs.fmo-offboarding}/bin/fmo-offboarding
@@ -102,28 +82,13 @@ in
 
     users.groups."plugdev" = { };
 
-    # Udev rules for Yubikey
+    # Udev rule for YubiKey-based hardware authentication (e.g., SSH keys)
     services.udev.extraRules = ''
       KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0407", TAG+="uaccess", GROUP="kvm", MODE="0666"
     '';
 
-    # Services
     services = {
-
-      # TODO enable monitoring service
-      # fmo-monitor-service = {
-      #   enable = true;
-      #   nats-ip = "192.168.101.111";
-      #   ca-crt-path = "/var/lib/nats/ca/ca.crt";
-      #   client-key-path = "/var/lib/nats/certs/client.key";
-      #   client-crt-path = "/var/lib/nats/certs/client.crt";
-      #   services = [ "fmo-dci.service" ];
-      #   topics = [ "dockervm/logs/fmo-dci" ];
-      # };
-
-      fmo-docker-networking = {
-        enable = true;
-      };
+      fmo-docker-networking.enable = true;
 
       fmo-dci-passthrough = {
         enable = true;
@@ -138,7 +103,6 @@ in
         backup-path = "/var/lib/fogdata/docker-compose.yml.backup";
         pat-path = "/var/lib/fogdata/PAT.pat";
         preloaded-images = "tii-offline-map-data-loader.tar.gz";
-        # docker-url = "cr.airoplatform.com";
         docker-url = "ghcr.io";
         docker-url-path = "/var/lib/fogdata/cr.url";
         docker-mtu = 1372;
@@ -154,7 +118,6 @@ in
         hostnamePath = "/var/common/hostname";
       };
 
-      # Setup service for onboarding agent
       fmo-onboarding-agent = {
         enable = true;
         certs_path = "/var/lib/fogdata/certs";
@@ -164,6 +127,6 @@ in
         ip_path = "/var/lib/fogdata";
         post_install_path = "/var/lib/fogdata/certs";
       };
-    }; # services
-  }; # config
+    };
+  };
 }

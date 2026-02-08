@@ -19,10 +19,8 @@
 #    Audio VM:   1 vcpu    384 MB
 #    Admin VM:   1 vcpu    512 MB
 #    Gui VM:     2 vcpu    2047 MB
-#    Zathura VM: 1 vcpu    512 MB
-#    Chrome VM:  4 vcpu    2047 MB
 #    Docker VM:  4 vcpu    2047 MB
-#    (Msg VM:     2 vcpu    512 MB)
+#    Msg VM:     2 vcpu    512 MB
 #
 # Memory ballooning is enabled in Ghaf.
 #
@@ -31,41 +29,24 @@ let
   inherit (lib) mkForce;
 in
 {
-  config = {
-
+  config.ghaf.virtualization.vmConfig = {
     # Gui VM
-    microvm.vms.gui-vm.config.config.microvm = {
+    guivm = {
       mem = mkForce 2047;
       vcpu = mkForce 2;
     };
 
-    ghaf.virtualization.microvm.appvm.vms = {
-      # Docker VM
+    # App VMs
+    appvms = {
       docker = {
-        ramMb = mkForce 2047;
-        cores = mkForce 4;
+        mem = mkForce 2047;
+        vcpu = mkForce 4;
         balloonRatio = mkForce 4;
       };
-
-      # Msg VM
       msg = {
-        ramMb = mkForce 512;
-        cores = mkForce 2;
+        mem = mkForce 512;
+        vcpu = mkForce 2;
         balloonRatio = mkForce 4;
-      };
-
-      # Chrome VM
-      chrome = {
-        ramMb = mkForce 2047;
-        cores = mkForce 4;
-        balloonRatio = mkForce 4;
-      };
-
-      # Zathura VM
-      zathura = {
-        ramMb = mkForce 512;
-        cores = mkForce 1;
-        balloonRatio = mkForce 2;
       };
     };
   };

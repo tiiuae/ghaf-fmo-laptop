@@ -21,23 +21,16 @@
   };
 
   inputs = {
+    # Ghaf is the source of truth for nixpkgs version
+    ghaf.url = "github:tiiuae/ghaf";
 
-    # Pinned to the version that ghaf is currently pinned to.
-    nixpkgs = {
-      #url = "github:NixOS/nixpkgs/c23193b943c6c689d70ee98ce3128239ed9e32d1";
-      url = "github:tiiuae/nixpkgs/cosmic-stable";
-    };
-
-    ghaf = {
-      #url = "flake:mylocalghaf";
-      url = "github:tiiuae/ghaf";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Follow ghaf's nixpkgs - no manual version tracking needed
+    nixpkgs.follows = "ghaf/nixpkgs";
 
     onboarding-agent = {
       url = "git+ssh://git@github.com/tiiuae/onboarding-agent";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        nixpkgs.follows = "ghaf/nixpkgs";
         flake-utils.follows = "ghaf/flake-utils";
       };
     };
@@ -48,7 +41,7 @@
     # Format all the things
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "ghaf/nixpkgs";
     };
 
     flake-parts = {
@@ -58,14 +51,14 @@
     # To ensure that checks are run locally to enforce cleanliness
     git-hooks-nix = {
       url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "ghaf/nixpkgs";
     };
 
     flake-root.url = "github:srid/flake-root";
 
     devshell = {
       url = "github:numtide/devshell";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "ghaf/nixpkgs";
     };
     ###
     ### End of Flake and repo structuring configurations

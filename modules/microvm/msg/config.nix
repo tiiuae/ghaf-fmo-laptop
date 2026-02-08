@@ -1,8 +1,6 @@
 # Copyright 2022-2025 TII (SSRC) and the Ghaf contributors
 # SPDX-License-Identifier: Apache-2.0
-#
 {
-  config,
   pkgs,
   lib,
   ...
@@ -11,14 +9,7 @@ let
   inherit (lib) mkForce;
 in
 {
-  # TODO implement appvm interface and remove these imports
-  imports = [
-    ../../fmo/fmo-nats-server
-    ../../fmo/fmo-update-hostname
-  ];
-
   config = {
-    # Packages
     environment.systemPackages = [
       pkgs.vim
       pkgs.tcpdump
@@ -28,23 +19,13 @@ in
       pkgs.nats-server
     ];
 
-    # Use givc service management
     givc.appvm.enable = mkForce false;
     givc.sysvm = {
       enable = true;
-      inherit (config.microvm.vms.msg-vm.config.config.givc.appvm)
-        debug
-        admin
-        tls
-        transport
-        ;
       services = [ "fmo-nats-server.service" ];
     };
 
-    # MicroVM
     microvm = {
-
-      # TODO Should we use storagevm instead?
       volumes = [
         {
           image = "/persist/tmp/msgvm_internal.img";
@@ -85,12 +66,9 @@ in
           socket = "nats_ca.sock";
         }
       ];
+    };
 
-    }; # microvm
-
-    # Services
     services = {
-
       avahi = {
         enable = true;
         nssmdns4 = true;
@@ -110,35 +88,23 @@ in
         hostnamePath = "/var/common/hostname";
       };
 
-      # NATS server
       fmo-nats-server = {
         enable = true;
         port = 4222;
-
         settings = {
-          # Monitoring endpoints
           http = 8222;
-
           tls = {
-            # Path to the server certificate and private key
             cert_file = "/var/lib/nats/certs/server.crt";
             key_file = "/var/lib/nats/certs/server.key";
-
-            # Path to the CA certificate
             ca_file = "/var/lib/nats/ca/ca.crt";
-
-            # Require client certificate verification
             verify_and_map = true;
           };
-
-          # Logs config
           log_file = "/var/lib/nats/nats-server.log";
           logtime = true;
         };
       };
-    }; # services
+    };
 
-    # TODO Do we support the FMO dynamic firewalling
     ghaf.firewall.enable = false;
   };
 }
