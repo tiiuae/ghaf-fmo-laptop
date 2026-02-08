@@ -1,5 +1,10 @@
 # Copyright 2022-2025 TII (SSRC) and the Ghaf contributors
 # SPDX-License-Identifier: Apache-2.0
+#
+# FMO hardware modules extend ghaf's hardware modules with:
+# - USB passthrough configuration
+# - Resource overrides (where needed)
+#
 { inputs, lib, ... }:
 {
   flake.nixosModules = {
@@ -21,16 +26,13 @@
     hardware-demo-tower-mk1.imports = [
       inputs.ghaf.nixosModules.hardware-demo-tower-mk1
       ./resources/demo-tower-mk1.nix
-      # TODO: fix this upstream to support the usb kbd also
-      #./definition/external-usb.nix
+      # TODO: fix upstream to support usb kbd
     ];
     hardware-tower-5080.imports = [
       inputs.ghaf.nixosModules.hardware-tower-5080
       ./resources/tower-5080.nix
       ./usb
-      {
-        ghaf.hardware.definition.network.pciDevices = lib.mkForce [ ];
-      }
+      { ghaf.hardware.definition.network.pciDevices = lib.mkForce [ ]; }
     ];
     hardware-lenovo-x1-carbon-gen11.imports = [
       inputs.ghaf.nixosModules.hardware-lenovo-x1-carbon-gen11
