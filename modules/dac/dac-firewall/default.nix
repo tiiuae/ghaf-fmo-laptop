@@ -14,7 +14,6 @@ let
     mkEnableOption
     mkOption
     types
-    optionalString
     ;
 
   mkFirewallRules =
@@ -70,52 +69,52 @@ in
     # Set network for USB ethernet adapters
     environment.etc."NetworkManager/dispatcher.d/99-dac-usb-network-configuration" = {
       text = ''
-        #!/bin/sh
-        IFACE="$1"
-        STATUS="$2"
+                #!/bin/sh
+                IFACE="$1"
+                STATUS="$2"
 
-	      logger -t dac-usb-network-configuration "Dispatcher triggered: IFACE=$IFACE STATUS=$STATUS"
+        	      logger -t dac-usb-network-configuration "Dispatcher triggered: IFACE=$IFACE STATUS=$STATUS"
 
-        add_rules(){
-            ${mkFirewallRules {
-              inherit (cfg) ip;
-              action = "add";
-              state = "up";
-              inherit (cfg) kmsip;
-              inherit (cfg) gwip;
-            }}
-        }
+                add_rules(){
+                    ${mkFirewallRules {
+                      inherit (cfg) ip;
+                      action = "add";
+                      state = "up";
+                      inherit (cfg) kmsip;
+                      inherit (cfg) gwip;
+                    }}
+                }
 
-        remove_rules(){
-            ${mkFirewallRules {
-              inherit (cfg) ip;
-              action = "del";
-              state = "down";
-              inherit (cfg) kmsip;
-              inherit (cfg) gwip;
-            }}
-        }
-	
-        # Skip loopback and common virtual interfaces
-        [[ "$IFACE" == "lo" ]] && exit
-        [[ "$IFACE" =~ tun|vbox|docker|veth|br-|virbr ]] && exit
+                remove_rules(){
+                    ${mkFirewallRules {
+                      inherit (cfg) ip;
+                      action = "del";
+                      state = "down";
+                      inherit (cfg) kmsip;
+                      inherit (cfg) gwip;
+                    }}
+                }
+        	
+                # Skip loopback and common virtual interfaces
+                [[ "$IFACE" == "lo" ]] && exit
+                [[ "$IFACE" =~ tun|vbox|docker|veth|br-|virbr ]] && exit
 
-        # Only Ethernet type (1)
-        type=$(cat /sys/class/net/$IFACE/type)
-        [[ "$type" != "1" ]] && exit            
+                # Only Ethernet type (1)
+                type=$(cat /sys/class/net/$IFACE/type)
+                [[ "$type" != "1" ]] && exit            
 
-        # Check if backed by USB
-        if readlink -f /sys/class/net/$IFACE | grep -q '/usb'; then
-            logger -t dac-usb-network-configuration "$IFACE is a USB Ethernet adapter"
+                # Check if backed by USB
+                if readlink -f /sys/class/net/$IFACE | grep -q '/usb'; then
+                    logger -t dac-usb-network-configuration "$IFACE is a USB Ethernet adapter"
 
-            if [ "$STATUS" = "up" ]; then
-                logger -t dac-usb-network-configuration "Interface $IFACE is up, applying rules"
-                add_rules
-            else
-                logger -t dac-usb-network-configuration "Interface $IFACE is down, removing rules"
-                remove_rules
-            fi
-        fi
+                    if [ "$STATUS" = "up" ]; then
+                        logger -t dac-usb-network-configuration "Interface $IFACE is up, applying rules"
+                        add_rules
+                    else
+                        logger -t dac-usb-network-configuration "Interface $IFACE is down, removing rules"
+                        remove_rules
+                    fi
+                fi
       '';
       mode = "0700";
     };

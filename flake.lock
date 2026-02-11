@@ -126,6 +126,8 @@
         "owner": "nixos-cuda",
         "repo": "cuda-legacy",
         "type": "github"
+      }
+    },
     "device-assembly-toolset": {
       "inputs": {
         "flake-utils": [
