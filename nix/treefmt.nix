@@ -7,7 +7,7 @@
     inputs.treefmt-nix.flakeModule
   ];
   perSystem =
-    { config, pkgs, ... }:
+    { config, ... }:
     {
       treefmt = {
         inherit (config.flake-root) projectRootFile;
@@ -16,7 +16,6 @@
           # Nix
           # nix standard formatter according to rfc 166 (https://github.com/NixOS/rfcs/pull/166)
           nixfmt.enable = true;
-          nixfmt.package = pkgs.nixfmt-rfc-style;
 
           deadnix.enable = true; # removes dead nix code https://github.com/astro/deadnix
           statix.enable = true; # prevents use of nix anti-patterns https://github.com/nerdypepper/statix

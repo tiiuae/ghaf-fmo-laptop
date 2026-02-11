@@ -12,22 +12,14 @@ let
   ueth-ip = "192.168.101.200/24";
 in
 {
-  imports = [
-    ../fmo/fmo-update-hostname
-    ../fmo/fmo-firewall
-  ];
   config = {
-
-    #renaming usb ethernet adapters
     services.udev.extraRules = ''
       SUBSYSTEM=="net", ACTION=="add", DRIVERS=="usb", \
            NAME="ueth%E{IFINDEX}"
     '';
 
-    # Adjust the MTU for the ethint0 interface
     systemd.network.links."10-ethint0".extraConfig = "MTUBytes=1372";
 
-    # Create vlan
     systemd.network = {
       enable = true;
       netdevs = {
@@ -40,24 +32,13 @@ in
         };
       };
 
-      # NOTE: this config will assign same vlan for
-      # every usb-eth-adapters. That's why you have to
-      # configure differently if you want to plug in
-      # multiple usb-eth-adapters
       networks = {
         "30-ueth" = {
           matchConfig.Name = "ueth*";
-          # tag vlan on this link
-          vlan = [
-            "vlan_control"
-          ];
+          vlan = [ "vlan_control" ];
           networkConfig.LinkLocalAddressing = "no";
           linkConfig.RequiredForOnline = "carrier";
-
-          addresses = [
-            { Address = "${ueth-ip}"; }
-          ];
-
+          addresses = [ { Address = "${ueth-ip}"; } ];
           routes = [
             {
               Destination = "${ueth-kmsip}";
@@ -67,31 +48,21 @@ in
         };
         "40-vlan_control" = {
           matchConfig.Name = "vlan_control";
-          addresses = [
-            { Address = "192.168.254.200/24"; }
-          ];
-          # add relevant configuration here
+          addresses = [ { Address = "192.168.254.200/24"; } ];
         };
       };
     };
 
-    environment.systemPackages = [
-      pkgs.vnstat
-    ];
+    environment.systemPackages = [ pkgs.vnstat ];
 
-    # Firewall attack mitigation configuration
     ghaf.firewall.attack-mitigation.ping.rule = {
       burstNum = 5;
       maxPacketFreq = "2/s";
     };
 
-    # Services
     services = {
-
-      # enable the network monitoring service
       vnstat.enable = true;
 
-      # Avahi
       avahi = {
         enable = true;
         nssmdns4 = true;
@@ -168,7 +139,7 @@ in
           }
         ];
       };
-    }; # services
+    };
 
     microvm = {
       volumes = [
@@ -204,7 +175,6 @@ in
           socket = "nats_netvm_ca_certs.sock";
         }
       ];
-    }; # microvm
-
+    };
   };
 }
