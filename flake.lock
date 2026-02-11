@@ -111,6 +111,8 @@
         "owner": "nixos-cuda",
         "repo": "cuda-legacy",
         "type": "github"
+      }
+    },
     "device-assembly-toolset": {
       "inputs": {
         "flake-utils": [
@@ -845,9 +847,8 @@
         "flake-root": "flake-root",
         "ghaf": "ghaf",
         "git-hooks-nix": "git-hooks-nix_2",
-        "nixpkgs": "nixpkgs_2",
         "kms-enrolment": "kms-enrolment",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "onboarding-agent": "onboarding-agent",
         "treefmt-nix": "treefmt-nix_2"
       }
