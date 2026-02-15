@@ -25,24 +25,19 @@ in
       services = [ "fmo-nats-server.service" ];
     };
 
-    microvm = {
-      volumes = [
+    ghaf.storagevm = {
+      maximumSize = 20 * 1024;
+      directories = [
         {
-          image = "/persist/tmp/msgvm_internal.img";
-          mountPoint = "/var/lib/internal";
-          size = 10240;
-          autoCreate = true;
-          fsType = "ext4";
-        }
-        {
-          image = "/persist/tmp/msgvm_var.img";
-          mountPoint = "/var";
-          size = 10240;
-          autoCreate = true;
-          fsType = "ext4";
+          directory = "/var";
+          user = "root";
+          group = "root";
+          mode = "0755";
         }
       ];
+    };
 
+    microvm = {
       shares = [
         {
           source = "/persist/common";

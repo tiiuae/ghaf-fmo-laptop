@@ -141,17 +141,16 @@ in
       };
     };
 
-    microvm = {
-      volumes = [
-        {
-          image = "/persist/tmp/netvm_internal.img";
-          mountPoint = "/var/lib/internal";
-          size = 10240;
-          autoCreate = true;
-          fsType = "ext4";
-        }
-      ];
+    ghaf.storagevm.directories = [
+      {
+        directory = "/var/lib/internal";
+        user = "root";
+        group = "root";
+        mode = "0755";
+      }
+    ];
 
+    microvm = {
       shares = [
         {
           source = "/persist/common";
