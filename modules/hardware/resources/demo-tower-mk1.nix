@@ -16,9 +16,8 @@
 #    Net VM:     1 vcpu    512 MB
 #    Audio VM:   1 vcpu    384 MB
 #    Admin VM:   1 vcpu    512 MB
-#    Gui VM:     14 vcpu   65536 MB
-#    Docker VM:  8 vcpu    8192 MB
-#    Msg VM:     4 vcpu    1024 MB
+#    Gui VM:     16 vcpu   66048 MB
+#    Docker VM:  10 vcpu   8704 MB
 #
 # Memory ballooning is enabled in Ghaf.
 #
@@ -30,20 +29,15 @@ in
   config.ghaf.virtualization.vmConfig = {
     # Gui VM
     guivm = {
-      mem = mkForce 65536;
-      vcpu = mkForce 14;
+      mem = mkForce 66048;
+      vcpu = mkForce 16;
     };
 
     # App VMs
     appvms = {
       docker = {
-        mem = mkForce 8192;
-        vcpu = mkForce 8;
-        balloonRatio = mkForce 4;
-      };
-      msg = {
-        mem = mkForce 1024;
-        vcpu = mkForce 4;
+        mem = mkForce 8704;
+        vcpu = mkForce 10;
         balloonRatio = mkForce 4;
       };
     };
