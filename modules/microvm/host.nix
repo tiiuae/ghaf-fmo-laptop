@@ -19,7 +19,6 @@
         enable = true;
         ca-name = "NATS CA";
         ca-path = "/run/certs/nats/ca";
-        # Base server-ips, msg-vm adds its IP when enabled (see msg/vm.nix)
         server-ips = [ "127.0.0.1" ];
         server-name = "NATS-server";
         server-path = "/run/certs/nats/server";

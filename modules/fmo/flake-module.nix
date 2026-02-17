@@ -13,7 +13,6 @@
       ./fmo-certs-distribution-host
       ./fmo-dci-passthrough
       ./fmo-onboarding-agent
-      ./fmo-nats-server
       ./fmo-update-hostname
       ./fmo-docker-networking
     ];
