@@ -15,6 +15,7 @@ in
 
   options.fmo.appvms.docker = {
     enable = lib.mkEnableOption "FMO Docker App VM";
+    enableDac = lib.mkEnableOption "Enable DAC services in Docker App VM";
   };
 
   config = lib.mkIf (cfg.enable && config.ghaf.profiles.laptop-x86.enable or false) {
@@ -54,6 +55,9 @@ in
         extraModules = [
           inputs.self.nixosModules.docker-vm-services
           ./config.nix
+          {
+            dockervm.enableDac = cfg.enableDac;
+          }
         ];
       };
     };

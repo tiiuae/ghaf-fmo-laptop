@@ -24,7 +24,7 @@
       # environment.systemPackages = [ pkgs.fmo-tool ];
 
       fmo-hardware-id-manager = {
-        enable = config.dockervm.enableDac; # This is used only by DAC at the moment
+        enable = config.fmo.appvms.docker.enableDac; # This is used only by DAC at the moment
       };
 
       fmo-certs-distribution-service-host = {

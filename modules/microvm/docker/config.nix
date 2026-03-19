@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -9,6 +10,8 @@ let
   appuser = config.ghaf.users.appUser.name;
 in
 {
+  options.dockervm.enableDac = lib.mkEnableOption "DAC creation in Docker App VM";
+
   # TODO implement appvm interface and remove these imports
   imports = [
     ../../fmo/fmo-dci-service
@@ -18,7 +21,6 @@ in
     ../../fmo/fmo-docker-networking
     ../../dac/dac-agent
     ../../dac/dac-kms-enrolment
-    ../../fmo/hardware-id-manager
   ];
 
   config = {
@@ -154,10 +156,6 @@ in
       dac-agent = {
         enable = config.dockervm.enableDac; # Disabled by default, enabled via profile option
         hardware_id_file = "/var/common/hardware-id.txt";
-      };
-
-      fmo-hardware-id-manager = {
-        enable = config.dockervm.enableDac; # Disabled by default, enabled via profile option
       };
     }; # services
   }; # config

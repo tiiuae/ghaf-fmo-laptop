@@ -122,8 +122,7 @@ in
         wantedBy = [ "multi-user.target" ];
         before = [ "multi-user.target" ];
         after = [
-          "fmo-hardware-id-manager.service" # Writes the hardware ID to /var/common/hardware-id.txt
-          "setup-kms-enrolment.service" # Sets up enrolment configuration
+          "setup-dac-kms-enrolment.service" # Sets up enrolment configuration
         ];
         serviceConfig = {
           Type = "oneshot";
