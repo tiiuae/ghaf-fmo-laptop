@@ -108,6 +108,7 @@ in
             TLS: true
             MDNS: true
             NatsEndpointFile: "${cfg.certs_path}/service_nats_url.txt"
+            ClaimServerEndpoint: "https://discovery.dev.airoplatform.com"
             Device:
               Type: "laptop"
               Alias: ""
@@ -120,6 +121,7 @@ in
               NatsLeafConfigurationFile: "${cfg.certs_path}/leaf.conf"
               AssemblyCardFile: "${cfg.dac_file_path}"
               HardwareConfigurationFile: "${cfg.hardware_config_file}"
+              ComponentType: "PMC"
             Identity:
               CaCertFile: "${cfg.certs_path}/identity_ca.crt"
               CertFile: "${cfg.certs_path}/identity.crt"

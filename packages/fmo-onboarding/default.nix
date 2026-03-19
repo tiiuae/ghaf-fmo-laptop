@@ -130,7 +130,7 @@ writeShellApplication {
       [yY][eE][sS] | [yY])
         cat $IP_FILE > /var/lib/fogdata/ip-address
         cat $HOSTNAME_FILE > /var/lib/fogdata/hostname
-        /run/current-system/sw/bin/onboarding-agent  --config $CONFIG_FILE --log-file /var/lib/fogdata/onboarding-agent.log --encrypt-secrets
+        /run/current-system/sw/bin/onboarding-agent --debug --pretty --config $CONFIG_FILE
       ;;
       *)
       ;;
