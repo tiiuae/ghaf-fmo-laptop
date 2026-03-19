@@ -139,11 +139,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763451090,
-        "narHash": "sha256-kOIddWoRyFuMQfk13dCkOH1tAqdZUZS78xVtScBqq6w=",
+        "lastModified": 1769783865,
+        "narHash": "sha256-ejGcT5au5MXRKcK8itoxZs7X4ZpQudM4maZ83WehA44=",
         "ref": "refs/heads/main",
-        "rev": "4fc6b2abb57cde9bc108485d841de86a49f7affd",
-        "revCount": 172,
+        "rev": "0e4a823df17deb92c40430879641771bd3e69391",
+        "revCount": 184,
         "type": "git",
         "url": "ssh://git@github.com/tiiuae/device_assembly_toolset"
       },
@@ -852,11 +852,11 @@
         "flake-root": "flake-root",
         "ghaf": "ghaf",
         "git-hooks-nix": "git-hooks-nix_2",
+        "kms-enrolment": "kms-enrolment",
         "nixpkgs": [
           "ghaf",
           "nixpkgs"
         ],
-        "kms-enrolment": "kms-enrolment",
         "onboarding-agent": "onboarding-agent",
         "treefmt-nix": "treefmt-nix_2"
       }
