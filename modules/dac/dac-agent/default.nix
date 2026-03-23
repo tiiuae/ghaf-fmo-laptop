@@ -114,11 +114,14 @@ in
 
     systemd.services.dac-agent = {
       description = "DAC agent";
-      wantedBy = [ "multi-user.target" ];
       before = [ "multi-user.target" ];
       requires = [
         "dac-kms-enrolment.service" # Enrols this PMC into KMS
         "setup-dac-agent.service" # Sets up DAC agent configuration
+      ];
+      after = [
+        "dac-kms-enrolment.service"
+        "setup-dac-agent.service"
       ];
       serviceConfig = {
         Type = "exec";
@@ -130,11 +133,19 @@ in
       unitConfig = {
         ConditionPathExists = [
           "${cfg.env_path}"
-          "${cfg.dac_store_path}"
           "${cfg.key_path}"
           "${cfg.hardware_id_file}"
         ];
         StartLimitIntervalSec = "0"; # Allows infinite restarts
+      };
+    };
+
+    systemd.paths.dac-agent = {
+      description = "Watch DAC store path";
+      wantedBy = [ "multi-user.target" ];
+      pathConfig = {
+        PathExists = "${cfg.dac_store_path}";
+        Unit = "dac-agent.service";
       };
     };
   };
