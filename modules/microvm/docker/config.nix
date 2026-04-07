@@ -19,24 +19,31 @@ in
 
     systemd.network.links."10-ethint0".extraConfig = "MTUBytes=1372";
 
-    microvm = {
-      volumes = [
+    ghaf.storagevm = {
+      maximumSize = 62 * 1024;
+
+      # Docker needs exec to launch runc, and dev to allow overlay2 storage driver to work properly.
+      mountOptions = [
+        "rw"
+        "nosuid"
+      ];
+      directories = [
         {
-          image = "/persist/tmp/dockervm_internal.img";
-          mountPoint = "/var/lib/internal";
-          size = 10240;
-          autoCreate = true;
-          fsType = "ext4";
+          directory = "/var/lib/internal";
+          user = "root";
+          group = "root";
+          mode = "0755";
         }
         {
-          image = "/persist/tmp/dockervm.img";
-          mountPoint = "/var/lib/docker";
-          size = 51200;
-          autoCreate = true;
-          fsType = "ext4";
+          directory = "/var/lib/docker";
+          user = "root";
+          group = "root";
+          mode = "0710";
         }
       ];
+    };
 
+    microvm = {
       shares = [
         {
           source = "/persist/common";
