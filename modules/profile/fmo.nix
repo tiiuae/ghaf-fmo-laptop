@@ -25,7 +25,6 @@ in
     inputs.self.nixosModules.fmo-services
     inputs.self.nixosModules.fmo-personalize
     inputs.self.nixosModules.dockervm
-    inputs.self.nixosModules.msgvm
   ];
 
   config = {
