@@ -375,11 +375,11 @@
         "xwayland-satellite": "xwayland-satellite"
       },
       "locked": {
-        "lastModified": 1771189142,
-        "narHash": "sha256-QHMJUc1ReD3NQcgcu+byvkxC1CDHMsjIv+aZRfg5vtc=",
+        "lastModified": 1771218368,
+        "narHash": "sha256-dFAYtKj6oQZuRzk26h1QMGtJglbGz+tejGTKnYzZZJQ=",
         "owner": "tiiuae",
         "repo": "ghaf",
-        "rev": "1c26384b1f72c38800f233a72ff557279b0153b6",
+        "rev": "dd80ded95ffb3e302f4b02b903edab50eafb0b11",
         "type": "github"
       },
       "original": {
