@@ -26,9 +26,9 @@ let
       action,
     }:
     ''
-      /run/current-system/sw/sbin/iptables -t nat -${action} ghaf-fw-pre-nat -i "$IFACE" -p ${proto} --dport ${sport} -j DNAT --to-destination ${dip}:${dport} 2> /dev/null || true
-      /run/current-system/sw/sbin/iptables -t filter -${action} ghaf-fw-fwd-filter -i "$IFACE" -p ${proto} --dport ${sport} -j ACCEPT 2> /dev/null || true
-      /run/current-system/sw/sbin/iptables -t nat -${action} ghaf-fw-post-nat -o "$IFACE" -p ${proto} --dport ${sport} -j MASQUERADE 2> /dev/null || true
+      ${config.ghaf.firewall.cmd} -t nat -${action} ghaf-fw-pre-nat -i "$IFACE" -p ${proto} --dport ${sport} -j DNAT --to-destination ${dip}:${dport} 2> /dev/null || true
+      ${config.ghaf.firewall.cmd} -t filter -${action} ghaf-fw-fwd-filter -i "$IFACE" -p ${proto} --dport ${sport} -j ACCEPT 2> /dev/null || true
+      ${config.ghaf.firewall.cmd} -t nat -${action} ghaf-fw-post-nat -o "$IFACE" -p ${proto} --dport ${sport} -j MASQUERADE 2> /dev/null || true
       logger -t fmo-fw "${action} rule on $IFACE: ${proto} ${sport} -> ${dip}:${dport}"
     '';
 in
@@ -109,7 +109,7 @@ in
 
         case "$STATUS" in
           up)
-            log "Interface $IFACE is up, applying rules"
+            logger -t fmo-fw "Interface $IFACE is up, applying rules"
             # Add port forwarding rules
             add_rules
 
@@ -117,7 +117,7 @@ in
             ${optionalString (cfg.mtu != null) ''ip link set dev "$IFACE" mtu ${toString cfg.mtu}''}
           ;;
           down)
-              log "Interface $IFACE is down, removing rules"
+              logger -t fmo-fw "Interface $IFACE is down, removing rules"
               remove_rules
           ;;
         esac
