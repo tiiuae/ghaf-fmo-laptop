@@ -35,13 +35,21 @@ in
 {
   config = {
     ghaf.graphics = {
-
+      # mkDefault, not a plain value: hardware modules own their own GPU setup
+      # and some set these unconditionally (hardware-intel-laptop turns on
+      # hybrid-setup, which sets both to true). An unprioritised definition
+      # here would conflict with that instead of yielding to it.
+      #
+      # These are still defined rather than dropped: the per-machine hardware
+      # modules for the Dell Latitudes and Lenovo X1s set neither, so removing
+      # them entirely would silently lose intel-media-driver/vpl-gpu-rt and
+      # with it VAAPI in the gui-VM.
       nvidia-setup = {
-        enable = lib.any (d: d.vendorId == "10de") config.ghaf.common.hardware.gpus;
+        enable = lib.mkDefault (lib.any (d: d.vendorId == "10de") config.ghaf.common.hardware.gpus);
       };
 
       intel-setup = {
-        enable = lib.any (d: d.vendorId == "8086") config.ghaf.common.hardware.gpus;
+        enable = lib.mkDefault (lib.any (d: d.vendorId == "8086") config.ghaf.common.hardware.gpus);
       };
     };
 
