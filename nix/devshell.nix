@@ -10,10 +10,15 @@
     {
       config,
       pkgs,
+      system,
       ...
     }:
     let
-      fmo-build-helper = pkgs.callPackage ../packages/fmo-build-helper/default.nix { };
+      # Upstream's helper is a superset of the one this repo used to carry:
+      # same <target-ip> <flake-target> [opts] contract, plus --force-local /
+      # --force-remote / --insecure, an nvd diff of the old and new system, and
+      # a `switch` that survives the SSH connection dropping.
+      ghaf-build-helper = inputs.ghaf.packages.${system}.ghaf-build-helper;
     in
     {
       devshells = {
@@ -34,7 +39,7 @@
               pkgs.cachix
               pkgs.coreutils
               config.treefmt.build.wrapper
-              fmo-build-helper
+              ghaf-build-helper
             ]
             ++ lib.attrValues config.treefmt.build.programs # make all the treefmt packages available
             ++ config.pre-commit.settings.enabledPackages;
@@ -57,7 +62,7 @@
             {
               help = "FMO nixos-rebuild command, uses proxy jump";
               name = "fmo-rebuild";
-              command = "fmo-build-helper $@";
+              command = "ghaf-build-helper $@";
               category = "builder";
             }
           ];

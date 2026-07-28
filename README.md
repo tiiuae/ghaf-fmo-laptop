@@ -96,9 +96,8 @@ username / password
 # setup the development environment
 nix develop
 
-# see the documentation on setting up the ssh config (especially the proxyJump)
-# only needs to be done once.
-cat .packages/fmo-build-helper/default.nix
+# the helper sets up the ProxyJump for you; see its options with
+ghaf-build-helper --help
 
 # use the helper tool to buid and flash your target
 just rebuild 192.168.10.212 .#fmo-lenovo-x1-gen11-debug boot

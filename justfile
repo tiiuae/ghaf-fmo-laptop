@@ -13,5 +13,5 @@ build target +rest:
 
 rebuild ip target +rest:
     install -m 644 {{NETRC_FILE}} /tmp/.netrc
-    fmo-build-helper {{ip}} {{target}} --option builders '' --option extra-sandbox-paths "/tmp/.netrc" {{rest}}
+    ghaf-build-helper {{ip}} {{target}} --option builders '' --option extra-sandbox-paths "/tmp/.netrc" {{rest}}
     rm -f /tmp/.netrc
