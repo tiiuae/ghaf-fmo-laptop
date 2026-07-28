@@ -22,7 +22,15 @@ in
     ghaf.storagevm = {
       maximumSize = 62 * 1024;
 
-      # Docker needs exec to launch runc, and dev to allow overlay2 storage driver to work properly.
+      # ghaf defaults to [ "rw" "nodev" "nosuid" "noexec" ]. noexec and nodev are
+      # omitted here because Docker needs exec to launch runc and dev for the
+      # overlay2 storage driver.
+      #
+      # NOTE: mountOptions applies to the whole /guestStorage volume, not just
+      # /var/lib/docker, so every preserved path in this VM - /var/lib/nixos,
+      # /var/lib/internal, /home/appuser, the journal - is exec and dev capable
+      # too. Also note this drops suid relative to the dedicated microvm.volumes
+      # this replaced, which inherited the "defaults" mount options.
       mountOptions = [
         "rw"
         "nosuid"
