@@ -7,7 +7,6 @@
   ...
 }:
 let
-  inherit (lib) optionals;
   hostGlobalConfig = config.ghaf.global-config;
   ghafInputs = inputs.ghaf.inputs // {
     self = inputs.ghaf;
@@ -99,13 +98,12 @@ in
           };
         };
 
-        appvm = {
-          enable = true;
-          vms = {
-            chrome.enable = false;
-            zathura.enable = false;
-          };
-        };
+        # Every ghaf reference app-VM is mkDefault-disabled upstream, so there
+        # is nothing to turn off here. The old `vms.zathura.enable = false` was
+        # worse than redundant: zathura was renamed to media, and because `vms`
+        # is an attrsOf submodule the stale key silently materialised a phantom
+        # VM entry rather than erroring. FMO ships only the docker app-VM.
+        appvm.enable = true;
       };
 
       logging = {
@@ -113,11 +111,6 @@ in
         server.endpoint = "https://loki.ghaflogs.vedenemo.dev/loki/api/v1/push";
         listener.address = config.ghaf.networking.hosts.admin-vm.ipv4;
       };
-
-      virtualization.microvm-host.sharedVmDirectory.vms = optionals (
-        config.ghaf.virtualization.microvm.appvm.enable
-        && config.ghaf.virtualization.microvm.appvm.vms.chrome.enable
-      ) [ "chrome-vm" ];
 
       hardware.passthrough = {
         mode = "dynamic";
@@ -132,6 +125,13 @@ in
           docker-vm.permittedDevices = [
             "crazyradio0"
             "crazyradio1"
+            # TODO(upstream): "gnss0" is not defined by any ghaf hardware
+            # definition, so this entry matches nothing and the GNSS receiver
+            # is NOT currently passed through to the docker-VM. Every other
+            # name here resolves via ghaf's shared external-devices list.
+            # The fix belongs upstream, next to gps0/crazyradio0/xbox0 in
+            # ghaf:modules/hardware/common/usb/external-devices.nix. Kept here
+            # so the requirement is not lost when that lands.
             "gnss0"
             "xbox0"
             "xbox1"
