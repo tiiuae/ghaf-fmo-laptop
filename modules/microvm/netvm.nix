@@ -171,7 +171,7 @@ in
           socket = "nats_netvm_certs.sock";
         }
         {
-          source = "/run/certs/nats/ca";
+          source = "/run/certs/nats/ca-pub";
           mountPoint = "/var/lib/nats/ca";
           tag = "nats_netvm_ca_certs";
           proto = "virtiofs";

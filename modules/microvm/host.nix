@@ -18,10 +18,13 @@
       fmo-certs-distribution-service-host = {
         enable = true;
         ca-name = "NATS CA";
+        # ca-path holds ca.key and stays host-only; only ca-public-path, which
+        # contains ca.crt alone, is shared into the VMs.
         ca-path = "/run/certs/nats/ca";
-        server-ips = [ "127.0.0.1" ];
-        server-name = "NATS-server";
-        server-path = "/run/certs/nats/server";
+        ca-public-path = "/run/certs/nats/ca-pub";
+        # No server certificate: the only thing that served TLS from this host
+        # was the msg-VM's NATS server, removed in 82ba0dc. The operational
+        # NATS the containers talk to runs in the docker-VM and brings its own.
         clients-paths = [
           "/run/certs/nats/clients/host"
           "/run/certs/nats/clients/netvm"
