@@ -129,6 +129,10 @@ in
       };
 
       fmo-update-hostname = {
+        # Kernel hostname only. The avahi half stays off here: this VM's
+        # avahi has publish.enable = false (the default), so renaming its
+        # daemon announced nothing. Publishing happens in net-vm, which is
+        # where avahi.enable is now set.
         enable = true;
         hostnamePath = "/var/common/hostname";
       };

@@ -63,6 +63,10 @@ in
     services = {
       vnstat.enable = true;
 
+      # net-vm is the VM that actually publishes on the LAN, so this is where
+      # the operator-chosen mDNS name has to be applied.
+      fmo-update-hostname.avahi.enable = true;
+
       avahi = {
         enable = true;
         nssmdns4 = true;
