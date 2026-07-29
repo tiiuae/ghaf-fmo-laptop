@@ -27,10 +27,15 @@ in
 
   config = mkIf cfg.enable {
 
-    # Add fmo-update-hostname service to givc
-    givc.sysvm.services = [
-      "fmo-update-hostname.service"
-    ];
+    # NOTE: there used to be a `givc.sysvm.services` registration here. It never
+    # took effect on any target and upstream has since moved that option under
+    # `capabilities`, so it also stopped evaluating. The only place this module
+    # is enabled is the docker app-VM, which runs givc's appvm agent - that
+    # agent has no `capabilities.services`, only `capabilities.applications`.
+    # It also named a unit ("fmo-update-hostname.service") that this module does
+    # not define; the real units are fmo-update-avahi-hostname and
+    # fmo-update-kernel-hostname. Making these givc-manageable needs upstream
+    # support, so the dead registration is removed rather than renamed.
 
     systemd = {
       # Note: path change only works for local updates.

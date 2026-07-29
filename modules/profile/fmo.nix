@@ -16,6 +16,9 @@ in
 {
   imports = [
     inputs.ghaf.nixosModules.disko-debug-partition
+    # Declares ghaf.partitioning.verity.*, which disko-debug-partition reads
+    # unconditionally. Upstream ships both together in its commonModules.
+    inputs.ghaf.nixosModules.verity-release-partition
     inputs.ghaf.nixosModules.reference-appvms
     inputs.ghaf.nixosModules.reference-passthrough
     inputs.ghaf.nixosModules.reference-programs

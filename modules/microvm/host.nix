@@ -40,22 +40,25 @@
 
     ghaf.virtualization.microvm.guivm.applications = [
       {
-        name = "Google Chrome GPU";
+        name = "google-chrome-gpu";
+        desktopName = "Google Chrome GPU";
         description = "Google Chrome with GPU acceleration";
         icon = "thorium-browser";
-        command = "/run/current-system/sw/bin/google-chrome-stable";
+        exec = "/run/current-system/sw/bin/google-chrome-stable";
       }
       {
-        name = "Firefox GPU";
+        name = "firefox-gpu";
+        desktopName = "Firefox GPU";
         description = "Firefox Beta with GPU acceleration";
         icon = "firefox";
-        command = "/run/current-system/sw/bin/firefox";
+        exec = "/run/current-system/sw/bin/firefox";
       }
       {
-        name = "Display Settings";
+        name = "display-settings";
+        desktopName = "Display Settings";
         description = "Manage displays and resolutions";
         icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus/64x64/devices/display.svg";
-        command = "${pkgs.wdisplays}/bin/wdisplays";
+        exec = "${pkgs.wdisplays}/bin/wdisplays";
       }
     ];
   };

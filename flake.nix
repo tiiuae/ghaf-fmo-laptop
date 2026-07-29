@@ -24,7 +24,13 @@
     # Ghaf is the source of truth for nixpkgs version
     ghaf.url = "github:tiiuae/ghaf";
 
-    # Follow ghaf's nixpkgs - no manual version tracking needed
+    # Follow ghaf's nixpkgs - no manual version tracking needed. This resolves
+    # to the node ghaf's own lock supplies, so there is nothing to pin.
+    #
+    # Bump this repo's inputs as a set, though: ghaf, nixpkgs, flake-parts and
+    # onboarding-agent are coupled. flake-parts supplies nixpkgs-lib, and an old
+    # one fails the new module system with "attribute 'wrapped' missing"; an old
+    # onboarding-agent asks for pkgs.go_1_24, which newer nixpkgs has dropped.
     nixpkgs.follows = "ghaf/nixpkgs";
 
     onboarding-agent = {

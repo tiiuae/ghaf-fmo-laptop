@@ -15,32 +15,28 @@
 #    Maximum Turbo Power   29 W
 #
 # Resource allocation:
-#    Net VM:     1 vcpu    512 MB
-#    Audio VM:   1 vcpu    384 MB
-#    Admin VM:   1 vcpu    512 MB
+#    Net VM:     2 vcpu   1024 MB   (ghaf default, not set here)
+#    Audio VM:   2 vcpu    512 MB   (ghaf default, not set here)
+#    Admin VM:   2 vcpu   1024 MB   (ghaf default, not set here)
 #    Gui VM:     3 vcpu    2303 MB
 #    Docker VM:  5 vcpu    2303 MB
 #
 # Memory ballooning is enabled in Ghaf.
 #
-{ lib, ... }:
-let
-  inherit (lib) mkForce;
-in
 {
   config.ghaf.virtualization.vmConfig = {
     # Gui VM
-    guivm = {
-      mem = mkForce 2303;
-      vcpu = mkForce 3;
+    sysvms.guivm = {
+      mem = 2303;
+      vcpu = 3;
     };
 
     # App VMs
     appvms = {
       docker = {
-        mem = mkForce 2303;
-        vcpu = mkForce 5;
-        balloonRatio = mkForce 4;
+        mem = 2303;
+        vcpu = 5;
+        balloonRatio = 4;
       };
     };
   };

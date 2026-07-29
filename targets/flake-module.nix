@@ -24,9 +24,12 @@ let
     inherit lib;
   };
 
+  # extraModules is a first-level argument: the installer NixOS system is
+  # evaluated once here and shared by every target's ISO.
   mkGhafInstaller = inputs.ghaf.builders.mkGhafInstaller {
     self = inputs.ghaf;
     inherit lib system;
+    extraModules = installerModules;
   };
 
   fmoCommonModule = {
@@ -71,19 +74,6 @@ let
     {
       hostConfig = baseConfig.hostConfiguration;
       inherit (baseConfig) package variant name;
-    };
-
-  installer-config =
-    targetName: imagePath: extraModules:
-    let
-      installerResult = mkGhafInstaller {
-        name = targetName;
-        inherit imagePath extraModules;
-      };
-    in
-    {
-      hostConfig = installerResult.hostConfiguration;
-      inherit (installerResult) name package;
     };
 
   installerModules = [
@@ -140,14 +130,22 @@ let
   ];
 
   target-installers = map (
-    t: installer-config t.name inputs.self.packages.x86_64-linux.${t.name} installerModules
+    t:
+    mkGhafInstaller {
+      inherit (t) name;
+      imagePath = inputs.self.packages.${system}.${t.name};
+    }
   ) target-configs;
-
-  targets = target-configs ++ target-installers;
 in
 {
   flake = {
-    nixosConfigurations = builtins.listToAttrs (map (t: lib.nameValuePair t.name t.hostConfig) targets);
-    packages.${system} = builtins.listToAttrs (map (t: lib.nameValuePair t.name t.package) targets);
+    # Installers are packages only: mkGhafInstaller returns { name; package; }
+    # and has no per-installer NixOS configuration to expose.
+    nixosConfigurations = builtins.listToAttrs (
+      map (t: lib.nameValuePair t.name t.hostConfig) target-configs
+    );
+    packages.${system} = builtins.listToAttrs (
+      map (t: lib.nameValuePair t.name t.package) (target-configs ++ target-installers)
+    );
   };
 }
