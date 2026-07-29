@@ -6,6 +6,7 @@
   ipcalc,
   gawk,
   grpcurl,
+  systemd,
 }:
 writeShellApplication {
   name = "fmo-onboarding";
@@ -15,6 +16,7 @@ writeShellApplication {
     onboarding-agent
     ipcalc
     grpcurl
+    systemd
   ];
 
   text =
@@ -29,6 +31,7 @@ writeShellApplication {
 
       IP_FILE=/var/common/ip-address
       HOSTNAME_FILE=/var/common/hostname
+      ALIAS_FILE=/var/lib/fogdata/alias
       CONFIG_FILE=/var/lib/fogdata/config.yaml
 
       set_hostname(){
@@ -65,11 +68,24 @@ writeShellApplication {
       }
 
       set_alias() {
-        # Read alias from user
-        read -r -p "Enter the alias for the device: " alias
-
-        # Update the alias in the config file
-        sed -i -e "s/Alias: .*/Alias: \"$alias\"/" "$CONFIG_FILE"
+        VALID_ALIAS=false
+        until $VALID_ALIAS; do
+          read -r -p "Enter the alias for the device: " alias
+          # The alias becomes the CommonName of the identity certificate, so
+          # constrain it rather than trusting whatever was typed.
+          if [[ ! "$alias" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+            echo "Alias must be non-empty and contain only letters, digits, '-' and '_'."
+            continue
+          fi
+          # Write to the alias file rather than editing config.yaml directly.
+          # setup-onboarding-agent regenerates config.yaml on every boot, so an
+          # in-place edit there is lost at the next reboot; it also reads this
+          # file back, which is what makes the alias survive.
+          printf '%s' "$alias" > "$ALIAS_FILE"
+          systemctl restart setup-onboarding-agent.service
+          VALID_ALIAS=true
+          echo "Alias set to $alias"
+        done
       }
 
       # Set mDNS hostname
@@ -114,13 +130,21 @@ writeShellApplication {
 
       # Set device alias
       echo ""
-      read -r -p "Do you want to set an alias for this device [y/N]? " response
+      [[ ! -f $ALIAS_FILE ]] && touch $ALIAS_FILE
+      ALIAS=$(gawk '{print $1}' $ALIAS_FILE)
+      if [ -n "$ALIAS" ]; then
+        echo "Current device alias: $ALIAS"
+        read -r -p 'Do you want to update the alias? [y/N] ' response
+      else
+        echo "No device alias is set."
+        read -r -p 'Do you want to set an alias for this device? [y/N] ' response
+      fi
       case "$response" in
       [yY][eE][sS] | [yY])
         set_alias
         ;;
       *)
-        echo "No alias set."
+        echo "Skipping alias update..."
         ;;
       esac
 

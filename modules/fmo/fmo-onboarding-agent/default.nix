@@ -62,6 +62,18 @@ in
       default = "/var/lib/fogdata";
     };
 
+    alias_file = mkOption {
+      description = ''
+        Path to the file holding the operator-chosen device alias.
+
+        The alias is inlined into config.yaml, which this module regenerates on
+        every boot, so it cannot live only in that file - keeping it here is
+        what makes it survive a reboot.
+      '';
+      type = types.path;
+      default = "/var/lib/fogdata/alias";
+    };
+
     log_file_path = mkOption {
       description = "Path to log file";
       type = types.path;
@@ -93,6 +105,15 @@ in
             [ ! -d ${cfg.ip_path} ] && mkdir -p ${cfg.ip_path}
             [ ! -d ${cfg.env_path} ] && mkdir -p ${cfg.env_path}
 
+            # The device alias is chosen by the operator during onboarding and
+            # becomes the CommonName of the identity certificate. config.yaml is
+            # rewritten below on every boot, so read the alias from its own file
+            # rather than losing it each time.
+            device_alias=""
+            if [ -r ${cfg.alias_file} ]; then
+              device_alias=$(tr -d '\r\n' < ${cfg.alias_file})
+            fi
+
             # Write config.yaml file
             cat > ${cfg.env_path}/config.yaml << EOF
             TLS: true
@@ -100,7 +121,7 @@ in
             NatsEndpointFile: "${cfg.certs_path}/service_nats_url.txt"
             Device:
               Type: "laptop"
-              Alias: ""
+              Alias: "$device_alias"
               Architecture: "linux/amd64"
               Topology: "recon"
               IpAddressFile: "${cfg.ip_path}/ip-address"
