@@ -5,6 +5,5 @@
 # packages.
 #
 (_final: prev: {
-  cosmic-panel = import ./cosmic-panel { inherit prev; };
   cosmic-applibrary = import ./cosmic-applibrary { inherit prev; };
 })
