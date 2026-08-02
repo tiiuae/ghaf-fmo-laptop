@@ -1,0 +1,179 @@
+# Copyright 2022-2025 TII (SSRC) and the Ghaf contributors
+# SPDX-License-Identifier: Apache-2.0
+#
+# Device facts for the fmo-* agent skills.
+#
+# One machine, one target
+# -----------------------
+# Unlike ghaf, which folds its x86 laptops into a single intel-laptop-debug
+# image, every FMO machine has its own target. modules/hardware/resources/
+# <machine>.nix sizes that machine's gui-VM and docker-VM memory and vcpu
+# counts against its actual RAM, and modules/hardware/flake-module.nix layers
+# per-machine USB and PCI overrides on top of ghaf's hardware module. Building
+# a neighbouring machine's target therefore boots, and then over-allocates or
+# passes through the wrong devices - a failure that reads as a regression.
+#
+# Where the machine-specific values live
+# --------------------------------------
+# This file is tracked, so it holds only what is true for the project: which
+# target a machine takes, which artefacts it produces, how it boots. Anything
+# describing whoever's desk the hardware sits on - addresses, MACs, ssh
+# identities, drive and serial nodes - goes in .claude/config.local.yaml,
+# which is gitignored. Those fields are left null here. See
+# config.local.yaml.example for the shape.
+#
+# Resolution order, per field:
+#   config.local.yaml devices.<name> > config.yaml devices.<name> > defaults
+# A null in the local file does NOT blank a value set here.
+#
+# Read it with .claude/scripts/fmo-config.py, which implements that merge:
+#   .claude/scripts/fmo-config.py --list
+#   .claude/scripts/fmo-config.py --device dell-7330 --field fmo_target
+#   .claude/scripts/fmo-config.py --device dell-7330
+
+version: 1
+
+defaults:
+  # ghaf.users.admin.name, which FMO does not override. The desktop login user
+  # is a separate, homed-managed account created on first boot.
+  ssh_user: ghaf
+  serial_baud: 115200
+  # Host-side interface facing the device over USB ethernet, and the ssh alias
+  # ghaf-build-helper sets up for it.
+  usb_iface: ghaf-usb
+  boot_wait_seconds: 180
+  # A netboot install fetches ~5 GB and then writes it to the internal disk.
+  netboot_install_wait_seconds: 1800
+  # The netboot chain is unsigned, exactly as the ISO is.
+  secureboot_must_be_off: true
+  boot_menu_key: F12
+  # The TARGET's internal disk, chosen in the installer TUI.
+  install_disk: null
+  # The USB stick the installer ISO is written to, on the build host.
+  flash_drive: null
+
+devices:
+  alienware-m18-r2:
+    architecture: x86_64
+    form_factor: laptop
+    ram_gb: 64
+    fmo_target: fmo-alienware-m18-r2-debug
+    installer_target: fmo-alienware-m18-r2-debug-installer
+    netboot_target: fmo-alienware-m18-r2-debug-netboot-installer
+    hardware_module: modules/hardware/resources/alienware-m18-r2.nix
+    host_ip: null
+    ssh_identity: null
+    install_disk: null
+    flash_drive: null
+    serial_device: null
+    netboot_iface: null
+    netboot_mac: null
+
+  dell-7230:
+    architecture: x86_64
+    form_factor: laptop
+    # The tightest machine in the fleet. If a VM is OOM-killed here and not on
+    # the others, start from the resource file rather than the service.
+    ram_gb: 8
+    fmo_target: fmo-dell-7230-debug
+    installer_target: fmo-dell-7230-debug-installer
+    netboot_target: fmo-dell-7230-debug-netboot-installer
+    hardware_module: modules/hardware/resources/dell-latitude-7230.nix
+    host_ip: null
+    ssh_identity: null
+    install_disk: null
+    flash_drive: null
+    serial_device: null
+    netboot_iface: null
+    netboot_mac: null
+
+  dell-7330:
+    architecture: x86_64
+    form_factor: laptop
+    ram_gb: 16
+    fmo_target: fmo-dell-7330-debug
+    installer_target: fmo-dell-7330-debug-installer
+    netboot_target: fmo-dell-7330-debug-netboot-installer
+    hardware_module: modules/hardware/resources/dell-latitude-7330.nix
+    # This firmware publishes several network boot entries on the same MAC.
+    # Use "ONBOARD NIC (IPV4)". "UEFI HTTPs Boot" announces DHCP option 93
+    # architecture 16, which pixiecore discards, so the machine appears to PXE
+    # and then silently never gets an offer.
+    host_ip: null
+    ssh_identity: null
+    install_disk: null
+    flash_drive: null
+    serial_device: null
+    netboot_iface: null
+    netboot_mac: null
+
+  lenovo-x1-gen11:
+    architecture: x86_64
+    form_factor: laptop
+    ram_gb: 32
+    fmo_target: fmo-lenovo-x1-gen11-debug
+    installer_target: fmo-lenovo-x1-gen11-debug-installer
+    netboot_target: fmo-lenovo-x1-gen11-debug-netboot-installer
+    hardware_module: modules/hardware/resources/lenovo-x1-carbon-gen11.nix
+    # No built-in RJ45. A generic USB-C ethernet dongle emits no PXE request at
+    # all - the firmware has no UEFI driver for it - so the server sees nothing
+    # and the fault looks like the server's. A Lenovo dock works, and the MAC to
+    # allow-list is the DOCK's, not the one the installed OS reports.
+    host_ip: null
+    ssh_identity: null
+    install_disk: null
+    flash_drive: null
+    serial_device: null
+    netboot_iface: null
+    netboot_mac: null
+
+  lenovo-x1-gen12:
+    architecture: x86_64
+    form_factor: laptop
+    ram_gb: 32
+    fmo_target: fmo-lenovo-x1-gen12-debug
+    installer_target: fmo-lenovo-x1-gen12-debug-installer
+    netboot_target: fmo-lenovo-x1-gen12-debug-netboot-installer
+    hardware_module: modules/hardware/resources/lenovo-x1-carbon-gen12.nix
+    # Same missing RJ45 as gen11; see the note there.
+    host_ip: null
+    ssh_identity: null
+    install_disk: null
+    flash_drive: null
+    serial_device: null
+    netboot_iface: null
+    netboot_mac: null
+
+  demo-tower-mk1:
+    architecture: x86_64
+    form_factor: tower
+    ram_gb: 128
+    fmo_target: fmo-demo-tower-mk1-debug
+    installer_target: fmo-demo-tower-mk1-debug-installer
+    netboot_target: fmo-demo-tower-mk1-debug-netboot-installer
+    hardware_module: modules/hardware/resources/demo-tower-mk1.nix
+    boot_menu_key: F11
+    host_ip: null
+    ssh_identity: null
+    install_disk: null
+    flash_drive: null
+    serial_device: null
+    netboot_iface: null
+    netboot_mac: null
+
+  tower-5080:
+    architecture: x86_64
+    form_factor: tower
+    ram_gb: 192
+    fmo_target: fmo-tower-5080-debug
+    installer_target: fmo-tower-5080-debug-installer
+    netboot_target: fmo-tower-5080-debug-netboot-installer
+    hardware_module: modules/hardware/resources/tower-5080.nix
+    boot_menu_key: F11
+    host_ip: null
+    ssh_identity: null
+    install_disk: null
+    flash_drive: null
+    serial_device: null
+    netboot_iface: null
+    netboot_mac: null

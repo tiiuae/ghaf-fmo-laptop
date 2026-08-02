@@ -5,5 +5,18 @@
 .serena/
 result*
 .pre-commit-config.yaml
-CLAUDE.md
-.claude/
+
+# CLAUDE.md is tracked: it imports the shared AGENTS.md, which is how Claude Code picks up
+# the project instructions. Personal, machine-local notes belong in CLAUDE.local.md.
+CLAUDE.local.md
+
+# Device addresses, MACs, ssh identities and drive nodes: properties of whoever's desk the
+# hardware is on, not of the project. .claude/config.yaml keeps the structural fields; see
+# .claude/config.local.yaml.example for the shape.
+.claude/config.local.yaml
+.claude/worktrees/
+
+# Log snapshots taken by .claude/skills/fmo-logs/scripts/collect-logs.sh. Anchored with a
+# leading slash on purpose: unanchored, it also matches .claude/skills/fmo-logs/ and
+# silently untracks the whole skill.
+/fmo-logs/

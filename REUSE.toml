@@ -16,6 +16,16 @@ path = [
   ".github/workflows/scorecards.yml",
   "flake.lock",
   "README.md",
-  "justfile",
-  "overlays/custom-packages/cosmic-panel/0001-Fix-touchscreen-click-events-for-panel-applets.patch"
+  "justfile"
+]
+
+[[annotations]]
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+SPDX-FileCopyrightText = "2022-2025 TII (SSRC) and the Ghaf contributors"
+precedence = "closest"
+path = [
+  # Claude Code skills and agents: the YAML frontmatter has to be the first thing in the
+  # file for the loader to parse it, so these cannot carry an SPDX comment header.
+  ".claude/skills/**/SKILL.md",
+  ".claude/agents/*.md"
 ]

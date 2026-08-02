@@ -16,16 +16,19 @@
 #    Net VM:     2 vcpu   1024 MB   (ghaf default, not set here)
 #    Audio VM:   2 vcpu    512 MB   (ghaf default, not set here)
 #    Admin VM:   2 vcpu   1024 MB   (ghaf default, not set here)
-#    Gui VM:     3 vcpu    6400 MB
+#    Gui VM:     3 vcpu    6144 MB
 #    Docker VM:  2 vcpu    2303 MB
 #
 # Memory ballooning is enabled in Ghaf.
+#
+# The gui-VM figure matches upstream's intel-laptop-low-mem variant, which is
+# also what upstream's own dell-latitude-7330 target uses.
 #
 {
   config.ghaf.virtualization.vmConfig = {
     # Gui VM
     sysvms.guivm = {
-      mem = 6400;
+      mem = 6144;
       vcpu = 3;
     };
 

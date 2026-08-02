@@ -90,6 +90,48 @@ username / password
 
 ```
 
+### Installing over the network (netboot)
+
+Netboot performs the same install as the ISO above — the same TUI, the same disk write — without a USB stick. The difference is where the image comes from: it is fetched over HTTP during the install rather than baked into the media, so the netboot artefacts are a kernel, an initrd and a small iPXE script instead of a ~7 GB image. The kernel and initrd are the same for every target, so one build serves the whole fleet.
+
+Secure Boot must be **off** on the target: the netboot chain is unsigned, exactly as the ISO is.
+
+``` shell
+nix develop
+
+# the installer environment, and the image it will fetch - both are needed
+just build .#fmo-lenovo-x1-gen11-debug-netboot-installer "-o result-netboot"
+just build .#fmo-lenovo-x1-gen11-debug "-o result"
+
+# check what will be served, and on which interface, before touching the network
+ghaf-netboot -i <iface> -m <target-mac> -n result-netboot -g result --dry-run
+
+# then serve it for real; the target is allow-listed by MAC, so nothing else on
+# the network is offered a boot image
+ghaf-netboot -i <iface> -m <target-mac> -n result-netboot -g result \
+  --open-firewall --exit-after-serve
+```
+
+Then power on the target and pick the network entry from its boot menu (`F12` on the Lenovo and Dell machines, `F11` on the towers). See `ghaf-netboot --help` for unattended installs (`--install-target`, `--encrypt`) and the other options.
+
+Two hardware notes worth knowing before blaming the server:
+
+* The Lenovo X1 has no built-in RJ45. A generic USB-C ethernet dongle emits no PXE request at all — the firmware has no UEFI driver for it. Use a Lenovo dock, and note that the MAC to allow-list is the **dock's**, not the one the installed OS reports.
+* The Dell Latitude 7330 publishes several network boot entries on the same MAC. Use `ONBOARD NIC (IPV4)`; `UEFI HTTPs Boot` announces a DHCP architecture that the server discards.
+
+### Building every target
+
+``` shell
+# every installer ISO, and with them every disk image, each to its own
+# result-<target> link
+just build-all
+
+# every netboot installer; only the first costs anything, since the kernel and
+# initrd are shared. NB this builds boot environments, not images - a netboot
+# install still serves an image built by `just build`, as shown above.
+just build-netboot
+```
+
 ### Rebuilding and flashing a target (after first install)
 
 ``` shell

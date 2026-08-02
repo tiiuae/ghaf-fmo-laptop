@@ -32,6 +32,17 @@ let
     extraModules = installerModules;
   };
 
+  # The same installer, delivered over the network instead of on a USB stick.
+  # It gets the same installerModules as the ISO, which is what keeps the two
+  # behaving identically. Unlike the ISO it does not take an imagePath - the
+  # image is fetched over HTTP at install time - so the per-target outputs are
+  # linkFarms over one shared kernel and initrd and cost nothing to add.
+  mkGhafNetbootInstaller = inputs.ghaf.builders.mkGhafNetbootInstaller {
+    self = inputs.ghaf;
+    inherit lib system;
+    extraModules = installerModules;
+  };
+
   fmoCommonModule = {
     nixpkgs.overlays = [
       inputs.self.overlays.custom-packages
@@ -136,16 +147,26 @@ let
       imagePath = inputs.self.packages.${system}.${t.name};
     }
   ) target-configs;
+
+  # No imagePath here on purpose: the netboot installer fetches the image at
+  # install time from whatever URL the server hands it, so it does not depend
+  # on the target's image being built first. The default imageUrl defers to
+  # iPXE's DHCP-provided ${next-server}, which keeps site-specific addresses
+  # out of the repo.
+  target-netboot-installers = map (t: mkGhafNetbootInstaller { inherit (t) name; }) target-configs;
 in
 {
   flake = {
     # Installers are packages only: mkGhafInstaller returns { name; package; }
-    # and has no per-installer NixOS configuration to expose.
+    # and has no per-installer NixOS configuration to expose. The same is true
+    # of the netboot installers.
     nixosConfigurations = builtins.listToAttrs (
       map (t: lib.nameValuePair t.name t.hostConfig) target-configs
     );
     packages.${system} = builtins.listToAttrs (
-      map (t: lib.nameValuePair t.name t.package) (target-configs ++ target-installers)
+      map (t: lib.nameValuePair t.name t.package) (
+        target-configs ++ target-installers ++ target-netboot-installers
+      )
     );
   };
 }

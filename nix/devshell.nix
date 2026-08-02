@@ -19,6 +19,11 @@
       # --force-remote / --insecure, an nvd diff of the old and new system, and
       # a `switch` that survives the SSH connection dropping.
       ghaf-build-helper = inputs.ghaf.packages.${system}.ghaf-build-helper;
+
+      # The PXE/netboot install server: ProxyDHCP plus TFTP plus an HTTP file
+      # server for the image. Upstream's, under upstream's name - it is not an
+      # FMO wrapper, unlike fmo-rebuild below.
+      ghaf-netboot = inputs.ghaf.packages.${system}.ghaf-netboot;
     in
     {
       devshells = {
@@ -40,6 +45,10 @@
               pkgs.coreutils
               config.treefmt.build.wrapper
               ghaf-build-helper
+              # The fmo-* skill scripts under .claude/ read .claude/config.yaml
+              # through fmo-config.py, and diff-logs.py is python too. Nothing
+              # else in this shell provides pyyaml.
+              (pkgs.python3.withPackages (ps: [ ps.pyyaml ]))
             ]
             ++ lib.attrValues config.treefmt.build.programs # make all the treefmt packages available
             ++ config.pre-commit.settings.enabledPackages;
@@ -64,6 +73,15 @@
               name = "fmo-rebuild";
               command = "ghaf-build-helper $@";
               category = "builder";
+            }
+            {
+              help = "Serve a netboot/PXE install (needs root)";
+              name = "ghaf-netboot";
+              # Called through sudo rather than left to the user, because
+              # sudo's secure_path discards this shell's PATH - a bare
+              # `sudo ghaf-netboot` would not find the binary.
+              command = ''exec sudo -- "${ghaf-netboot}/bin/ghaf-netboot" "$@"'';
+              category = "deployer";
             }
           ];
         };

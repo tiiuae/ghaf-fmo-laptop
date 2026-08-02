@@ -1,0 +1,65 @@
+# Copyright 2022-2025 TII (SSRC) and the Ghaf contributors
+# SPDX-License-Identifier: Apache-2.0
+#
+# Template for .claude/config.local.yaml, which is gitignored.
+#
+# Copy this file to .claude/config.local.yaml and fill in the machines on your
+# desk. Everything here describes where the hardware physically is, not what the
+# project builds, which is why it does not belong in the tracked config.
+#
+#   cp .claude/config.local.yaml.example .claude/config.local.yaml
+#
+# Only list the machines you actually have, and only the fields you know. A
+# field you omit - or leave null - falls through to .claude/config.yaml and then
+# to its defaults block. A null here does NOT blank a value set there, so an
+# unused key is harmless rather than destructive.
+#
+# Device keys must match the ones in .claude/config.yaml: alienware-m18-r2,
+# dell-7230, dell-7330, lenovo-x1-gen11, lenovo-x1-gen12, demo-tower-mk1,
+# tower-5080. A device that exists only here is allowed, which is the escape
+# hatch for a machine that is not yet a target.
+#
+# Override the paths with FMO_CONFIG and FMO_LOCAL_CONFIG if you keep them
+# elsewhere.
+
+version: 1
+
+devices:
+  dell-7330:
+    # The address of ghaf-host as seen from your workstation - usually the USB
+    # ethernet address, or the net-vm's address on the lab network. The internal
+    # 192.168.100.0/24 addresses are reached by hopping through it, not directly.
+    host_ip: 192.168.10.212
+    ssh_identity: ~/.ssh/id_ed25519
+    # The target's internal disk, as the installer TUI sees it. Confirm with
+    # lsblk on the target before an install - this is the disk that gets erased.
+    install_disk: /dev/nvme0n1
+    # The USB stick you write the installer ISO to, on THIS machine. Re-check it
+    # every time; enumeration order is not stable across reboots.
+    flash_drive: /dev/sdb
+    # A USB-serial adapter, if you have one attached. None of the FMO machines
+    # has a debug-USB console, so this is genuinely absent on most desks.
+    serial_device: null
+    # For netboot: the interface on THIS machine that faces the target, and the
+    # target's boot-time MAC. On the Dell, use the "ONBOARD NIC (IPV4)" entry.
+    netboot_iface: enp0s31f6
+    netboot_mac: null
+    # A bootnum as efibootmgr prints it, NOT a description: "0000", not
+    # "ONBOARD NIC (IPV4)". set-bootnext.sh passes it straight to
+    # `efibootmgr -n`. Only set this when the heuristic picks the wrong one -
+    # on this machine that means anything other than ONBOARD NIC (IPV4), since
+    # the IPv6 and UEFI HTTPs Boot entries share the same MAC and do not work.
+    # Find it with: set-bootnext.sh -m dell-7330 --dry-run
+    netboot_boot_entry: "0000"
+
+  lenovo-x1-gen11:
+    host_ip: null
+    ssh_identity: ~/.ssh/id_ed25519
+    install_disk: /dev/nvme0n1
+    flash_drive: null
+    serial_device: null
+    netboot_iface: enp0s31f6
+    # The DOCK's MAC, not the one the installed OS reports: this machine has no
+    # built-in RJ45 and only PXE-boots through a Lenovo dock.
+    netboot_mac: null
+    netboot_boot_entry: null
