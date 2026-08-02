@@ -85,6 +85,12 @@ let
     {
       hostConfig = baseConfig.hostConfiguration;
       inherit (baseConfig) package variant name;
+      inherit (baseConfig)
+        extendHost
+        extendVm
+        getVmConfig
+        buildSysupdateImage
+        ;
     };
 
   installerModules = [
@@ -97,6 +103,10 @@ let
           inputs.ghaf.nixosModules.development
           inputs.ghaf.nixosModules.reference-personalize
         ];
+        # The installer is what enrolls Secure Boot keys onto the target, so an
+        # installer built without this can only ever produce machines that
+        # cannot verify their own boot chain - and nothing reports that.
+        ghaf.host.secureboot.enable = true;
         users.users.nixos.openssh.authorizedKeys.keys =
           config.ghaf.reference.personalize.keys.authorizedSshKeys;
       }

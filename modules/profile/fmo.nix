@@ -47,7 +47,19 @@ in
           suspend.enable = false;
         };
         kill-switch.enable = true;
+        # TuneD profiles and the system76 scheduler. Upstream's mvp-user-trial
+        # enables this on every laptop; this profile had simply never set it, so
+        # FMO devices ran without the CPU and I/O tuning the rest of the fleet
+        # gets. Nothing announces its absence - the machine is just slower.
+        performance.enable = true;
       };
+
+      # laptop-x86 turns this on with an empty `vms` list, so it created the
+      # shared-directory scaffolding on every FMO host and then wired it to
+      # nothing. Turned off explicitly rather than populated: upstream lists its
+      # user-facing app-VMs (business, comms, chrome, flatpak), and FMO has none
+      # of those - its only app-VM is docker-vm.
+      virtualization.microvm-host.sharedVmDirectory.enable = lib.mkForce false;
 
       virtualization.microvm = {
         guivm.evaluatedConfig = config.ghaf.profiles.laptop-x86.guivmBase.extendModules {

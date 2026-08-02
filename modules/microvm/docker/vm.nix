@@ -62,9 +62,34 @@ in
 
         extraModules = [
           inputs.self.nixosModules.docker-vm-services
-          ./config.nix
+          # Wrapped rather than passed as a bare `./config.nix` path. Both are
+          # valid NixOS modules, but ghaf's wireguard-gui walks every app-VM's
+          # extraModules with `extraMod // { vmName = ...; }`
+          # (ghaf:modules/reference/services/wireguard-gui/wireguard-gui-config.nix),
+          # and `//` needs an attrset - a path or a function makes it fail with
+          # "expected a set but found a path", which surfaces as an unrelated
+          # error about the option it was computing. Upstream's own app-VMs only
+          # ever use inline attrsets, so the assumption goes unnoticed there.
+          { imports = [ ./config.nix ]; }
         ];
       };
+
+      # Device-specific USB routing, declared on the VM that uses it rather than
+      # as a global rule.
+      usbPassthrough = [
+        {
+          description = "GPS receiver for DockerVM";
+          targetVm = "docker-vm";
+          tag = "gps";
+          allow = [
+            {
+              vendorId = "0403";
+              productId = "6015";
+              description = "FTDI FT231X USB UART to access GPS device";
+            }
+          ];
+        }
+      ];
     };
   };
 }

@@ -35,14 +35,9 @@
 
     # Create MicroVM host share folders
     systemd.tmpfiles.rules = [
-      # `z`, not `d`: ghaf's identity module also declares /persist/common, at
-      # 0755, and its rule is rendered first. systemd-tmpfiles keeps the first
-      # of duplicate `d` lines ("Duplicate line for path ..., ignoring"), so the
-      # `d ... 0700` this used to be was silently discarded and the directory
-      # came out 0755. `z` only adjusts mode/ownership and is not deduplicated
-      # against the `d` lines, so 0700 is applied while ghaf's own
-      # /persist/common/ghaf subdirectory keeps its 0755.
-      "z /persist/common 0700 root root -"
+      # 0755, matching ghaf, and NOT the 0700 this used to be. 0700 broke SPIRE
+      # on every VM:
+      "z /persist/common 0755 root root -"
       "d /persist/fogdata 0700 ${toString config.ghaf.users.homedUser.uid} users -"
       "f /persist/common/hostname 0600 root root -"
       "f /persist/common/ip-address 0600 root root -"
